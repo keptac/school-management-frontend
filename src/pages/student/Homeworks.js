@@ -1,6 +1,4 @@
 import { Helmet } from 'react-helmet';
-// import { useLocation } from 'react-router-dom';
-
 import {
   Box,
   Container,
@@ -14,7 +12,7 @@ import LibraryCard from 'src/components/student/library/LibraryCard';
 import React from 'react';
 import resources from 'src/__mocks__/subjectResources';
 
-const subject = 'Shonsa';
+const subject = 'Shona';
 const siteName = ' | Vivid Learn ';
 
 class SubjectContent extends React.Component {
@@ -23,7 +21,7 @@ class SubjectContent extends React.Component {
     this.state = {
       subjectName: '',
       viewDoc: false,
-      docs: [],
+      docs: []
     };
   }
 
@@ -41,13 +39,6 @@ class SubjectContent extends React.Component {
   }
 
   render() {
-    // const location = useLocation();
-    // const subjectDetails = location.state;
-
-    // if (this.state.redirect === true) {
-    //   return <Redirect to="/class-coursework" />;
-    // }
-
     const { subjectName, viewDoc, docs } = this.state;
     return (
       <>
@@ -83,6 +74,7 @@ class SubjectContent extends React.Component {
                   spacing={2}
                   sx={{ marginTop: '0.1%' }}
                 >
+
                   <Grid
                     item
                     container

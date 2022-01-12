@@ -68,7 +68,7 @@ class Subjectscard extends React.Component {
                 <Link
                   to={{
                     pathname: '/student/subject',
-                    subjectDetails: subjectData
+                    state: subjectData
                   }}
                 >
                   <LaunchIcon />

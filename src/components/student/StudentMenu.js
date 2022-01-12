@@ -11,7 +11,7 @@ import {
   ListItemText
 } from '@material-ui/core';
 
-const products = [
+const menuItems = [
   {
     id: uuid(),
     name: 'Resources',
@@ -32,20 +32,20 @@ const products = [
 const MenuBoard = (props) => (
   <Card {...props}>
     <CardHeader
-      subtitle={`${products.length} in total`}
+      subtitle={`${menuItems.length} in total`}
       title="Class Menu"
     />
     <Divider />
     <List>
-      {products.map((announcement, i) => (
+      {menuItems.map((item, i) => (
         <ListItem
-          divider={i < products.length - 1}
-          key={announcement.id}
+          divider={i < menuItems.length - 1}
+          key={item.id}
         >
           <ListItemAvatar>
             <img
-              alt={announcement.name}
-              src={announcement.imageUrl}
+              alt={item.name}
+              src={item.imageUrl}
               style={{
                 height: 48,
                 width: 48
@@ -53,7 +53,7 @@ const MenuBoard = (props) => (
             />
           </ListItemAvatar>
           <ListItemText
-            primary={announcement.name}
+            primary={item.name}
           />
         </ListItem>
       ))}
