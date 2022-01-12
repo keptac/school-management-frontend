@@ -1,92 +1,40 @@
-import axios from "axios";
-const qs = require("qs");
-const apiUrl = "http://localhost:3001/api";
-const token = JSON.parse(localStorage.getItem("token"));
-// const apiUrl = "http://localhost:3001/api";
+import axios from 'axios';
+
+const qs = require('qs');
+
+const apiUrl = 'http://localhost:3001/api';
+// const apiUrl = 'https://westminster-backend.herokuapp.com/api';
 
 const config = {
-  baseURL: apiUrl,
+  baseURL: `${apiUrl}/westminster`,
   headers: {
-    "Content-Type": "application/x-www-form-urlencoded",
-    Authorization: `Bearer ${token}`,
-    "Access-Control-Allow-Origin": "https://pawacyberschool.net",
-    "Access-Control-Allow-Credentials": true,
+    'Content-Type': 'application/x-www-form-urlencoded',
   },
 };
-export const AuthService = {
-  register,
-  login,
-  profile,
-  update_profile,
-  change_password,
-};
 
-//Register New User
-async function register(data, referrerId) {
-  const config = {
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      "Access-Control-Allow-Origin": "https://pawacyberschool.net",
-      "Access-Control-Allow-Credentials": true,
-    },
-  };
-
+async function register(data) {
   try {
-    if (referrerId === "no-referrer") {
-      let res = await axios.post(
-        `${apiUrl}/register`,
-        qs.stringify(data),
-        config
-      );
-      return res.data;
-    } else {
-      let res = await axios.post(
-        `${apiUrl}/register?referer=${referrerId}`,
-        qs.stringify(data),
-        config
-      );
-      return res.data;
-    }
-  } catch (err) {
-    console.error(err);
-  }
-}
-
-//Register New User
-async function login(data) {
-  const config = {
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-  };
-  try {
-    let res = await axios.post(`${apiUrl}/login`, qs.stringify(data), config);
+    const res = await axios.post('/staff', qs.stringify(data), config);
     return res.data;
   } catch (err) {
     console.error(err);
+    return { success: false, message: 'Connection failed. Please check your connection.' };
   }
 }
-async function profile() {
+
+async function login(data) {
   try {
-    let res = await axios.get("/profile", config);
-    return res;
+    const res = await axios.post('/staff/authenticate', qs.stringify(data), config);
+    return res.data;
   } catch (err) {
     console.error(err);
+    return err;
   }
 }
-async function update_profile(data) {
-  try {
-    let res = await axios.put("/update_profile", qs.stringify(data), config);
-    return res;
-  } catch (err) {
-    console.error(err);
-  }
-}
-async function change_password(data) {
-  try {
-    let res = await axios.put("/changepw", qs.stringify(data), config);
-    return res;
-  } catch (err) {
-    console.error(err);
-  }
-}
+
+const AuthService = {
+  register,
+  login
+};
+
+export default AuthService;
