@@ -2,11 +2,13 @@ import axios from 'axios';
 
 const qs = require('qs');
 
+// const apiUrl = 'http://localhost:3001/api';
+
 // Submissions
 async function submitAssignment(data) {
   const token = await JSON.parse(localStorage.getItem('token'));
   const config = {
-    baseURL: 'http://localhost:3001/api/student',
+    baseURL: 'https://mtgs-backend.herokuapp.com/api/student',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       Authorization: `Bearer ${token}`,
@@ -27,7 +29,7 @@ async function submitAssignment(data) {
 async function getStudentSubjects(studentId) {
   // const token = await JSON.parse(localStorage.getItem('token'));
   const config = {
-    baseURL: 'http://localhost:3001/api/esm/student-enrolment',
+    baseURL: 'https://mtgs-backend.herokuapp.com/api/esm/student-enrolment',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       // Authorization: `Bearer ${token}`,
@@ -47,7 +49,7 @@ async function download(data) {
   const token = await JSON.parse(localStorage.getItem('token'));
   try {
     const res = await axios.post(
-      'http://localhost:3001/api/upload/get',
+      'https://mtgs-backend.herokuapp.com/api/upload/get',
       qs.stringify(data),
       {
         headers: {
@@ -71,7 +73,7 @@ async function deleteResource(data) {
 
   try {
     const res = await axios.delete(
-      'http://localhost:3001/api/upload/delete',
+      'https://mtgs-backend.herokuapp.com/api/upload/delete',
       {
         headers: {
           Authorization: `Bearer ${token}`,

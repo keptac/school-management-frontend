@@ -74,8 +74,6 @@ const routes = [
     ]
   },
 
-  // Super Admin Routes
-
   // Default Routes
   {
     path: '/',

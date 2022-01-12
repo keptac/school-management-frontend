@@ -2,8 +2,8 @@ import axios from 'axios';
 
 const qs = require('qs');
 
-const apiUrl = 'http://localhost:3001/api';
-// const apiUrl = 'https://esm-backend.herokuapp.com/api';
+// const apiUrl = 'http://localhost:3001/api';
+const apiUrl = 'https://mtgs-backend.herokuapp.com/api';
 
 const config = {
   baseURL: `${apiUrl}/esm`,

@@ -4,7 +4,7 @@ const qs = require('qs');
 
 async function postMaterial(data) {
   const config = {
-    baseURL: 'https://esm-backend.herokuapp.com/api/teacher',
+    baseURL: 'https://mtgs-backend.herokuapp.com/api/teacher',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },

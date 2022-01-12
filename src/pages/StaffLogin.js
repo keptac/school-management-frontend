@@ -12,7 +12,7 @@ import {
   Typography
 } from '@material-ui/core';
 import AuthService from 'src/services/authServices';
-import Logo from '../components/Logo';
+// import Logo from '../components/Logo';
 
 const StaffLogin = () => {
   const navigate = useNavigate();
@@ -44,13 +44,13 @@ const StaffLogin = () => {
             width: '6%'
           }}
         >
-          <Logo />
+          {/* <Logo /> */}
         </Container>
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: 'admin@mtgs.com',
-              password: 'admin@123'
+              email: '',
+              password: ''
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string()
