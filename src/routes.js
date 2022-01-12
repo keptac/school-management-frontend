@@ -86,7 +86,7 @@ const routes = [
       { path: 'register', element: <Register /> },
       { path: 'new-registration', element: <NewStudentRegister /> },
       { path: '404', element: <NotFound /> },
-      { path: '/', element: <Navigate to="/login" /> },
+      { path: '/', element: <Navigate to="/staff" /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   }
