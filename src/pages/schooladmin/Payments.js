@@ -26,32 +26,26 @@ import {
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import AdminServices from 'src/services/schoolAdmin';
 
-class AddStudents extends React.Component {
+class PaymentClass extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      payments: [],
       limit: 10,
       page: 0,
-      classes: [],
-      students: [],
-      className: {},
-      addStudentForm: false,
-      name: null,
-      surname: null,
-      dob: null,
-      phoneNumber: null,
-      emailAddress: null,
-      idNumber: null
+      term: 1,
+      amount: null,
+      narration: null,
+      studentId: null
     };
   }
 
   componentDidMount() {
-    this.getAllClasses();
-    this.getAllStudents();
+    this.getAllPayments();
   }
 
-  handleChangeClass(selectedClass) {
-    this.setState({ className: selectedClass });
+  handleChangeTerm(selectedClass) {
+    this.setState({ term: selectedClass });
   }
 
   handleLimitChange(event) {
@@ -63,58 +57,40 @@ class AddStudents extends React.Component {
   }
 
   handleChangeAdd() {
-    this.setState({ addStudentForm: true });
+    this.setState({ addPaymentForm: true });
   }
 
   handleSubmit() {
     const {
-      name,
-      surname,
-      dob,
-      phoneNumber,
-      emailAddress,
-      idNumber,
-      className
+      term,
+      amount,
+      narration,
+      studentId,
     } = this.state;
 
-    const a = Math.floor(100000 + Math.random() * 900000);
-    const studentIdRef = `STUD${String(a).substring(0, 4)}`;
+    const a = Math.floor(10000000 + Math.random() * 90000000);
+    const paymentReference = `PAY${String(a).substring(0, 7)}`;
 
     const data = {
-      name,
-      surname,
-      studentId: studentIdRef,
-      classId: className.classId,
-      dob,
-      phoneNumber,
-      emailAddress,
-      idNumber
+      term,
+      amount,
+      narration,
+      studentId,
+      reference: paymentReference,
     };
 
-    console.log(`Saving data ${data}`);
-
-    AdminServices.postNewStudent(data)
+    AdminServices.postNewPayment(data)
       .then((response) => {
-        console.log(response); // Add alert
-        alert('Success. Refresh your the page to update students.');
+        alert(response.message);
       }).catch((error) => {
         console.log(error);
       });
   }
 
-  async getAllClasses() {
-    AdminServices.getAllClasses()
+  async getAllPayments() {
+    AdminServices.getAllPayments()
       .then((response) => {
-        this.setState({ classes: response });
-      }).catch((error) => {
-        console.log(error);
-      });
-  }
-
-  async getAllStudents() {
-    AdminServices.getAllStudents()
-      .then((response) => {
-        this.setState({ students: response });
+        this.setState({ payments: response });
       }).catch((error) => {
         console.log(error);
       });
@@ -122,7 +98,7 @@ class AddStudents extends React.Component {
 
   render() {
     const {
-      students, limit, page, classes, className, addStudentForm, name, surname, dob, phoneNumber, emailAddress, idNumber
+      payments, limit, page, term, addPaymentForm, amount, narration, studentId
     } = this.state;
 
     return (
@@ -164,24 +140,24 @@ class AddStudents extends React.Component {
                                 Student Name
                               </TableCell>
                               <TableCell>
-                                DOB
-                              </TableCell>
-                              <TableCell>
-                                Phone Number
-                              </TableCell>
-                              <TableCell>
-                                Email
-                              </TableCell>
-                              <TableCell>
                                 Class
+                              </TableCell>
+                              <TableCell>
+                                Amount
+                              </TableCell>
+                              <TableCell>
+                                Narration
+                              </TableCell>
+                              <TableCell>
+                                Term
                               </TableCell>
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            {students.slice(0, limit).map((student) => (
+                            {payments.slice(0, limit).map((payment) => (
                               <TableRow
                                 hover
-                                key={student.studentId}
+                                key={payment.studentId}
                               >
                                 <TableCell>
                                   <Box
@@ -194,24 +170,24 @@ class AddStudents extends React.Component {
                                       color="textPrimary"
                                       variant="body1"
                                     >
-                                      {student.studentId}
+                                      {payment.studentId}
                                     </Typography>
                                   </Box>
                                 </TableCell>
                                 <TableCell>
-                                  {`${student.surname} ${student.name}` }
+                                  {`${payment.surname} ${payment.name}` }
                                 </TableCell>
                                 <TableCell>
-                                  {`${student.dob}`}
+                                  {payment.classId}
                                 </TableCell>
                                 <TableCell>
-                                  {student.phoneNumber}
+                                  {payment.amount}
                                 </TableCell>
                                 <TableCell>
-                                  {student.emailAddress}
+                                  {payment.narration}
                                 </TableCell>
                                 <TableCell>
-                                  {student.classId}
+                                  {payment.term}
                                 </TableCell>
                               </TableRow>
                             ))}
@@ -222,7 +198,7 @@ class AddStudents extends React.Component {
                     </PerfectScrollbar>
                     <TablePagination
                       component="div"
-                      count={students.length}
+                      count={payments.length}
                       onPageChange={() => this.handlePageChange}
                       onRowsPerPageChange={() => this.handleLimitChange}
                       page={page}
@@ -240,14 +216,14 @@ class AddStudents extends React.Component {
                 xs={12}
               >
                 <Box sx={{ pt: 3 }}>
-                  {addStudentForm ? (
+                  {addPaymentForm ? (
                     <form
                       autoComplete="off"
                       noValidate
                     >
                       <Card>
                         <CardHeader
-                          title="Add New New Student"
+                          title="Add New Payment"
                         />
                         <Divider />
                         <CardContent>
@@ -257,32 +233,16 @@ class AddStudents extends React.Component {
                           >
                             <Grid
                               item
-                              md={6}
+                              md={8}
                               xs={12}
                             >
                               <TextField
                                 fullWidth
-                                label="Student Name"
-                                name="name"
-                                onChange={(e) => this.setState({ name: e.target.value })}
-                                // onChange={e => this.handleChange(name, )}
+                                label="Student ID Number"
+                                name="studentId"
+                                onChange={(e) => this.setState({ studentId: e.target.value })}
                                 required
-                                value={name}
-                                variant="outlined"
-                              />
-                            </Grid>
-                            <Grid
-                              item
-                              md={6}
-                              xs={12}
-                            >
-                              <TextField
-                                fullWidth
-                                label="Surname"
-                                name="surname"
-                                onChange={(e) => this.setState({ surname: e.target.value })}
-                                required
-                                value={surname}
+                                value={studentId}
                                 variant="outlined"
                               />
                             </Grid>
@@ -291,85 +251,55 @@ class AddStudents extends React.Component {
                               md={4}
                               xs={12}
                             >
-                              <TextField
-                                fullWidth
-                                label="ID Number"
-                                name="idNumber"
-                                onChange={(e) => this.setState({ idNumber: e.target.value })}
-                                required
-                                value={idNumber}
-                                variant="outlined"
-                              />
-                            </Grid>
-                            <Grid
-                              item
-                              md={8}
-                              xs={12}
-                            >
-                              <TextField
-                                fullWidth
-                                label="Date of Birth"
-                                name="dob"
-                                type="date"
-                                onChange={(e) => this.setState({ dob: e.target.value })}
-                                required
-                                value={dob}
-                                variant="outlined"
-                              />
-                            </Grid>
-                            <Grid
-                              item
-                              md={6}
-                              xs={12}
-                            >
-                              <TextField
-                                fullWidth
-                                label="Phone Number"
-                                name="phoneNumber"
-                                type="number"
-                                onChange={(e) => this.setState({ phoneNumber: e.target.value })}
-                                required
-                                value={phoneNumber}
-                                variant="outlined"
-                              />
-                            </Grid>
-                            <Grid
-                              item
-                              md={6}
-                              xs={12}
-                            >
-                              <TextField
-                                fullWidth
-                                label="Email Address"
-                                name="emailAddress"
-                                type="email"
-                                onChange={(e) => this.setState({ emailAddress: e.target.value })}
-                                required
-                                value={emailAddress}
-                                variant="outlined"
-                              />
-                            </Grid>
-
-                            <Grid
-                              item
-                              md={5}
-                              xs={12}
-                            >
                               <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">Class</InputLabel>
+                                <InputLabel id="demo-simple-select-label">Term</InputLabel>
                                 <Select
-                                  value={className}
-                                  label="Subject"
-                                // onChange={() => this.handleChangeClass}
+                                  value={term}
+                                  label="term"
+                                  onChange={() => this.handleChangeTerm}
                                   required
                                   variant="outlined"
                                 >
-                                  {classes.map((classe) => (
-                                    <MenuItem onClick={() => this.handleChangeClass(classe)} value={classe}>{classe.className}</MenuItem>
-                                  ))}
+                                  <MenuItem value="1">Term 1</MenuItem>
+                                  <MenuItem value="2">Term 2</MenuItem>
+                                  <MenuItem value="3">Term 3</MenuItem>
+                                  <MenuItem value="4">Vacation</MenuItem>
                                 </Select>
                               </FormControl>
 
+                            </Grid>
+
+                            <Grid
+                              item
+                              md={6}
+                              xs={12}
+                            >
+                              <TextField
+                                fullWidth
+                                label="Amount"
+                                name="amount"
+                                type="number"
+                                onChange={(e) => this.setState({ amount: e.target.value })}
+                                required
+                                value={amount}
+                                variant="outlined"
+                              />
+                            </Grid>
+                            <Grid
+                              item
+                              md={12}
+                              xs={12}
+                            >
+                              <TextField
+                                fullWidth
+                                label="Narration"
+                                name="narration"
+                                type="email"
+                                onChange={(e) => this.setState({ narration: e.target.value })}
+                                required
+                                value={narration}
+                                variant="outlined"
+                              />
                             </Grid>
                           </Grid>
                         </CardContent>
@@ -386,7 +316,7 @@ class AddStudents extends React.Component {
                             variant="contained"
                             onClick={() => this.handleSubmit()}
                           >
-                            Add Student
+                            Add New Payment
                           </Button>
                         </Box>
                       </Card>
@@ -398,7 +328,7 @@ class AddStudents extends React.Component {
                         variant="contained"
                         onClick={() => this.handleChangeAdd()}
                       >
-                        Add New Student
+                        Add Payment
                       </Button>
                     )}
                 </Box>
@@ -412,4 +342,4 @@ class AddStudents extends React.Component {
   }
 }
 
-export default AddStudents;
+export default PaymentClass;

@@ -110,8 +110,8 @@ const Login = () => {
                 <Typography color="textSecondary" variant="body1">
                   Don&apos;t have an account?
                   {' '}
-                  <Link component={RouterLink} to="/register" variant="h6">
-                    Sign up
+                  <Link component={RouterLink} to="/new-registration" variant="h6">
+                    New Student Application
                   </Link>
                 </Typography>
               </form>

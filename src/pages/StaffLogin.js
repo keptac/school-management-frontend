@@ -60,7 +60,7 @@ const StaffLogin = () => {
               password: Yup.string().max(255).required('Password is required')
             })}
             onSubmit={(values) => {
-              AuthService.StaffLogin(values)
+              AuthService.login(values)
                 .then((response) => {
                   if (response.success) {
                     sessionStorage.setItem('loggedUserAvatar', '/static/images/resources/mtgs.jpeg');
@@ -122,7 +122,7 @@ const StaffLogin = () => {
               <form onSubmit={handleSubmit}>
                 <Box sx={{ mb: 3 }}>
                   <Typography color="textPrimary" variant="h2">
-                    Westmister International School
+                    Mother Touch Group of Schools
                   </Typography>
                   <Typography
                     color="textSecondary"

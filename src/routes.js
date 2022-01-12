@@ -18,6 +18,7 @@ import Library from 'src/pages/student/Library';
 import VirtualClass from 'src/pages/student/VirtualClass';
 import ProgressReport from './pages/teacher/ProgressReport';
 import AddTeacherClass from './pages/teacher/TeacherClasses';
+
 import SubjectContent from './pages/student/SubjectContent';
 
 import SchoolAdminDashboardLayout from './components/schoolAdmin/SchoolAdminLayout';
@@ -27,6 +28,8 @@ import AddStudents from './pages/schooladmin/Students';
 import AddClass from './pages/schooladmin/Classes';
 import AddNotice from './pages/schooladmin/NoticeBoard';
 import StaffLogin from './pages/StaffLogin';
+import NewStudentRegister from './pages/NewStudentRegister';
+import PaymentClass from './pages/schooladmin/Payments';
 
 const routes = [
   // Student Routes
@@ -65,6 +68,7 @@ const routes = [
       { path: 'subjects', element: <AddSubject /> },
       { path: 'classes', element: <AddClass /> },
       { path: 'students', element: <AddStudents /> },
+      { path: 'tuition', element: <PaymentClass /> },
       { path: 'notices', element: <AddNotice /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
@@ -80,6 +84,7 @@ const routes = [
       { path: 'login', element: <Login /> },
       { path: 'staff', element: <StaffLogin /> },
       { path: 'register', element: <Register /> },
+      { path: 'new-registration', element: <NewStudentRegister /> },
       { path: '404', element: <NotFound /> },
       { path: '/', element: <Navigate to="/login" /> },
       { path: '*', element: <Navigate to="/404" /> }

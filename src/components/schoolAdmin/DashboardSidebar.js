@@ -16,6 +16,7 @@ import {
   Lock as LockIcon,
   Edit as EditIcon,
   Users as PeopleIcon,
+  DollarSign as DollarSignIcon,
   // BarChart2 as ResultsIcon,
   BookOpen as BookOpenIcon,
   Clipboard as NoticeBoardIcon
@@ -54,6 +55,11 @@ const items = [
     href: '/school-admin/students',
     icon: PeopleIcon,
     title: 'Students'
+  },
+  {
+    href: '/school-admin/tuition',
+    icon: DollarSignIcon,
+    title: 'Fees Payments'
   },
   {
     href: '/school-admin/notices',

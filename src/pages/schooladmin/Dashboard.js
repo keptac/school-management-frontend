@@ -448,7 +448,7 @@ class AdminDashboard extends React.Component {
                               <Button
                                 sx={{ mx: 1 }}
                               >
-                                Current weeks reports will be complete by 01 October 2021
+                                End of term progress reports not yet ready
                               </Button>
                             </Box>
                           </Grid>
@@ -482,7 +482,7 @@ class AdminDashboard extends React.Component {
                                       this.downloadReports();
                                     }}
                                   >
-                                    Generate Weekly Reports
+                                    Generate Reports
                                   </Button>
                                 )}
                             </Box>

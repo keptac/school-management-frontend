@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core';
 import AuthService from 'src/services/authServices';
 
-const Register = () => {
+const NewStudentRegister = () => {
   const alert = useAlert();
   const navigate = useNavigate();
   return (
@@ -61,7 +61,7 @@ const Register = () => {
                         console.log(response);
                       },
                       onClose: () => {
-                        navigate('/staff', { replace: true });
+                        navigate('/login', { replace: true });
                       }
                     });
                   } else {
@@ -210,4 +210,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default NewStudentRegister;
