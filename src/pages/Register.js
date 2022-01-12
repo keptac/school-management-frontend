@@ -1,21 +1,21 @@
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useAlert, positions } from 'react-alert';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import {
   Box,
   Button,
-  Checkbox,
   Container,
-  FormHelperText,
   Link,
   TextField,
   Typography
 } from '@material-ui/core';
+import AuthService from 'src/services/authServices';
 
 const Register = () => {
+  const alert = useAlert();
   const navigate = useNavigate();
-
   return (
     <>
       <Helmet>
@@ -35,21 +35,57 @@ const Register = () => {
             initialValues={{
               email: '',
               firstName: '',
-              lastName: '',
+              surname: '',
               password: '',
-              policy: false
+              idNumber: '',
+              userType: 'TEACHER',
+              staffId: `TCM${String(Math.floor(100000 + Math.random() * 900000)).substring(0, 3)}`
             }}
             validationSchema={
               Yup.object().shape({
                 email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
                 firstName: Yup.string().max(255).required('First name is required'),
-                lastName: Yup.string().max(255).required('Last name is required'),
+                surname: Yup.string().max(255).required('Last name is required'),
+                idNumber: Yup.string().max(255).required('ID Number is required'),
                 password: Yup.string().max(255).required('password is required'),
-                policy: Yup.boolean().oneOf([true], 'This field must be checked')
               })
             }
-            onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
+            onSubmit={(values) => {
+              AuthService.register(values)
+                .then((response) => {
+                  console.log(response);
+                  if (response.success) {
+                    alert.success(response.message, { position: positions.MIDDLE }, {
+                      timeout: 2000,
+                      onOpen: () => {
+                        console.log(response);
+                      },
+                      onClose: () => {
+                        navigate('/login', { replace: true });
+                      }
+                    });
+                  } else {
+                    alert.error(response.message, { position: positions.MIDDLE }, {
+                      timeout: 2000,
+                      onOpen: () => {
+                        console.log(response.error);
+                      },
+                      onClose: () => {
+                        navigate('/register', { replace: true });
+                      }
+                    });
+                  }
+                }).catch((error) => {
+                  alert.error('An error occured. Please contact Admin', { position: positions.MIDDLE }, {
+                    timeout: 2000,
+                    onOpen: () => {
+                      console.log(error);
+                    },
+                    onClose: () => {
+                      navigate('/', { replace: true });
+                    }
+                  });
+                });
             }}
           >
             {({
@@ -90,15 +126,27 @@ const Register = () => {
                   variant="outlined"
                 />
                 <TextField
-                  error={Boolean(touched.lastName && errors.lastName)}
+                  error={Boolean(touched.surname && errors.surname)}
                   fullWidth
-                  helperText={touched.lastName && errors.lastName}
+                  helperText={touched.surname && errors.surname}
                   label="Last name"
                   margin="normal"
-                  name="lastName"
+                  name="surname"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.lastName}
+                  value={values.surname}
+                  variant="outlined"
+                />
+                <TextField
+                  error={Boolean(touched.idNumber && errors.idNumber)}
+                  fullWidth
+                  helperText={touched.idNumber && errors.idNumber}
+                  label="ID Number"
+                  margin="normal"
+                  name="idNumber"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.idNumber}
                   variant="outlined"
                 />
                 <TextField
@@ -127,40 +175,6 @@ const Register = () => {
                   value={values.password}
                   variant="outlined"
                 />
-                <Box
-                  sx={{
-                    alignItems: 'center',
-                    display: 'flex',
-                    ml: -1
-                  }}
-                >
-                  <Checkbox
-                    checked={values.policy}
-                    name="policy"
-                    onChange={handleChange}
-                  />
-                  <Typography
-                    color="textSecondary"
-                    variant="body1"
-                  >
-                    I have read the
-                    {' '}
-                    <Link
-                      color="primary"
-                      component={RouterLink}
-                      to="#"
-                      underline="always"
-                      variant="h6"
-                    >
-                      Terms and Conditions
-                    </Link>
-                  </Typography>
-                </Box>
-                {Boolean(touched.policy && errors.policy) && (
-                  <FormHelperText error>
-                    {errors.policy}
-                  </FormHelperText>
-                )}
                 <Box sx={{ py: 2 }}>
                   <Button
                     color="primary"

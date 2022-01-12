@@ -13,48 +13,40 @@ import {
 import {
   BarChart as BarChartIcon,
   Lock as LockIcon,
-  BookOpen as Library,
-  MessageCircle as UsersIcon
+  Edit as EditIcon
 } from 'react-feather';
-import OndemandVideoIcon from '@material-ui/icons/OndemandVideo';
-import NavItem from '../NavItem';
 
-const user = {
-  avatar: '/static/images/avatars/avatar_1.jpg',
-  jobTitle: 'Student',
-  name: 'Kelvin Chelenje'
-};
+import NavItem from '../NavItem';
 
 const items = [
   {
-    href: '/student/dashboard',
+    href: '/teacher/dashboard',
     icon: BarChartIcon,
-    title: 'Dashboard'
-  },
-  {
-    href: '/student/library',
-    icon: Library,
-    title: 'Library'
-  },
-  {
-    href: '/student/virtual-class',
-    icon: OndemandVideoIcon,
-    title: 'Virtual Class'
-  },
-  {
-    href: '/student/chat',
-    icon: UsersIcon,
-    title: 'Chat'
-  },
-  {
-    href: '/login',
-    icon: LockIcon,
-    title: 'Logout'
+    title: 'Home'
   }
 ];
 
+const quickAccess = [
+  {
+    href: '/teacher/classes',
+    icon: EditIcon,
+    title: 'Create Class'
+  }
+];
+
+const login = {
+  href: '/login',
+  icon: LockIcon,
+  title: 'Logout'
+};
+
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const location = useLocation();
+  const user = {
+    avatar: sessionStorage.getItem('loggedUserAvatar'),
+    jobTitle: sessionStorage.getItem('loggedUserRole'),
+    name: sessionStorage.getItem('name')
+  };
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
@@ -86,7 +78,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             width: 64,
             height: 64
           }}
-          to="/student/account"
+          to="/teacher/dasshboard"
         />
         <Typography
           color="textPrimary"
@@ -112,6 +104,27 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
               icon={item.icon}
             />
           ))}
+          <br />
+          <hr />
+          <br />
+          <h4>
+            Quick Access
+          </h4>
+          <br />
+          {quickAccess.map((item) => (
+            <NavItem
+              href={item.href}
+              key={item.title}
+              title={item.title}
+              icon={item.icon}
+            />
+          ))}
+          <NavItem
+            href={login.href}
+            key={login.title}
+            title={login.title}
+            icon={login.icon}
+          />
         </List>
       </Box>
 

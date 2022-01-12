@@ -8,13 +8,25 @@ import Login from 'src/pages/Login';
 import NotFound from 'src/pages/NotFound';
 import Register from 'src/pages/Register';
 
+import TeacherDashboardLayout from 'src/components/teacher/TeacherDashboardLayout';
+import TeacherDashboard from 'src/pages/teacher/TeacherDashboard';
+
 import Account from 'src/pages/student/Account';
 import Chat from 'src/pages/student/Chat';
 import Dashboard from 'src/pages/student/Dashboard';
 import Library from 'src/pages/student/Library';
 import VirtualClass from 'src/pages/student/VirtualClass';
-import ProgressReport from './pages/student/ProgressReport';
+import ProgressReport from './pages/teacher/ProgressReport';
+import AddTeacherClass from './pages/teacher/TeacherClasses';
 import SubjectContent from './pages/student/SubjectContent';
+
+import SchoolAdminDashboardLayout from './components/schoolAdmin/SchoolAdminLayout';
+import AdminDashboard from './pages/schooladmin/Dashboard';
+import AddSubject from './pages/schooladmin/Subjects';
+import AddStudents from './pages/schooladmin/Students';
+import AddClass from './pages/schooladmin/Classes';
+import AddNotice from './pages/schooladmin/NoticeBoard';
+import StaffLogin from './pages/StaffLogin';
 
 const routes = [
   // Student Routes
@@ -27,7 +39,6 @@ const routes = [
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'library', element: <Library /> },
       { path: 'virtual-class', element: <VirtualClass /> },
-      { path: 'report', element: <ProgressReport /> },
       { path: 'subject', element: <SubjectContent /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
@@ -36,36 +47,38 @@ const routes = [
   // Teacher Routes
   {
     path: 'teacher',
-    element: <StudentDashboardLayout />,
+    element: <TeacherDashboardLayout />,
     children: [
-      { path: 'dashboard', element: <Dashboard /> },
+      { path: 'dashboard', element: <TeacherDashboard /> },
+      { path: 'report', element: <ProgressReport /> },
+      { path: 'classes', element: <AddTeacherClass /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },
+
   // School Admin Routes
   {
     path: 'school-admin',
-    element: <StudentDashboardLayout />,
+    element: <SchoolAdminDashboardLayout />,
     children: [
-      { path: 'dashboard', element: <Dashboard /> },
+      { path: 'dashboard', element: <AdminDashboard /> },
+      { path: 'subjects', element: <AddSubject /> },
+      { path: 'classes', element: <AddClass /> },
+      { path: 'students', element: <AddStudents /> },
+      { path: 'notices', element: <AddNotice /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },
+
   // Super Admin Routes
-  {
-    path: 'app',
-    element: <StudentDashboardLayout />,
-    children: [
-      { path: 'dashboard', element: <Dashboard /> },
-      { path: '*', element: <Navigate to="/404" /> }
-    ]
-  },
+
   // Default Routes
   {
     path: '/',
     element: <MainLayout />,
     children: [
       { path: 'login', element: <Login /> },
+      { path: 'staff', element: <StaffLogin /> },
       { path: 'register', element: <Register /> },
       { path: '404', element: <NotFound /> },
       { path: '/', element: <Navigate to="/login" /> },

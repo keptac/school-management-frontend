@@ -11,47 +11,67 @@ import {
   Typography
 } from '@material-ui/core';
 import {
-  BarChart as BarChartIcon,
+  Home as HomeIcon,
+  // BarChart as BarChartIcon,
   Lock as LockIcon,
-  BookOpen as Library,
-  MessageCircle as UsersIcon
+  Edit as EditIcon,
+  Users as PeopleIcon,
+  // BarChart2 as ResultsIcon,
+  BookOpen as BookOpenIcon,
+  Clipboard as NoticeBoardIcon
 } from 'react-feather';
-import OndemandVideoIcon from '@material-ui/icons/OndemandVideo';
+
 import NavItem from '../NavItem';
 
 const user = {
-  avatar: '/static/images/avatars/avatar_1.jpg',
-  jobTitle: 'Student',
-  name: 'Kelvin Chelenje'
+  avatar: sessionStorage.getItem('loggedUserAvatar'),
+  jobTitle: sessionStorage.getItem('loggedUserRole'),
+  name: sessionStorage.getItem('loggedUser')
 };
 
 const items = [
   {
-    href: '/student/dashboard',
-    icon: BarChartIcon,
-    title: 'Dashboard'
+    href: '/school-admin/dashboard',
+    icon: HomeIcon,
+    title: 'Home'
+  },
+  // {
+  //   href: '/school-admin/dashboard',
+  //   icon: BarChartIcon,
+  //   title: 'Reports'
+  // },
+  {
+    href: '/school-admin/subjects',
+    icon: EditIcon,
+    title: 'Subjects'
   },
   {
-    href: '/student/library',
-    icon: Library,
-    title: 'Library'
+    href: '/school-admin/classes',
+    icon: BookOpenIcon,
+    title: 'Classes'
   },
   {
-    href: '/student/virtual-class',
-    icon: OndemandVideoIcon,
-    title: 'Virtual Class'
+    href: '/school-admin/students',
+    icon: PeopleIcon,
+    title: 'Students'
   },
   {
-    href: '/student/chat',
-    icon: UsersIcon,
-    title: 'Chat'
+    href: '/school-admin/notices',
+    icon: NoticeBoardIcon,
+    title: 'Notices'
   },
-  {
-    href: '/login',
-    icon: LockIcon,
-    title: 'Logout'
-  }
+  // {
+  //   href: '/school-admin/dashboard',
+  //   icon: ResultsIcon,
+  //   title: 'Configured Grades'
+  // }
 ];
+
+const login = {
+  href: '/login',
+  icon: LockIcon,
+  title: 'Logout'
+};
 
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const location = useLocation();
@@ -86,7 +106,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             width: 64,
             height: 64
           }}
-          to="/student/account"
+          to="/school-admin/dashboard"
         />
         <Typography
           color="textPrimary"
@@ -112,6 +132,19 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
               icon={item.icon}
             />
           ))}
+          <br />
+          <hr />
+          <br />
+          <h4>
+            Quick Access
+          </h4>
+          <br />
+          <NavItem
+            href={login.href}
+            key={login.title}
+            title={login.title}
+            icon={login.icon}
+          />
         </List>
       </Box>
 
