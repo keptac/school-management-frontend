@@ -14,7 +14,7 @@ import {
 const menuItems = [
   {
     id: uuid(),
-    name: 'Student Enrollments',
+    name: 'Students Record',
     imageUrl: '/static/images/resources/mtgs.png',
   },
   {

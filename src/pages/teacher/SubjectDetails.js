@@ -113,6 +113,7 @@ class TeacherSubjectDetails extends React.Component {
     const { classId } = JSON.parse(localStorage.getItem('recordingSubject'));
     TeacherServices.getStudentsPerClass(classId)
       .then((response) => {
+        console.log(response);
         this.setState({ students: response });
       }).catch((error) => {
         console.log(error);
@@ -175,19 +176,22 @@ class TeacherSubjectDetails extends React.Component {
                           <TableHead>
                             <TableRow>
                               <TableCell>
-                                Student Name
+                                Student
                               </TableCell>
                               <TableCell>
-                                Mark
+                                Student ID
                               </TableCell>
                               <TableCell>
-                                Grade
+                                Full Name
                               </TableCell>
                               <TableCell>
-                                Comment
+                                DOB
                               </TableCell>
                               <TableCell>
-                                Date
+                                Guardian Phone
+                              </TableCell>
+                              <TableCell>
+                                Address
                               </TableCell>
                             </TableRow>
                           </TableHead>
@@ -209,27 +213,36 @@ class TeacherSubjectDetails extends React.Component {
                                       src={student.avatarUrl}
                                       sx={{ mr: 2 }}
                                     >
-                                      {getInitials(`${student.firstName} ${student.surname}`)}
+                                      {getInitials(`${student.name} ${student.surname}`)}
                                     </Avatar>
+                                  </Box>
+                                </TableCell>
+                                <TableCell>
+                                  {`${student.studentId}`}
+                                </TableCell>
+                                <TableCell>
+                                  <Box
+                                    sx={{
+                                      alignItems: 'center',
+                                      display: 'flex'
+                                    }}
+                                  >
                                     <Typography
                                       color="textPrimary"
                                       variant="body1"
                                     >
-                                      {`${student.firstName} ${student.surname}` }
+                                      {`${student.name} ${student.surname}` }
                                     </Typography>
                                   </Box>
                                 </TableCell>
                                 <TableCell>
-                                  {`${student.mark}`}
+                                  {moment(student.dob).format('DD MMM YYYY')}
                                 </TableCell>
                                 <TableCell>
-                                  {student.grade}
+                                  {`${student.phoneNumber}`}
                                 </TableCell>
                                 <TableCell>
-                                  {student.comment}
-                                </TableCell>
-                                <TableCell>
-                                  {moment(student.dateJoined).format('DD MMM YYYY')}
+                                  {`${student.address}`}
                                 </TableCell>
                               </TableRow>
                             ))}
