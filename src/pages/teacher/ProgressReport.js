@@ -101,7 +101,7 @@ class ProgressReport extends React.Component {
       TeacherServices.submitReports(data)
         .then((response) => {
           console.log(response);
-          alert('Results successfully submitted for reporting');
+          window.location.reload(false);
           this.setState({ reportsSubmitted: true });
         }).catch((error) => {
           console.log(error);

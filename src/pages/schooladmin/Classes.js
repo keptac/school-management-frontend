@@ -37,6 +37,9 @@ class AddClass extends React.Component {
   }
 
   handlePageChange(newPage) {
+    // eslint-disable-next-line no-alert
+    alert(newPage);
+    console.log(newPage);
     this.setState({ page: newPage });
   }
 
@@ -50,7 +53,7 @@ class AddClass extends React.Component {
   }
 
   render() {
-    const {
+    let {
       limit, page, classes,
     } = this.state;
 

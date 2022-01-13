@@ -64,16 +64,15 @@ const Register = () => {
                         navigate('/staff', { replace: true });
                       }
                     });
+                    navigate('/staff', { replace: true });
                   } else {
                     alert.error(response.message, { position: positions.MIDDLE }, {
                       timeout: 2000,
                       onOpen: () => {
                         console.log(response.error);
                       },
-                      onClose: () => {
-                        navigate('/register', { replace: true });
-                      }
                     });
+                    navigate('/register', { replace: true });
                   }
                 }).catch((error) => {
                   alert.error('An error occured. Please contact Admin', { position: positions.MIDDLE }, {

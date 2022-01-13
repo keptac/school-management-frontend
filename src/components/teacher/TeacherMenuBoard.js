@@ -14,26 +14,31 @@ import {
 const menuItems = [
   {
     id: uuid(),
+    name: 'Student Enrollments',
+    imageUrl: '/static/images/resources/mtgs.png',
+  },
+  {
+    id: uuid(),
     name: 'Resources',
-    imageUrl: '/static/images/resources/mtgs.jpeg',
+    imageUrl: '/static/images/resources/mtgs.png',
   },
   {
     id: uuid(),
     name: 'Homeworks',
-    imageUrl: '/static/images/resources/mtgs.jpeg',
+    imageUrl: '/static/images/resources/mtgs.png',
   },
   {
     id: uuid(),
     name: 'Tests',
-    imageUrl: '/static/images/resources/mtgs.jpeg',
+    imageUrl: '/static/images/resources/mtgs.png',
   }
 ];
 
-const MenuBoard = (props) => (
+const TeacherMenuBoard = (props) => (
   <Card {...props}>
     <CardHeader
       subtitle={`${menuItems.length} in total`}
-      title="Class Menu"
+      title="Subject Menu"
     />
     <Divider />
     <List>
@@ -62,4 +67,4 @@ const MenuBoard = (props) => (
   </Card>
 );
 
-export default MenuBoard;
+export default TeacherMenuBoard;

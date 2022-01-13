@@ -15,8 +15,9 @@ import {
 import {
   BarChart as BarChartIcon,
   Lock as LockIcon,
-  Edit as EditIcon,
-  Link as LinkIcon
+  Settings as EditIcon,
+  Link as LinkIcon,
+  Book as ReportIcon
 } from 'react-feather';
 
 import NavItem from '../NavItem';
@@ -30,7 +31,12 @@ const items = [
   {
     href: '/teacher/classes',
     icon: EditIcon,
-    title: 'My Classes'
+    title: 'Configure Classes'
+  },
+  {
+    href: '/teacher/reporting',
+    icon: ReportIcon,
+    title: 'End of Term Reporting'
   }
 ];
 

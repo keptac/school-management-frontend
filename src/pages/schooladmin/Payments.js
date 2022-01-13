@@ -82,6 +82,7 @@ class PaymentClass extends React.Component {
     AdminServices.postNewPayment(data)
       .then((response) => {
         alert(response.message);
+        window.location.reload(false);
       }).catch((error) => {
         console.log(error);
       });

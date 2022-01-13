@@ -100,7 +100,7 @@ async function getAllSubjects() {
 async function getAllTeachers() {
   const config = {
     method: 'get',
-    url: `${deploymentUrl}/api/esm/staffType/Teacher`,
+    url: `${deploymentUrl}/api/esm/staffType/TEACHER`,
     headers: { }
   };
 

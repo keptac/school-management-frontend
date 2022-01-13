@@ -111,10 +111,11 @@ class AddStudents extends React.Component {
           AuthService.studentAuthRegister(dataReg)
             .then((res) => {
               console.log(res);
-              alert(res.message);
+              window.location.reload(false);
             });
         } else {
           alert(response.message);
+          window.location.reload(false);
         }
       }).catch((error) => {
         console.log(error);

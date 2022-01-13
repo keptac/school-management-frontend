@@ -15,7 +15,7 @@ import {
 import Visibility from '@material-ui/icons/Visibility';
 import { PeopleOutline } from '@material-ui/icons';
 
-const SubjectCard = ({ resource, ...rest }) => {
+const SubjectReportingCard = ({ resource, ...rest }) => {
   const navigate = useNavigate();
 
   return (
@@ -95,7 +95,7 @@ const SubjectCard = ({ resource, ...rest }) => {
             <Button
               onClick={() => {
                 localStorage.setItem('recordingSubject', JSON.stringify(resource));
-                navigate('/teacher/subjectDetails', { replace: true });
+                navigate('/teacher/report', { replace: true });
               }}
             >
               <Tooltip title={`Add Student Assessment Marks for ${resource.subjectName}`} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
@@ -111,8 +111,8 @@ const SubjectCard = ({ resource, ...rest }) => {
   );
 };
 
-SubjectCard.propTypes = {
+SubjectReportingCard.propTypes = {
   resource: PropTypes.object.isRequired
 };
 
-export default SubjectCard;
+export default SubjectReportingCard;

@@ -39,14 +39,10 @@ const AddClassForm = () => {
 
     SchoolAdminServices.postClasses(data)
       .then((response) => {
+        navigate('/school-admin/dashboard', { replace: true });
+        navigate('/school-admin/classes', { replace: true });
         alert.info(response.message, { position: positions.MIDDLE }, {
           timeout: 2000,
-          onOpen: () => {
-            navigate('/school-admin/classes', { replace: true });
-          },
-          onClose: () => {
-            console.log(response);
-          }
         });
       }).catch((error) => {
         alert.error('Snap, an error occured. Please try again later.', { position: positions.MIDDLE }, {
@@ -54,9 +50,7 @@ const AddClassForm = () => {
           onOpen: () => {
             console.log(error);
           },
-          onClose: () => {
-            navigate('/school-admin/classes', { replace: true });
-          }
+
         });
       });
   };

@@ -36,6 +36,8 @@ const AddNoticeForm = () => {
 
     AdminServices.postAnnouncement(data)
       .then((response) => {
+        navigate('/school-admin/dashboard', { replace: true });
+        navigate('/school-admin/notices', { replace: true });
         alert.info(response.message, { position: positions.MIDDLE }, {
           timeout: 2000,
           onOpen: () => {

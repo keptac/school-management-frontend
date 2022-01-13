@@ -50,15 +50,14 @@ const AddSubjectForm = () => {
 
     SchoolAdminServices.postSubject(data)
       .then((response) => {
+        navigate('/school-admin/dashboard/', { replace: true });
         alert.info(response.message, { position: positions.MIDDLE }, {
           timeout: 2000,
           onOpen: () => {
             console.log(response);
           },
-          onClose: () => {
-            navigate('/school-admin/subjects/', { replace: true });
-          }
         });
+        navigate('/school-admin/subjects/', { replace: true });
       }).catch((error) => {
         console.log();
         alert.error('Oh snap, an error occured.', { position: positions.MIDDLE }, {
