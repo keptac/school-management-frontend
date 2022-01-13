@@ -26,15 +26,16 @@ const items = [
     href: '/teacher/dashboard',
     icon: BarChartIcon,
     title: 'Home'
+  },
+  {
+    href: '/teacher/classes',
+    icon: EditIcon,
+    title: 'My Classes'
   }
 ];
 
 const quickAccess = [
-  {
-    href: '/teacher/classes',
-    icon: EditIcon,
-    title: 'Create Class'
-  }
+
 ];
 
 const login = {

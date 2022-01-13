@@ -2,8 +2,6 @@
 /* eslint-disable prefer-const */
 import { Helmet } from 'react-helmet';
 import React from 'react';
-import { useAlert, positions } from 'react-alert';
-import { useNavigate } from 'react-router-dom';
 import {
   Box, Container, Grid,
   Card,
@@ -27,6 +25,7 @@ import {
 
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import AdminServices from 'src/services/schoolAdmin';
+import AuthService from 'src/services/authServices';
 
 class AddStudents extends React.Component {
   constructor(props) {
@@ -97,30 +96,25 @@ class AddStudents extends React.Component {
       address: ''
     };
 
+    const dataReg = {
+      studentId: studentIdRef,
+      firstName: name,
+      surname,
+      classId: className.classId,
+      email: emailAddress,
+      password: 'pass@123'
+    };
+
     AdminServices.postNewStudent(data)
       .then((response) => {
-        const alert = useAlert();
-        const navigate = useNavigate();
         if (response.success) {
-          alert.success(response.message, { position: positions.MIDDLE }, {
-            timeout: 2000,
-            onOpen: () => {
-              console.log('hey');
-            },
-            onClose: () => {
-              navigate('/school-admin/students', { replace: true });
-            }
-          });
+          AuthService.studentAuthRegister(dataReg)
+            .then((res) => {
+              console.log(res);
+              alert(res.message);
+            });
         } else {
-          alert.error(response.message, { position: positions.MIDDLE }, {
-            timeout: 2000,
-            onOpen: () => {
-              console.log('hey');
-            },
-            onClose: () => {
-              navigate('/school-admin/students', { replace: true });
-            }
-          });
+          alert(response.message);
         }
       }).catch((error) => {
         console.log(error);

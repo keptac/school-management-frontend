@@ -1,3 +1,4 @@
+import { useAlert, positions } from 'react-alert';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
@@ -10,14 +11,19 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
+import AuthService from 'src/services/authServices';
+// import Logo from '../components/Logo';
 
 const Login = () => {
   const navigate = useNavigate();
+  sessionStorage.clear();
+  localStorage.clear();
+  const alert = useAlert();
 
   return (
     <>
       <Helmet>
-        <title>Login | Vivid Learn</title>
+        <title>Student Login | MTGS</title>
       </Helmet>
       <Box
         sx={{
@@ -28,11 +34,23 @@ const Login = () => {
           justifyContent: 'center'
         }}
       >
+        <Container
+          sx={{
+            backgroundColor: 'background.default',
+            display: 'flex',
+            flexDirection: 'column',
+            height: '10%',
+            justifyContent: 'center',
+            width: '6%'
+          }}
+        >
+          {/* <Logo /> */}
+        </Container>
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: 'dev@techvividholdings.com',
-              password: 'pass@123'
+              email: '',
+              password: ''
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string()
@@ -41,9 +59,54 @@ const Login = () => {
                 .required('Email is required'),
               password: Yup.string().max(255).required('Password is required')
             })}
-            onSubmit={() => {
-              // Check the user role and navigate accordingly
-              navigate('/student/dashboard', { replace: true });
+            onSubmit={(values) => {
+              AuthService.studentLogin(values)
+                .then((response) => {
+                  if (response.success) {
+                    sessionStorage.setItem('loggedUserAvatar', '/static/images/resources/mtgs.jpeg');
+                    sessionStorage.setItem('loggedUser', values.email);
+                    sessionStorage.setItem('userId', response.user.studentId);
+                    sessionStorage.setItem('name', response.user.name);
+                    sessionStorage.setItem('classId', response.user.classId);
+                    sessionStorage.setItem('loggedUserRole', response.user.userType);
+                    sessionStorage.setItem('token', response.user.token);
+
+                    if (response.user.userType === 'STUDENT') {
+                      navigate('/student/dashboard', { replace: true });
+                    } else {
+                      alert.error('Account not setup correctly. Please contact Admin', { position: positions.MIDDLE }, {
+                        timeout: 2000,
+                        onOpen: () => {
+                          console.log('hey');
+                        },
+                        onClose: () => {
+                          navigate('/', { replace: true });
+                        }
+                      });
+                    }
+                  } else {
+                    alert.error(response.message, { position: positions.MIDDLE }, {
+                      timeout: 2000,
+                      onOpen: () => {
+                        console.log(response);
+                      },
+                      onClose: () => {
+                        navigate('/', { replace: true });
+                      }
+                    });
+                  }
+                }).catch((error) => {
+                  alert.show('Oops, an error occured. Try again in a moment.', { position: positions.MIDDLE }, {
+                    timeout: 2000,
+                    type: 'error',
+                    onOpen: () => {
+                      console.log(error);
+                    },
+                    onClose: () => {
+                      navigate('/', { replace: true });
+                    }
+                  });
+                });
             }}
           >
             {({
@@ -58,14 +121,14 @@ const Login = () => {
               <form onSubmit={handleSubmit}>
                 <Box sx={{ mb: 3 }}>
                   <Typography color="textPrimary" variant="h2">
-                    Sign in
+                    Students Portal
                   </Typography>
                   <Typography
                     color="textSecondary"
                     gutterBottom
                     variant="body2"
                   >
-                    Sign in to vividlearn
+                    Sign in
                   </Typography>
                 </Box>
 
@@ -110,8 +173,8 @@ const Login = () => {
                 <Typography color="textSecondary" variant="body1">
                   Don&apos;t have an account?
                   {' '}
-                  <Link component={RouterLink} to="/new-registration" variant="h6">
-                    New Student Application
+                  <Link component={RouterLink} to="/register" variant="h6">
+                    Sign up
                   </Link>
                 </Typography>
               </form>

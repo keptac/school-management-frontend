@@ -2,17 +2,17 @@ import axios from 'axios';
 
 const qs = require('qs');
 
-// const apiUrl = 'http://localhost:3001/api';
+// const deploymentUrl = 'http://localhost:3001/api';
+const deploymentUrl = 'https://mtgs-backend.herokuapp.com/api';
 
 // Submissions
 async function submitAssignment(data) {
   const token = await JSON.parse(localStorage.getItem('token'));
   const config = {
-    baseURL: 'https://mtgs-backend.herokuapp.com/api/student',
+    baseURL: `${deploymentUrl}/student`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       Authorization: `Bearer ${token}`,
-      'Access-Control-Allow-Origin': 'https://pawacyberschool.net',
       'Access-Control-Allow-Credentials': true,
     },
   };
@@ -26,10 +26,10 @@ async function submitAssignment(data) {
 }
 
 // Student Subjects
-async function getStudentSubjects(studentId) {
+async function getStudentSubjects(classId) {
   // const token = await JSON.parse(localStorage.getItem('token'));
   const config = {
-    baseURL: 'https://mtgs-backend.herokuapp.com/api/esm/student-enrolment',
+    baseURL: `${deploymentUrl}/esm/student-enrolment`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       // Authorization: `Bearer ${token}`,
@@ -37,8 +37,8 @@ async function getStudentSubjects(studentId) {
     },
   };
   try {
-    const res = await axios.get(`/student/${studentId}`, config);
-    return res.data.data;
+    const res = await axios.get(`/student/${classId}`, config);
+    return res.data;
   } catch (err) {
     console.error(err);
     return [];
@@ -49,7 +49,7 @@ async function download(data) {
   const token = await JSON.parse(localStorage.getItem('token'));
   try {
     const res = await axios.post(
-      'https://mtgs-backend.herokuapp.com/api/upload/get',
+      `${deploymentUrl}/upload/get`,
       qs.stringify(data),
       {
         headers: {
@@ -73,7 +73,7 @@ async function deleteResource(data) {
 
   try {
     const res = await axios.delete(
-      'https://mtgs-backend.herokuapp.com/api/upload/delete',
+      `${deploymentUrl}/upload/delete`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

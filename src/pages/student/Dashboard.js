@@ -51,22 +51,16 @@ class Dashboard extends React.Component {
   // };
 
   componentDidMount() {
-    // this.getDashData();
+    this.getDashData();
 
     this.setState({
-      subjectData: [
-        { name: 'Shona', subjectCode: 'SUB123', color: '#ffc107' },
-        { name: 'Maths', subjectCode: 'SUB241', color: '#c62828' },
-        { name: 'General Paper', subjectCode: 'SUB251', color: '#00796b' },
-        { name: 'English', subjectCode: 'SUB243', color: '#0288d1' }
-      ]
+      subjectData: []
     });
   }
 
   getDashData() {
-    // const studentData = JSON.parse(localStorage.getItem('userAll'));
-    // StudentServices.getStudentSubjects(studentData.studentId) // Get all courses by userid
-    StudentServices.getStudentSubjects('STUD128') // Get all subjects for student
+    const classid = sessionStorage.getItem('classId');
+    StudentServices.getStudentSubjects(classid)
       .then((response) => {
         this.setState({ subjectData: response });
       });

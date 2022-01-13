@@ -1,85 +1,112 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/prefer-stateless-function */
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import {
   Avatar,
+  Box,
   Card,
   CardContent,
+  Divider,
   Grid,
-  Typography
+  Typography,
+  Tooltip,
+  Fade,
 } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import Visibility from '@material-ui/icons/Visibility';
 
-import LaunchIcon from '@material-ui/icons/Launch';
-import React from 'react';
-
-class Subjectscard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      // browseTo: {}
-    };
-  }
-
-  componentDidMount() {
-    // const { _subjectData } = this.props;
-    this.setState({
-      // browseTo: {
-      //   pathname: '/student/subject',
-      //   subjectDetails: _subjectData
-      // }
-    });
-  }
-
-  render() {
-    const { subjectData } = this.props;
-    return (
-      <Card
-        sx={{ height: '100%' }}
+const Subjectscard = ({ subjectData, ...rest }) => (
+  <Card
+    sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%',
+      borderRadius: '10px',
+      elevation: '10px'
+    }}
+    {...rest}
+  >
+    <CardContent>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          pb: 3
+        }}
       >
-        <CardContent>
-          <Grid
-            container
-            spacing={3}
-            sx={{ justifyContent: 'space-between' }}
+        <Avatar
+          alt={subjectData.subjectName}
+          src="src/media.png"
+          variant="round"
+          sx={{ width: 66, height: 66 }}
+        />
+      </Box>
+      <Typography
+        align="center"
+          // color="#997b2f"
+        gutterBottom
+        variant="h5"
+      >
+        {`${subjectData.subjectName} (${subjectData.subjectCode})`}
+      </Typography>
+      <Typography
+        align="center"
+        color="primary"
+        variant="body1"
+      >
+        {`Form Class: ${subjectData.className}`}
+      </Typography>
+    </CardContent>
+    <Box sx={{ flexGrow: 1 }} />
+    <Divider />
+    <Box sx={{ p: 2 }}>
+      <Grid
+        container
+        spacing={2}
+        sx={{ justifyContent: 'space-between' }}
+      >
+
+        <Grid
+          item
+          sx={{
+            alignItems: 'center',
+            display: 'flex'
+          }}
+        >
+          {/* <PeopleOutline color="action" /> */}
+          <Typography
+            color="secondaey"
+            display="inline"
+            sx={{ pl: 1 }}
+            variant="body2"
           >
-            <Grid item>
-              <Typography
-                color="textSecondary"
-                gutterBottom
-                variant="h6"
-              >
-                {subjectData.subjectCode}
-              </Typography>
-              <Typography
-                color="textPrimary"
-                variant="h3"
-              >
-                {subjectData.name}
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Avatar
-                sx={{
-                  backgroundColor: subjectData.color,
-                  height: 56,
-                  width: 56
-                }}
-              >
-                <Link
-                  to={{
-                    pathname: '/student/subject',
-                    state: subjectData
-                  }}
-                >
-                  <LaunchIcon />
-                </Link>
-              </Avatar>
-            </Grid>
-          </Grid>
-        </CardContent>
-      </Card>
-    );
-  }
-}
+            { `Class Teacher ${subjectData.teacherName} `}
+          </Typography>
+        </Grid>
+        <Grid
+          item
+          sx={{
+            alignItems: 'center',
+            display: 'flex'
+          }}
+        >
+
+          <Link
+            to={{
+              pathname: '/student/subject',
+              state: subjectData
+            }}
+          >
+            <Tooltip title={`View ${subjectData.subjectName}`} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
+              <Visibility color="inherit" align="right" />
+            </Tooltip>
+          </Link>
+        </Grid>
+      </Grid>
+    </Box>
+  </Card>
+);
+
+Subjectscard.propTypes = {
+  subjectData: PropTypes.object.isRequired
+};
 
 export default Subjectscard;
