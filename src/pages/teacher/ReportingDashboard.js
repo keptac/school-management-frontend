@@ -24,7 +24,7 @@ class ReportingDashboard extends React.Component {
 
   getDashData() {
     const userId = sessionStorage.getItem('userId');
-    TeacherServices.getTeacherClasses(userId) // Get all subjects for student
+    TeacherServices.getTeacherClasses(userId)
       .then((response) => {
         this.setState({ subjectData: response });
       });
@@ -66,9 +66,9 @@ class ReportingDashboard extends React.Component {
                     <Grid
                       item
                       key={resource.subjectCode}
-                      lg={6}
-                      md={6}
-                      xs={12}
+                      lg={3}
+                      md={4}
+                      xs={6}
                     >
                       <SubjectReportingCard resource={resource} />
                     </Grid>

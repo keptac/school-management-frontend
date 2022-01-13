@@ -2,28 +2,8 @@ import axios from 'axios';
 
 const qs = require('qs');
 
-// const deploymentUrl = 'http://localhost:3001/api';
-const deploymentUrl = 'https://mtgs-backend.herokuapp.com/api';
-
-// Submissions
-async function submitAssignment(data) {
-  const token = await JSON.parse(localStorage.getItem('token'));
-  const config = {
-    baseURL: `${deploymentUrl}/student`,
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      Authorization: `Bearer ${token}`,
-      'Access-Control-Allow-Credentials': true,
-    },
-  };
-  try {
-    const res = await axios.post('/new_submission', qs.stringify(data), config);
-    return res.data;
-  } catch (err) {
-    console.error(err);
-    return err;
-  }
-}
+const deploymentUrl = 'http://localhost:3001/api';
+// const deploymentUrl = 'https://mtgs-backend.herokuapp.com/api';
 
 // Student Subjects
 async function getStudentSubjects(classId) {
@@ -42,6 +22,26 @@ async function getStudentSubjects(classId) {
   } catch (err) {
     console.error(err);
     return [];
+  }
+}
+
+// Submissions
+async function submitAssignment(data) {
+  const token = await JSON.parse(localStorage.getItem('token'));
+  const config = {
+    baseURL: `${deploymentUrl}/student`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      Authorization: `Bearer ${token}`,
+      'Access-Control-Allow-Credentials': true,
+    },
+  };
+  try {
+    const res = await axios.post('/new_submission', qs.stringify(data), config);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return err;
   }
 }
 

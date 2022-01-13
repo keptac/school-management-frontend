@@ -13,7 +13,6 @@ import {
   Button
 } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
-import { PeopleOutline } from '@material-ui/icons';
 
 const SubjectReportingCard = ({ resource, ...rest }) => {
   const navigate = useNavigate();
@@ -50,14 +49,7 @@ const SubjectReportingCard = ({ resource, ...rest }) => {
           gutterBottom
           variant="h5"
         >
-          {`${resource.subjectName} (${resource.classId})`}
-        </Typography>
-        <Typography
-          align="center"
-          color="primary"
-          variant="body1"
-        >
-          {`Form Class: ${resource.className}`}
+          {`${resource.subjectName} - ${resource.className}`}
         </Typography>
       </CardContent>
       <Box sx={{ flexGrow: 1 }} />
@@ -75,14 +67,13 @@ const SubjectReportingCard = ({ resource, ...rest }) => {
               display: 'flex'
             }}
           >
-            <PeopleOutline color="action" />
             <Typography
               color="secondaey"
               display="inline"
               sx={{ pl: 1 }}
               variant="body2"
             >
-              { `${resource.studentCount} Students Enrolled`}
+              { ' '}
             </Typography>
           </Grid>
           <Grid
