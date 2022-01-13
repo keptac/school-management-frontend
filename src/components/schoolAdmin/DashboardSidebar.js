@@ -8,7 +8,9 @@ import {
   Drawer,
   Hidden,
   List,
-  Typography
+  Typography,
+  Button,
+  ListItem
 } from '@material-ui/core';
 import {
   Home as HomeIcon,
@@ -18,6 +20,7 @@ import {
   Users as PeopleIcon,
   DollarSign as DollarSignIcon,
   // BarChart2 as ResultsIcon,
+  Link as LinkIcon,
   BookOpen as BookOpenIcon,
   Clipboard as NoticeBoardIcon
 } from 'react-feather';
@@ -65,7 +68,7 @@ const items = [
     href: '/school-admin/notices',
     icon: NoticeBoardIcon,
     title: 'Notices'
-  },
+  }
   // {
   //   href: '/school-admin/dashboard',
   //   icon: ResultsIcon,
@@ -74,7 +77,7 @@ const items = [
 ];
 
 const login = {
-  href: '/login',
+  href: '/staff',
   icon: LockIcon,
   title: 'Logout'
 };
@@ -145,12 +148,44 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             Quick Access
           </h4>
           <br />
+          <a href="http://mtgs.techvividholdings.com/" target="blank">
+            <ListItem
+              disableGutters
+              sx={{
+                display: 'flex',
+                py: 0
+              }}
+            >
+              <Button
+                sx={{
+                  color: 'text.secondary',
+                  fontWeight: 'medium',
+                  justifyContent: 'flex-start',
+                  letterSpacing: 0,
+                  py: 1.25,
+                  textTransform: 'none',
+                  width: '100%',
+                  '& svg': {
+                    mr: 1
+                  }
+                }}
+              >
+                {LinkIcon && (
+                  <LinkIcon size="20" />
+                )}
+                <span>
+                  HR Functions
+                </span>
+              </Button>
+            </ListItem>
+          </a>
           <NavItem
             href={login.href}
             key={login.title}
             title={login.title}
             icon={login.icon}
           />
+
         </List>
       </Box>
 

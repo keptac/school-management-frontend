@@ -2,6 +2,8 @@
 /* eslint-disable prefer-const */
 import { Helmet } from 'react-helmet';
 import React from 'react';
+import { useAlert, positions } from 'react-alert';
+import { useNavigate } from 'react-router-dom';
 import {
   Box, Container, Grid,
   Card,
@@ -88,15 +90,38 @@ class AddStudents extends React.Component {
       dob,
       phoneNumber,
       emailAddress,
-      idNumber
+      idNumber,
+      guardianName: '',
+      relationshipToGuardian: '',
+      gender: '',
+      address: ''
     };
-
-    console.log(`Saving data ${data}`);
 
     AdminServices.postNewStudent(data)
       .then((response) => {
-        console.log(response); // Add alert
-        alert('Success. Refresh your the page to update students.');
+        const alert = useAlert();
+        const navigate = useNavigate();
+        if (response.success) {
+          alert.success(response.message, { position: positions.MIDDLE }, {
+            timeout: 2000,
+            onOpen: () => {
+              console.log('hey');
+            },
+            onClose: () => {
+              navigate('/school-admin/students', { replace: true });
+            }
+          });
+        } else {
+          alert.error(response.message, { position: positions.MIDDLE }, {
+            timeout: 2000,
+            onOpen: () => {
+              console.log('hey');
+            },
+            onClose: () => {
+              navigate('/school-admin/students', { replace: true });
+            }
+          });
+        }
       }).catch((error) => {
         console.log(error);
       });

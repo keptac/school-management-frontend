@@ -8,12 +8,15 @@ import {
   Drawer,
   Hidden,
   List,
-  Typography
+  Typography,
+  ListItem,
+  Button
 } from '@material-ui/core';
 import {
   BarChart as BarChartIcon,
   Lock as LockIcon,
-  Edit as EditIcon
+  Edit as EditIcon,
+  Link as LinkIcon
 } from 'react-feather';
 
 import NavItem from '../NavItem';
@@ -35,7 +38,7 @@ const quickAccess = [
 ];
 
 const login = {
-  href: '/login',
+  href: '/staff',
   icon: LockIcon,
   title: 'Logout'
 };
@@ -119,6 +122,37 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
               icon={item.icon}
             />
           ))}
+          <a href="http://mtgs.techvividholdings.com/" target="blank">
+            <ListItem
+              disableGutters
+              sx={{
+                display: 'flex',
+                py: 0
+              }}
+            >
+              <Button
+                sx={{
+                  color: 'text.secondary',
+                  fontWeight: 'medium',
+                  justifyContent: 'flex-start',
+                  letterSpacing: 0,
+                  py: 1.25,
+                  textTransform: 'none',
+                  width: '100%',
+                  '& svg': {
+                    mr: 1
+                  }
+                }}
+              >
+                {LinkIcon && (
+                  <LinkIcon size="20" />
+                )}
+                <span>
+                  HR Functions
+                </span>
+              </Button>
+            </ListItem>
+          </a>
           <NavItem
             href={login.href}
             key={login.title}
