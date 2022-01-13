@@ -151,8 +151,8 @@ class TeacherSubjectDetails extends React.Component {
             >
               <Grid
                 item
-                lg={3}
-                md={12}
+                lg={2}
+                md={4}
                 xs={12}
               >
                 <Box sx={{ pt: 3 }}>
@@ -162,8 +162,8 @@ class TeacherSubjectDetails extends React.Component {
 
               <Grid
                 item
-                lg={9}
-                md={12}
+                lg={10}
+                md={8}
                 xl={9}
                 xs={12}
               >

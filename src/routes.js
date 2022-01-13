@@ -32,6 +32,7 @@ import NewStudentRegister from './pages/NewStudentRegister';
 import PaymentClass from './pages/schooladmin/Payments';
 import TeacherSubjectDetails from './pages/teacher/SubjectDetails';
 import ReportingDashboard from './pages/teacher/ReportingDashboard';
+import TeachingResources from './pages/teacher/TeachingResources';
 
 const routes = [
   // Student Routes
@@ -58,6 +59,7 @@ const routes = [
       { path: 'reporting', element: <ReportingDashboard /> },
       { path: 'report', element: <ProgressReport /> },
       { path: 'classes', element: <AddTeacherClass /> },
+      { path: 'teaching-resources', element: <TeachingResources /> },
       { path: 'subjectDetails', element: <TeacherSubjectDetails /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]

@@ -6,31 +6,41 @@ import {
   Divider,
 
   List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText
+  // ListItem,
+  // ListItemAvatar,
+  // ListItemText
 } from '@material-ui/core';
+
+import {
+  BookOpen as ResourcesIcon
+} from 'react-feather';
+
+import NavItem from '../NavItem';
 
 const menuItems = [
   {
     id: uuid(),
     name: 'Students Record',
-    imageUrl: '/static/images/resources/mtgs.png',
+    page: '/teacher/subjectDetails',
+    imageUrl: ResourcesIcon,
   },
   {
     id: uuid(),
     name: 'Resources',
-    imageUrl: '/static/images/resources/mtgs.png',
+    page: '/teacher/teaching-resources',
+    imageUrl: ResourcesIcon,
   },
   {
     id: uuid(),
     name: 'Homeworks',
-    imageUrl: '/static/images/resources/mtgs.png',
+    page: '/teacher/teaching-resources',
+    imageUrl: ResourcesIcon,
   },
   {
     id: uuid(),
     name: 'Tests',
-    imageUrl: '/static/images/resources/mtgs.png',
+    page: '/teacher/teaching-resources',
+    imageUrl: ResourcesIcon,
   }
 ];
 
@@ -42,25 +52,31 @@ const TeacherMenuBoard = (props) => (
     />
     <Divider />
     <List>
-      {menuItems.map((item, i) => (
-        <ListItem
-          divider={i < menuItems.length - 1}
-          key={item.id}
-        >
-          <ListItemAvatar>
-            <img
-              alt={item.name}
-              src={item.imageUrl}
-              style={{
-                height: 48,
-                width: 48
-              }}
-            />
-          </ListItemAvatar>
-          <ListItemText
-            primary={item.name}
-          />
-        </ListItem>
+      {menuItems.map((item) => (
+        <NavItem
+          href={item.page}
+          key={item.name}
+          title={item.name}
+          icon={item.imageUrl}
+        />
+        // <ListItem
+        //   divider={i < menuItems.length - 1}
+        //   key={item.id}
+        // >
+        //   <ListItemAvatar>
+        //     <img
+        //       alt={item.name}
+        //       src={item.imageUrl}
+        //       style={{
+        //         height: 48,
+        //         width: 48
+        //       }}
+        //     />
+        //   </ListItemAvatar>
+        //   <ListItemText
+        //     primary={item.name}
+        //   />
+        // </ListItem>
       ))}
     </List>
     <Divider />

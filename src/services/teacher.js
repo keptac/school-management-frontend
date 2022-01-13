@@ -112,6 +112,21 @@ async function submitReports(data) {
   }
 }
 
+async function getResourcesBySubjectCode(subjectCode) {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/api/esm/teacher/resources/subject/${subjectCode}`,
+    headers: { }
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
 const TeacherServices = {
   postStudentMarks,
   getStudentsPerClass,
@@ -119,7 +134,8 @@ const TeacherServices = {
   addTeacherClass,
   getTeacherClasses,
   checkTeacherSubmissionStatus,
-  submitReports
+  submitReports,
+  getResourcesBySubjectCode
 };
 
 export default TeacherServices;

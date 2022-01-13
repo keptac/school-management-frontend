@@ -8,11 +8,11 @@ import {
   Container,
   Grid,
   Pagination,
-  Card
+  Card,
+  Button
 } from '@material-ui/core';
 
 import LibraryCard from 'src/components/student/library/LibraryCard';
-import LibraryToolBar from 'src/components/student/library/LibraryToolbar';
 import resources from 'src/__mocks__/resources';
 
 import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
@@ -20,13 +20,11 @@ import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
 import TeacherServices from 'src/services/teacher';
 import TeacherMenuBoard from 'src/components/teacher/TeacherMenuBoard';
 
-// const { classId } = JSON.parse(localStorage.getItem('recordingSubject'));
-
-class TeacherClassResources extends React.Component {
+class TeachingResources extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      marksResults: [],
+      learningResources: [],
       students: [],
       viewDoc: false,
       docs: []
@@ -34,15 +32,16 @@ class TeacherClassResources extends React.Component {
   }
 
   componentDidMount() {
+    this.getAllSubjectResources();
   }
 
   async handleUploadResource() {
     const classData = JSON.parse(localStorage.getItem('recordingSubject'));
-    const { students, marksResults } = this.state;
+    const { students, learningResources } = this.state;
     const userId = sessionStorage.getItem('userId');
     const teacherName = sessionStorage.getItem('name');
 
-    if (students.length > 0 && marksResults.length > 0) {
+    if (students.length > 0 && learningResources.length > 0) {
       const data = {
         className: classData.className,
         subject: classData.subjectCode,
@@ -65,10 +64,10 @@ class TeacherClassResources extends React.Component {
   }
 
   async getAllSubjectResources() {
-    const { classId } = JSON.parse(localStorage.getItem('recordingSubject'));
-    TeacherServices.getStudentMarksPerClass(classId)
+    const recordingSubject = JSON.parse(localStorage.getItem('recordingSubject'));
+    TeacherServices.getResourcesBySubjectCode(recordingSubject.subjectCode)
       .then((response) => {
-        this.setState({ marksResults: response });
+        this.setState({ learningResources: response });
       }).catch((error) => {
         console.log(error);
       });
@@ -113,7 +112,7 @@ class TeacherClassResources extends React.Component {
               <Grid
                 item
                 lg={2}
-                md={12}
+                md={5}
                 xs={12}
               >
                 <Box sx={{ pt: 3 }}>
@@ -123,12 +122,30 @@ class TeacherClassResources extends React.Component {
 
               <Grid
                 item
-                lg={9}
-                md={12}
+                lg={10}
+                md={7}
                 xl={9}
                 xs={12}
               >
                 <Box sx={{ pt: 3 }}>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'flex-start'
+                    }}
+                  >
+                    <Button
+                      color="primary"
+                      variant="contained"
+                    >
+                      Upload Materials
+                    </Button>
+                  </Box>
+                  <Box
+                    sx={{
+                      pt: 2
+                    }}
+                  />
                   <Card>
                     <Container maxWidth={false}>
                       {viewDoc
@@ -146,7 +163,6 @@ class TeacherClassResources extends React.Component {
                         )
                         : (
                           <>
-                            <LibraryToolBar />
                             <Box sx={{ pt: 3 }}>
                               <Grid
                                 container
@@ -184,6 +200,11 @@ class TeacherClassResources extends React.Component {
                           </>
                         )}
                     </Container>
+                    <Box
+                      sx={{
+                        pt: 2
+                      }}
+                    />
                   </Card>
                 </Box>
               </Grid>
@@ -196,4 +217,4 @@ class TeacherClassResources extends React.Component {
   }
 }
 
-export default TeacherClassResources;
+export default TeachingResources;
