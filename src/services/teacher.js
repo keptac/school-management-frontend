@@ -1,8 +1,8 @@
 import axios from 'axios';
 import qs from 'qs';
 
-// const deploymentUrl = 'http://localhost:3001';
-const deploymentUrl = 'https://mtgs-backend.herokuapp.com';
+const deploymentUrl = 'http://localhost:3001';
+// const deploymentUrl = 'https://mtgs-backend.herokuapp.com';
 
 async function postStudentMarks(data) {
   const config = {
@@ -127,6 +127,21 @@ async function getResourcesBySubjectCode(subjectCode) {
     });
 }
 
+async function getSubjectAssignments(subjectCode) {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/api/esm/teacher/resources/subject/${subjectCode}`,
+    headers: { }
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
 const TeacherServices = {
   postStudentMarks,
   getStudentsPerClass,
@@ -135,7 +150,8 @@ const TeacherServices = {
   getTeacherClasses,
   checkTeacherSubmissionStatus,
   submitReports,
-  getResourcesBySubjectCode
+  getResourcesBySubjectCode,
+  getSubjectAssignments
 };
 
 export default TeacherServices;
