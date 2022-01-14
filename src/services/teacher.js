@@ -130,7 +130,7 @@ async function getResourcesBySubjectCode(subjectCode) {
 async function getSubjectAssignments(subjectCode) {
   const config = {
     method: 'get',
-    url: `${deploymentUrl}/api/esm/teacher/resources/subject/${subjectCode}`,
+    url: `${deploymentUrl}/api/esm/teacher/assignments/subject/${subjectCode}`,
     headers: { }
   };
 

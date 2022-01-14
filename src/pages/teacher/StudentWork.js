@@ -11,7 +11,7 @@ import {
   Button
 } from '@material-ui/core';
 
-import LibraryCard from 'src/components/student/library/LibraryCard';
+import AssignmentsFolderCard from 'src/components/teacher/library/AssignmentFolderCard';
 
 import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
 
@@ -23,7 +23,7 @@ class StudentWork extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      learningResources: [],
+      studentWork: [],
       viewDoc: false,
       uploadDoc: false,
       docs: []
@@ -39,9 +39,9 @@ class StudentWork extends React.Component {
 
   async getAllSubjectResources() {
     const recordingSubject = JSON.parse(localStorage.getItem('recordingSubject'));
-    TeacherServices.getResourcesBySubjectCode(recordingSubject.subjectCode)
+    TeacherServices.getSubjectAssignments(recordingSubject.subjectCode)
       .then((response) => {
-        this.setState({ learningResources: response });
+        this.setState({ studentWork: response });
       }).catch((error) => {
         console.log(error);
       });
@@ -62,10 +62,10 @@ class StudentWork extends React.Component {
 
   render() {
     const {
-      viewDoc, docs, uploadDoc, learningResources
+      viewDoc, docs, uploadDoc, studentWork
     } = this.state;
 
-    console.log(learningResources);
+    console.log(studentWork);
     const subjectData = JSON.parse(localStorage.getItem('recordingSubject'));
     return (
       <>
@@ -150,7 +150,7 @@ class StudentWork extends React.Component {
                                   container
                                   spacing={3}
                                 >
-                                  {learningResources.map((resource) => (
+                                  {studentWork.map((resource) => (
                                     <Grid
                                       item
                                       key={resource.id}
@@ -159,7 +159,7 @@ class StudentWork extends React.Component {
                                       xs={12}
                                     >
                                       <div onClick={() => this.readDocument(resource.resourcePath)} aria-hidden="true">
-                                        <LibraryCard resource={resource} />
+                                        <AssignmentsFolderCard resource={resource} />
                                       </div>
                                     </Grid>
                                   ))}

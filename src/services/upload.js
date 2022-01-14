@@ -14,10 +14,9 @@ async function postMaterial(body) {
   data.append('topicName', body.topicName);
   data.append('resourcePath', '');
   data.append('teacherId', body.teacherId);
-  // data.append('vividlearn', fs.createReadStream(body.vividlearn));
   data.append('vividlearn', body.vividlearn);
-
   data.append('type', body.type);
+  data.append('materialId', body.materialId);
 
   const config = {
     method: 'post',
@@ -44,6 +43,7 @@ async function issueAssignment(body) {
   data.append('category', body.category);
   data.append('dueDate', body.dueDate);
   data.append('totalMarks', body.totalMarks);
+  data.append('assignmentId', body.assingmentId);
 
   const config = {
     method: 'post',

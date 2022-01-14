@@ -12,7 +12,7 @@ import {
   Button
 } from '@material-ui/core';
 
-import LibraryCard from 'src/components/student/library/LibraryCard';
+import LibraryCard from 'src/components/teacher/library/LibraryCard';
 
 import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
 

@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import {
-  Avatar,
   Box,
   Card,
   CardContent,
@@ -10,7 +9,6 @@ import {
   Tooltip,
   Fade
 } from '@material-ui/core';
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import Visibility from '@material-ui/icons/Visibility';
 
 const LibraryCard = ({ resource, ...rest }) => (
@@ -23,38 +21,25 @@ const LibraryCard = ({ resource, ...rest }) => (
     {...rest}
   >
     <CardContent>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          pb: 3
-        }}
-      >
-        <Avatar
-          alt={resource.title}
-          src={resource.media}
-          variant="square"
-        />
-      </Box>
       <Typography
         align="center"
         color="#997b2f"
         gutterBottom
         variant="h4"
       >
-        {resource.title}
+        {resource.resourceName}
       </Typography>
       <Typography
         align="center"
         color="textPrimary"
         variant="body1"
       >
-        {resource.description}
+        {resource.topicName}
       </Typography>
     </CardContent>
     <Box sx={{ flexGrow: 1 }} />
     <Divider />
-    <Box sx={{ p: 2 }}>
+    <Box sx={{ p: 1 }}>
       <Grid
         container
         spacing={2}
@@ -66,17 +51,7 @@ const LibraryCard = ({ resource, ...rest }) => (
             alignItems: 'center',
             display: 'flex'
           }}
-        >
-          <AccessTimeIcon color="action" />
-          <Typography
-            color="textSecondary"
-            display="inline"
-            sx={{ pl: 1 }}
-            variant="body2"
-          >
-            Uploaded 2hr ago
-          </Typography>
-        </Grid>
+        />
         <Grid
           item
           sx={{
@@ -84,18 +59,10 @@ const LibraryCard = ({ resource, ...rest }) => (
             display: 'flex'
           }}
         >
-          <a href="#">
-            <Tooltip title={`Open and read ${resource.title}`} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
+          <a>
+            <Tooltip resourceName={`Open and read ${resource.resourceName}`} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
               <Visibility color="default" />
             </Tooltip>
-            {/* <Typography
-              color="#00796b"
-              display="inline"
-              sx={{ pl: 1 }}
-              variant="body2"
-            >
-              Read Now
-            </Typography> */}
           </a>
         </Grid>
 

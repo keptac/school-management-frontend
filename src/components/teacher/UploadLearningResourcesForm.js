@@ -34,6 +34,8 @@ const UploadLearningResourcesForm = () => {
 
   const handleSubmit = () => {
     const subjectData = JSON.parse(localStorage.getItem('recordingSubject'));
+    const a = Math.floor(1000000 + Math.random() * 9000000);
+    const resourceId = `RSC${String(a).substring(0, 5)}`;
     const data = {
       resourceName: values.resourceName,
       subjectCode: subjectData.subjectCode,
@@ -41,7 +43,8 @@ const UploadLearningResourcesForm = () => {
       resourcePath: '',
       teacherId: subjectData.teacherId,
       type: 'RESOURCE',
-      vividlearn
+      vividlearn,
+      resourceId
     };
 
     UploadService.postMaterial(data)
