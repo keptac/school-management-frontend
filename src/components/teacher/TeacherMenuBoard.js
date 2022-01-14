@@ -32,14 +32,8 @@ const menuItems = [
   },
   {
     id: uuid(),
-    name: 'Homeworks',
-    page: '/teacher/teaching-resources',
-    imageUrl: ResourcesIcon,
-  },
-  {
-    id: uuid(),
-    name: 'Tests',
-    page: '/teacher/teaching-resources',
+    name: 'Student Work',
+    page: '/teacher/student-work',
     imageUrl: ResourcesIcon,
   }
 ];
