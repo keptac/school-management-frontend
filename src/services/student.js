@@ -2,8 +2,8 @@ import axios from 'axios';
 
 const qs = require('qs');
 
-const deploymentUrl = 'http://localhost:3001/api';
-// const deploymentUrl = 'https://mtgs-backend.herokuapp.com/api';
+// const deploymentUrl = 'http://localhost:3001/api';
+const deploymentUrl = 'https://mtgs-backend.herokuapp.com/api';
 
 // Student Subjects
 async function getStudentSubjects(classId) {
