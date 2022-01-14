@@ -33,6 +33,7 @@ const AssignmentsFolderCard = ({ resource, ...rest }) => {
           sx={{
             display: 'flex',
             justifyContent: 'center',
+            pb: 1
           }}
         >
           <Avatar>
@@ -44,6 +45,7 @@ const AssignmentsFolderCard = ({ resource, ...rest }) => {
           color="#997b2f"
           gutterBottom
           variant="h4"
+          fontSize={15}
         >
           {resource.assignmentTitle}
         </Typography>
@@ -52,6 +54,8 @@ const AssignmentsFolderCard = ({ resource, ...rest }) => {
           color="textPrimary"
           variant="body1"
         >
+          Due on
+          {' '}
           {moment(resource.dueDatet).format('DD/MM/YYYY')}
 
         </Typography>
