@@ -1,45 +1,104 @@
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Card,
   CardContent,
   Divider,
   Typography,
+  Avatar,
+  Grid,
+  Tooltip,
+  Fade,
+  Button
 } from '@material-ui/core';
-// import Visibility from '@material-ui/icons/Visibility';
+import { Folder } from '@material-ui/icons';
+import Visibility from '@material-ui/icons/Visibility';
 
-const AssignmentsFolderCard = ({ resource, ...rest }) => (
-  <Card
-    sx={{
-      display: 'flex',
-      flexDirection: 'column',
-      height: '100%'
-    }}
-    {...rest}
-  >
-    <CardContent>
-      <Typography
-        align="center"
-        color="#997b2f"
-        gutterBottom
-        variant="h4"
-      >
-        {resource.assignmentTitle}
-      </Typography>
-      <Typography
-        align="center"
-        color="textPrimary"
-        variant="body1"
-      >
-        {moment(resource.dueDatet).format('DD/MM/YYYY')}
+const AssignmentsFolderCard = ({ resource, ...rest }) => {
+  const navigate = useNavigate();
 
-      </Typography>
-    </CardContent>
-    <Box sx={{ flexGrow: 1 }} />
-    <Divider />
-  </Card>
-);
+  return (
+    <Card
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%'
+      }}
+      {...rest}
+    >
+      <CardContent>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <Avatar>
+            <Folder />
+          </Avatar>
+        </Box>
+        <Typography
+          align="center"
+          color="#997b2f"
+          gutterBottom
+          variant="h4"
+        >
+          {resource.assignmentTitle}
+        </Typography>
+        <Typography
+          align="center"
+          color="textPrimary"
+          variant="body1"
+        >
+          {moment(resource.dueDatet).format('DD/MM/YYYY')}
+
+        </Typography>
+      </CardContent>
+      <Box sx={{ flexGrow: 1 }} />
+      <Divider />
+      <Box sx={{ p: 1 }}>
+        <Grid
+          container
+          spacing={2}
+          sx={{ justifyContent: 'space-between' }}
+        >
+          <Grid
+            item
+            sx={{
+              alignItems: 'center',
+              display: 'flex'
+            }}
+          >
+            <Tooltip title="View Question Paper" TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
+              <Visibility color="default" />
+            </Tooltip>
+          </Grid>
+          <Grid
+            item
+            sx={{
+              alignItems: 'center',
+              display: 'flex'
+            }}
+          >
+            <Button
+              onClick={() => {
+                localStorage.setItem('recordingAssignment', JSON.stringify(resource));
+                navigate('/teacher/student-submissions', { replace: true });
+              }}
+            >
+              <Tooltip title="View Submissions" TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
+                <Folder color="default" />
+              </Tooltip>
+            </Button>
+          </Grid>
+
+        </Grid>
+      </Box>
+    </Card>
+  );
+};
 
 AssignmentsFolderCard.propTypes = {
   resource: PropTypes.object.isRequired
