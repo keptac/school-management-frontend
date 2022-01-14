@@ -1,34 +1,38 @@
 import axios from 'axios';
 
 const FormData = require('form-data');
-const fs = require('fs');
+// const fs = require('fs');
 
 const data = new FormData();
 
-async function postMaterial() {
-  data.append('resourceName', 'Value');
-  data.append('subjectCode', 'SUB124');
-  data.append('topicName', 'Test');
+const deploymentUrl = 'http://localhost:3001';
+// const deploymentUrl = 'https://mtgs-backend.herokuapp.com';
+
+async function postMaterial(body) {
+  data.append('resourceName', body.resourceName);
+  data.append('subjectCode', body.subjectCode);
+  data.append('topicName', body.topicName);
   data.append('resourcePath', '');
-  data.append('teacherId', 'TEC123');
-  data.append('vividlearn', fs.createReadStream('/Users/kelvinchelenje/Desktop/DATA BASE TWO GREEN.xlsx'));
-  data.append('type', 'resource');
+  data.append('teacherId', body.teacherId);
+  // data.append('vividlearn', fs.createReadStream(body.vividlearn));
+  data.append('vividlearn', body.vividlearn);
+
+  data.append('type', body.type);
 
   const config = {
     method: 'post',
-    url: 'localhost:3001/api/esm/teacher/resources',
+    url: `${deploymentUrl}/api/esm/teacher/resources`,
     headers: {
-      ...data.getHeaders()
+      'Content-Type': 'application/x-www-form-urlencoded',
     },
     data
   };
 
-  axios(config)
-    .then((response) => {
-      console.log(JSON.stringify(response.data));
-    })
+  return axios(config)
+    .then((response) => response.data)
     .catch((error) => {
       console.log(error);
+      return { message: error };
     });
 }
 

@@ -95,7 +95,7 @@ const SubjectCard = ({ resource, ...rest }) => {
             <Button
               onClick={() => {
                 localStorage.setItem('recordingSubject', JSON.stringify(resource));
-                navigate('/teacher/subjectDetails', { replace: true });
+                navigate('/teacher/subject-student-records', { replace: true });
               }}
             >
               <Tooltip title={`Add Student Assessment Marks for ${resource.subjectName}`} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">

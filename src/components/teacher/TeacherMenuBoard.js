@@ -21,7 +21,7 @@ const menuItems = [
   {
     id: uuid(),
     name: 'Students Record',
-    page: '/teacher/subjectDetails',
+    page: '/teacher/subject-student-records',
     imageUrl: ResourcesIcon,
   },
   {

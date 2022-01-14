@@ -14,7 +14,7 @@ import LibraryCard from 'src/components/student/library/LibraryCard';
 import React from 'react';
 import resources from 'src/__mocks__/subjectResources';
 
-const subject = 'Shonsa';
+const subject = 'Shona';
 const siteName = ' | Vivid Learn ';
 
 class SubjectContent extends React.Component {

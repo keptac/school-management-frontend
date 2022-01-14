@@ -31,8 +31,8 @@ const LibraryCard = ({ resource, ...rest }) => (
         }}
       >
         <Avatar
-          alt={resource.title}
-          src={resource.media}
+          alt={resource.resourceName}
+          src={resource.resourcePath}
           variant="square"
         />
       </Box>
@@ -42,14 +42,14 @@ const LibraryCard = ({ resource, ...rest }) => (
         gutterBottom
         variant="h4"
       >
-        {resource.title}
+        {resource.resourceName}
       </Typography>
       <Typography
         align="center"
         color="textPrimary"
         variant="body1"
       >
-        {resource.description}
+        {resource.topicName}
       </Typography>
     </CardContent>
     <Box sx={{ flexGrow: 1 }} />
@@ -74,7 +74,8 @@ const LibraryCard = ({ resource, ...rest }) => (
             sx={{ pl: 1 }}
             variant="body2"
           >
-            Uploaded 2hr ago
+            Uploaded
+            {resource.uploadedOn}
           </Typography>
         </Grid>
         <Grid
@@ -85,7 +86,7 @@ const LibraryCard = ({ resource, ...rest }) => (
           }}
         >
           <a href="#">
-            <Tooltip title={`Open and read ${resource.title}`} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
+            <Tooltip resourceName={`Open and read ${resource.resourceName}`} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
               <Visibility color="default" />
             </Tooltip>
             {/* <Typography

@@ -60,7 +60,7 @@ const routes = [
       { path: 'report', element: <ProgressReport /> },
       { path: 'classes', element: <AddTeacherClass /> },
       { path: 'teaching-resources', element: <TeachingResources /> },
-      { path: 'subjectDetails', element: <TeacherSubjectDetails /> },
+      { path: 'subject-student-records', element: <TeacherSubjectDetails /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },
