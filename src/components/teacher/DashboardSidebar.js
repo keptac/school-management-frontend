@@ -17,7 +17,8 @@ import {
   Lock as LockIcon,
   Settings as EditIcon,
   Link as LinkIcon,
-  Book as ReportIcon
+  Book as ReportIcon,
+  Video as VideoIcon
 } from 'react-feather';
 
 import NavItem from '../NavItem';
@@ -27,6 +28,11 @@ const items = [
     href: '/teacher/dashboard',
     icon: BarChartIcon,
     title: 'Home'
+  },
+  {
+    href: '/teacher/virtual-classes',
+    icon: VideoIcon,
+    title: 'Virtual Classes'
   },
   {
     href: '/teacher/classes',
