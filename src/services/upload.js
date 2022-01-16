@@ -5,8 +5,8 @@ const FormData = require('form-data');
 
 const data = new FormData();
 
-// const deploymentUrl = 'http://localhost:3001';
-const deploymentUrl = 'https://mtgs-backend.herokuapp.com';
+const deploymentUrl = 'http://localhost:3001';
+// const deploymentUrl = 'https://mtgs-backend.herokuapp.com';
 
 async function postMaterial(body) {
   data.append('resourceName', body.resourceName);
@@ -16,7 +16,7 @@ async function postMaterial(body) {
   data.append('teacherId', body.teacherId);
   data.append('vividlearn', body.vividlearn);
   data.append('type', body.type);
-  data.append('materialId', body.materialId);
+  data.append('resourceId', body.resourceId);
 
   const config = {
     method: 'post',
