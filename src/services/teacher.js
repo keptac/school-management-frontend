@@ -142,6 +142,37 @@ async function getSubjectAssignments(subjectCode) {
     });
 }
 
+async function getSubmittedAssignments(subjectCode) {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/api/esm/teacher/assignments/subject/${subjectCode}`,
+    headers: { }
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
+async function gradeAssignment(data) {
+  const config = {
+    baseURL: `${deploymentUrl}/api/esm`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  };
+  try {
+    const res = await axios.put(`/submissions/${data.submissionId}`, qs.stringify(data), config);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+}
+
 const TeacherServices = {
   postStudentMarks,
   getStudentsPerClass,
@@ -151,7 +182,9 @@ const TeacherServices = {
   checkTeacherSubmissionStatus,
   submitReports,
   getResourcesBySubjectCode,
-  getSubjectAssignments
+  getSubjectAssignments,
+  gradeAssignment,
+  getSubmittedAssignments
 };
 
 export default TeacherServices;

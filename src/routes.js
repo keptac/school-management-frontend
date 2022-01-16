@@ -35,6 +35,7 @@ import ReportingDashboard from './pages/teacher/ReportingDashboard';
 import TeachingResources from './pages/teacher/TeachingResources';
 import StudentWork from './pages/teacher/StudentWork';
 import TeacherVirtualClass from './pages/teacher/TeacherVirtualClass';
+import AssignmentGrading from './pages/teacher/AssignmentGrading';
 
 const routes = [
   // Student Routes
@@ -66,6 +67,7 @@ const routes = [
       { path: 'subject-student-records', element: <TeacherSubjectDetails /> },
       { path: 'virtual-classes', element: <TeacherVirtualClass /> },
       { path: 'virtual-classroom', element: <TeacherSubjectDetails /> },
+      { path: 'student-submissions', element: <AssignmentGrading /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },
