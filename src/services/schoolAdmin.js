@@ -143,6 +143,21 @@ async function getAllNotices() {
     });
 }
 
+async function getNoticesByTaget(target) {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/api/esm/announcements/${target}`,
+    headers: {}
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
 async function getTeacherSubmissions() {
   const config = {
     method: 'get',
@@ -215,10 +230,10 @@ const AdminServices = {
   getAllStudents,
   getAllPayments,
   postNewPayment,
-  // downloadReports,
   postAnnouncement,
   getTeacherSubmissions,
-  getStudentReport
+  getStudentReport,
+  getNoticesByTaget
 };
 
 export default AdminServices;

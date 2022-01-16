@@ -45,6 +45,7 @@ async function issueAssignment(body) {
   data.append('totalMarks', body.totalMarks);
   data.append('assignmentId', body.assignmentId);
   data.append('status', body.status);
+  data.append('assignmentDescription', body.description);
 
   const config = {
     method: 'post',

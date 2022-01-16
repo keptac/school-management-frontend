@@ -39,7 +39,7 @@ const menuItems = [
   {
     id: uuid(),
     name: 'Class Announcements',
-    page: '/teacher/announemcents',
+    page: '/teacher/class-announcements',
     imageUrl: ResourcesIcon,
   }
 ];

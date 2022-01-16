@@ -28,7 +28,8 @@ const IssueAssignment = () => {
   const [values, setValues] = useState({
     assignmentTitle: null,
     totalMarks: null,
-    dueDate: null
+    dueDate: null,
+    description: ''
   });
 
   const handleChange = (event) => {
@@ -53,7 +54,8 @@ const IssueAssignment = () => {
       category,
       dueDate: values.dueDate,
       totalMarks: values.totalMarks,
-      status: 'OPEN'
+      status: 'OPEN',
+      assignmentDescription: values.description
     };
 
     UploadService.issueAssignment(data)
@@ -168,6 +170,20 @@ const IssueAssignment = () => {
                       type="date"
                     />
                   </Grid>
+                  <Grid
+                    item
+                    md={5}
+                    xs={12}
+                  >
+                    <TextField
+                      fullWidth
+                      label="Description (optional)"
+                      name="description"
+                      onChange={handleChange}
+                      value={values.description}
+                      variant="outlined"
+                    />
+                  </Grid>
                 </Grid>
               </Box>
               <Box
@@ -189,7 +205,6 @@ const IssueAssignment = () => {
                       fullWidth
                       name="vividlearn"
                       onChange={(e) => setSelectedFile(e.target.files[0])}
-                      required
                       value={values.vividlearn}
                       variant="outlined"
                     />
