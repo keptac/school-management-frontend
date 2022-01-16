@@ -60,7 +60,7 @@ const LibraryCard = ({ resource, ...rest }) => (
           }}
         >
           <a>
-            <Tooltip resourceName={`Open and read ${resource.resourceName}`} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
+            <Tooltip title={`Open and read ${resource.resourceName}`} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
               <Visibility color="default" />
             </Tooltip>
           </a>

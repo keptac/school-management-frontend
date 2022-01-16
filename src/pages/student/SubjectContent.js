@@ -12,7 +12,7 @@ import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
 import MenuBoard from 'src/components/student/StudentMenu';
 import LibraryCard from 'src/components/student/library/LibraryCard';
 import React from 'react';
-import resources from 'src/__mocks__/subjectResources';
+import TeacherServices from 'src/services/teacher';
 
 const subject = 'Shona';
 const siteName = ' | Vivid Learn ';
@@ -24,6 +24,7 @@ class SubjectContent extends React.Component {
       subjectName: '',
       viewDoc: false,
       docs: [],
+      resources: []
     };
   }
 
@@ -31,12 +32,23 @@ class SubjectContent extends React.Component {
     this.setState({
       subjectName: subject + siteName
     });
+    this.getAllSubjectResources();
   }
 
-  readDocument() {
+  async getAllSubjectResources() {
+    const subjectData = JSON.parse(localStorage.getItem('subjectData'));
+    TeacherServices.getResourcesBySubjectCode(subjectData.subjectCode)
+      .then((response) => {
+        this.setState({ resources: response });
+      }).catch((error) => {
+        console.log(error);
+      });
+  }
+
+  readDocument(path) {
     this.setState({
       viewDoc: true,
-      docs: [{ uri: '../../files/monetary.pdf' }]
+      docs: [{ uri: path }]
     });
   }
 
@@ -48,7 +60,9 @@ class SubjectContent extends React.Component {
     //   return <Redirect to="/class-coursework" />;
     // }
 
-    const { subjectName, viewDoc, docs } = this.state;
+    const {
+      subjectName, viewDoc, docs, resources
+    } = this.state;
     return (
       <>
         <Helmet>
@@ -102,7 +116,7 @@ class SubjectContent extends React.Component {
                         xl={9}
                         xs={12}
                       >
-                        <div onClick={() => this.readDocument()} aria-hidden="true">
+                        <div onClick={() => this.readDocument(resource.resourcePath)} aria-hidden="true">
                           <LibraryCard resource={resource} />
                         </div>
                       </Grid>

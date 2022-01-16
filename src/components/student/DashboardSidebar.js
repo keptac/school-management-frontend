@@ -13,7 +13,6 @@ import {
 import {
   BarChart as BarChartIcon,
   Lock as LockIcon,
-  BookOpen as Library,
   MessageCircle as UsersIcon
 } from 'react-feather';
 import OndemandVideoIcon from '@material-ui/icons/OndemandVideo';
@@ -32,11 +31,6 @@ const items = [
     title: 'Dashboard'
   },
   {
-    href: '/student/library',
-    icon: Library,
-    title: 'Library'
-  },
-  {
     href: '/student/virtual-class',
     icon: OndemandVideoIcon,
     title: 'Virtual Class'
@@ -44,7 +38,7 @@ const items = [
   {
     href: '/student/chat',
     icon: UsersIcon,
-    title: 'Chat'
+    title: 'End of year Report'
   },
   {
     href: '/login',

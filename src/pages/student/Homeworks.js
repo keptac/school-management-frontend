@@ -31,10 +31,10 @@ class SubjectContent extends React.Component {
     });
   }
 
-  readDocument() {
+  readDocument(path) {
     this.setState({
       viewDoc: true,
-      docs: [{ uri: '../../files/monetary.pdf' }]
+      docs: [{ uri: path }]
     });
   }
 
@@ -94,7 +94,7 @@ class SubjectContent extends React.Component {
                         xl={9}
                         xs={12}
                       >
-                        <div onClick={() => this.readDocument()} aria-hidden="true">
+                        <div onClick={() => this.readDocument(resource.resourcePath)} aria-hidden="true">
                           <LibraryCard resource={resource} />
                         </div>
                       </Grid>
