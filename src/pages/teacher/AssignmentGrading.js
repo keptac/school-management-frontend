@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-alert */
 /* eslint-disable prefer-const */
 
@@ -18,12 +19,9 @@ import {
   CardHeader,
   Divider,
   Button,
-  CardContent,
-  TextField,
-  InputAdornment,
-  SvgIcon
+
 } from '@material-ui/core';
-import { Search as SearchIcon } from 'react-feather';
+
 import AssignmentMarksForm from 'src/components/teacher/assignmentGrading/AssignmentMarksForm';
 import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -48,7 +46,7 @@ class AssignmentGrading extends React.Component {
   }
 
   componentDidMount() {
-    this.getStudentReports();
+    this.getStudentSubmissions();
     this.getTeacherSubmissionStatus();
   }
 
@@ -79,22 +77,16 @@ class AssignmentGrading extends React.Component {
 
   // CLoses assignment status
   async handleReportSubmission() {
-    const classData = JSON.parse(localStorage.getItem('recordingSubject'));
+    const { assignmentId } = JSON.parse(localStorage.getItem('recordingAssignment'));
     const { students, marksResults } = this.state;
-    const userId = sessionStorage.getItem('userId');
-    const teacherName = sessionStorage.getItem('name');
 
     if (students.length > 0 && marksResults.length > 0) {
       const data = {
-        className: classData.className,
-        subject: classData.subjectCode,
-        classId: classData.className,
+        assignmentId,
         status: 'SUBMITTED',
-        teacherName,
-        teacherId: userId
       };
 
-      TeacherServices.submitReports(data)
+      TeacherServices.closeAssignment(data)
         .then((response) => {
           console.log(response);
           window.location.reload(false);
@@ -107,9 +99,9 @@ class AssignmentGrading extends React.Component {
     }
   }
 
-  async getStudentReports() {
-    const { classId } = JSON.parse(localStorage.getItem('recordingSubject'));
-    TeacherServices.getStudentMarksPerClass(classId)
+  async getStudentSubmissions() {
+    const { assignmentId } = JSON.parse(localStorage.getItem('recordingAssignment'));
+    TeacherServices.getSubmittedAssignments(assignmentId)
       .then((response) => {
         this.setState({ marksResults: response });
       }).catch((error) => {
@@ -119,8 +111,8 @@ class AssignmentGrading extends React.Component {
 
   async getTeacherSubmissionStatus() {
     const userId = sessionStorage.getItem('userId');
-    const classData = JSON.parse(localStorage.getItem('recordingSubject'));
-    TeacherServices.checkTeacherSubmissionStatus(userId, classData.subjectCode)
+    const recordingAssignment = JSON.parse(localStorage.getItem('recordingAssignment'));
+    TeacherServices.checkTeacherAssignmentStatus(userId, recordingAssignment.assignmentId)
       .then((response) => {
         if (response.submitted) {
           this.setState({ reportsSubmitted: response.submitted, reviewRecord: true });
@@ -150,88 +142,60 @@ class AssignmentGrading extends React.Component {
         >
           <Container maxWidth={false}>
             <Box>
-              <Box sx={{ mt: 3 }}>
-                <Card>
-                  <CardContent>
-                    <Grid
-                      container
-                    >
-                      <Grid
-                        lg={6}
-                        md={12}
-                        xl={9}
-                        xs={12}
+              <Grid
+                container
+              >
+                <Grid
+                  lg={6}
+                  md={12}
+                  xl={9}
+                  xs={12}
+                />
+                <Grid
+                  lg={6}
+                  md={12}
+                  xl={9}
+                  xs={12}
+                >
+                  {reportsSubmitted
+                    ? (
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'flex-end'
+                        }}
                       >
-                        <Box sx={{ maxWidth: 500 }}>
-                          <TextField
-                            fullWidth
-                            InputProps={{
-                              startAdornment: (
-                                <InputAdornment position="start">
-                                  <SvgIcon
-                                    fontSize="small"
-                                    color="action"
-                                  >
-                                    <SearchIcon />
-                                  </SvgIcon>
-                                </InputAdornment>
-                              )
-                            }}
-                            placeholder="Search student"
-                            variant="outlined"
-                          />
-                        </Box>
-                      </Grid>
-                      <Grid
-                        lg={6}
-                        md={12}
-                        xl={9}
-                        xs={12}
+                        <Button
+                          color="primary"
+                          variant="contained"
+                        >
+                          Results issued to students
+                        </Button>
+                      </Box>
+                    )
+                    : (
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'flex-end'
+                        }}
                       >
-                        {reportsSubmitted
-                          ? (
-                            <Box
-                              sx={{
-                                display: 'flex',
-                                justifyContent: 'flex-end'
-                              }}
-                            >
-                              <Button
-                                color="primary"
-                                variant="contained"
-                              >
-                                Results issued to students
-                              </Button>
-                            </Box>
-                          )
-                          : (
-                            <Box
-                              sx={{
-                                display: 'flex',
-                                justifyContent: 'flex-end'
-                              }}
-                            >
-                              <Button
-                                onClick={() => this.handleReportSubmission()}
-                                color="primary"
-                                variant="contained"
-                              >
-                                Submit Results
-                              </Button>
-                            </Box>
-                          )}
-                      </Grid>
-                    </Grid>
-                  </CardContent>
-                </Card>
-              </Box>
+                        <Button
+                          onClick={() => this.handleReportSubmission()}
+                          color="primary"
+                          variant="contained"
+                        >
+                          Submit Results
+                        </Button>
+                      </Box>
+                    )}
+                </Grid>
+              </Grid>
             </Box>
             <Grid
               container
               spacing={3}
-              sx={{ marginTop: '0.1%' }}
             >
-
               <Grid
                 item
                 lg={8}
@@ -330,10 +294,10 @@ class AssignmentGrading extends React.Component {
                 xs={12}
               >
                 <Box sx={{ pt: 3 }}>
-                  {submissionRecord.name !== undefined ? (
+                  {submissionRecord.name === undefined ? (
                     <Card>
                       <CardHeader
-                        title={reportsSubmitted ? 'Marks already Submitted for this subject' : 'PLEASE CLICK ON STUDENT TO ADD MARKS'}
+                        title={reportsSubmitted ? 'Marks already Submitted for this subject' : (marksResults.length > 0 ? 'PLEASE CLICK ON STUDENT TO ADD MARKS' : 'NO STUDENT HAS SUBMITTED')}
                       />
                       <Divider />
                     </Card>

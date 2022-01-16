@@ -40,9 +40,12 @@ const IssueAssignment = () => {
 
   const handleSubmit = () => {
     const subjectData = JSON.parse(localStorage.getItem('recordingSubject'));
-    const a = Math.floor(1000000 + Math.random() * 9000000);
-    const assignmentId = `ASS${String(a).substring(0, 5)}`;
+
+    const a = Math.floor(10000000 + Math.random() * 90000000);
+    const assId = `ASS${String(a).substring(0, 5)}`;
+
     const data = {
+      assignmentId: assId,
       assignmentTitle: values.assignmentTitle,
       subjectCode: subjectData.subjectCode,
       assignmentPath: '',
@@ -50,7 +53,7 @@ const IssueAssignment = () => {
       category,
       dueDate: values.dueDate,
       totalMarks: values.totalMarks,
-      assignmentId
+      status: 'OPEN'
     };
 
     UploadService.issueAssignment(data)

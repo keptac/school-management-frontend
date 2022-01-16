@@ -79,7 +79,7 @@ class AddStudents extends React.Component {
     } = this.state;
 
     const a = Math.floor(100000 + Math.random() * 900000);
-    const studentIdRef = `STUD${String(a).substring(0, 4)}`;
+    const studentIdRef = `STUD${String(a).substring(0, 5)}`;
 
     const data = {
       name,

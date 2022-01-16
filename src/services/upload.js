@@ -43,7 +43,8 @@ async function issueAssignment(body) {
   data.append('category', body.category);
   data.append('dueDate', body.dueDate);
   data.append('totalMarks', body.totalMarks);
-  data.append('assignmentId', body.assingmentId);
+  data.append('assignmentId', body.assignmentId);
+  data.append('status', body.status);
 
   const config = {
     method: 'post',

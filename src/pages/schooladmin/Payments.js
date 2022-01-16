@@ -69,7 +69,7 @@ class PaymentClass extends React.Component {
     } = this.state;
 
     const a = Math.floor(10000000 + Math.random() * 90000000);
-    const paymentReference = `PAY${String(a).substring(0, 7)}`;
+    const paymentReference = `PAY${String(a).substring(0, 5)}`;
 
     const data = {
       term,
