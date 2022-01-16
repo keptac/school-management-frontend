@@ -35,7 +35,7 @@ class TeacherVirtualClass extends React.Component {
     this.state = {
       teacherClasses: [],
       className: {},
-      topicName: '',
+      topicName: null,
       classDate: null
     };
   }
@@ -124,14 +124,18 @@ class TeacherVirtualClass extends React.Component {
                 xl={9}
                 xs={12}
               >
-                <Box sx={{ pt: 3 }}>
-                  <Grid
-                    item
-                    lg={3}
-                    md={12}
-                    xs={12}
-                  >
-                    {teacherClasses.map((resource) => (
+                <Grid
+                  container
+                  spacing={3}
+                >
+                  {teacherClasses.map((resource) => (
+
+                    <Grid
+                      item
+                      lg={3}
+                      md={12}
+                      xs={12}
+                    >
                       <Card
                         sx={{
                           display: 'flex',
@@ -167,7 +171,7 @@ class TeacherVirtualClass extends React.Component {
                             color="textPrimary"
                             variant="body1"
                           >
-                            {moment(resource.dueDatet).format('DD/MM/YYYY')}
+                            {moment(resource.dueDate).format('DD/MM/YYYY')}
                           </Typography>
                         </CardContent>
                         <Box sx={{ flexGrow: 1 }} />
@@ -213,11 +217,10 @@ class TeacherVirtualClass extends React.Component {
                           </Grid>
                         </Grid>
                       </Card>
-                    ))}
+                    </Grid>
 
-                  </Grid>
-
-                </Box>
+                  ))}
+                </Grid>
               </Grid>
               <Grid
                 item
@@ -250,7 +253,7 @@ class TeacherVirtualClass extends React.Component {
                               <Select
                                 value={className}
                                 label="Subject"
-                                // onChange={() => this.handleChangeClass}
+                                onChange={() => this.handleChangeClass}
                                 required
                                 variant="outlined"
                               >
