@@ -8,7 +8,7 @@ import {
   Typography
 } from '@material-ui/core';
 
-import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
+import DocViewer from 'react-doc-viewer';
 
 import MenuBoard from 'src/components/student/StudentMenu';
 import LibraryCard from 'src/components/student/library/LibraryCard';
@@ -80,7 +80,7 @@ class SubjectContent extends React.Component {
                   }}
                 >
 
-                  <DocViewer pluginRenderers={DocViewerRenderers} documents={docs} />
+                  <DocViewer documents={docs} />
                 </Box>
               )
               : (

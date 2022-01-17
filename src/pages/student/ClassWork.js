@@ -19,7 +19,7 @@ import {
 
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
-import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
+import DocViewer from 'react-doc-viewer';
 
 import TeacherServices from 'src/services/teacher';
 import MenuBoard from 'src/components/student/StudentMenu';
@@ -209,7 +209,7 @@ class ClassWork extends React.Component {
                                 pt: 3
                               }}
                             >
-                              <DocViewer pluginRenderers={DocViewerRenderers} documents={docs} />
+                              <DocViewer documents={docs} />
                             </Box>
                           )
                           : (
