@@ -38,6 +38,7 @@ import AssignmentGrading from './pages/teacher/AssignmentGrading';
 import ClassNoticeBoard from './pages/teacher/ClassNoticeBoard';
 import ClassWork from './pages/student/ClassWork';
 import StudentReport from './pages/student/ReportBook';
+import SubmitAssignment from './pages/student/SubmitAssignment';
 
 const routes = [
   // Student Routes
@@ -52,6 +53,7 @@ const routes = [
       { path: 'virtual-class', element: <VirtualClass /> },
       { path: 'subject', element: <SubjectContent /> },
       { path: 'class-work', element: <ClassWork /> },
+      { path: 'new-submission', element: <SubmitAssignment /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },

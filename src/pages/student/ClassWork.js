@@ -19,14 +19,13 @@ import {
 
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
-import AssignmentsFolderCard from 'src/components/teacher/library/AssignmentFolderCard';
-
 import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
 
 import TeacherServices from 'src/services/teacher';
 import MenuBoard from 'src/components/student/StudentMenu';
 import SubmittedWork from 'src/components/student/SubmittedWork';
 import StudentServices from 'src/services/student';
+import StudentsAssignmentsFolderCard from 'src/components/student/library/StudentAssignmentFolderCard';
 
 class ClassWork extends React.Component {
   constructor(props) {
@@ -229,7 +228,7 @@ class ClassWork extends React.Component {
                                       xs={12}
                                     >
                                       <div onClick={() => this.readDocument(resource.resourcePath)} aria-hidden="true">
-                                        <AssignmentsFolderCard resource={resource} />
+                                        <StudentsAssignmentsFolderCard resource={resource} />
                                       </div>
                                     </Grid>
                                   ))}

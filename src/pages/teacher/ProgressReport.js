@@ -92,7 +92,7 @@ class ProgressReport extends React.Component {
       const data = {
         className: classData.className,
         subject: classData.subjectCode,
-        classId: classData.className,
+        classId: classData.classId,
         status: 'SUBMITTED',
         teacherName,
         teacherId: userId

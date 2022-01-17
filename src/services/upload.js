@@ -65,9 +65,40 @@ async function issueAssignment(body) {
     });
 }
 
+async function submitAssignment(body) {
+  data.append('submissionId', body.submissionId);
+  data.append('subjectName', body.subjectName);
+  data.append('subjectCode', body.subjectCode);
+  data.append('studentName', body.studentName);
+  data.append('studentId', body.studentId);
+  data.append('submissionPath', '');
+  data.append('assignmentId', body.assignmentId);
+  data.append('graded', body.graded);
+  data.append('mark', body.mark);
+  data.append('grade', body.grade);
+  data.append('vividlearn', body.vividlearn);
+
+  const config = {
+    method: 'post',
+    url: `${deploymentUrl}/api/esm/submissions/subject`,
+    headers: {
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    data
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return { message: error };
+    });
+}
+
 const UploadService = {
   postMaterial,
-  issueAssignment
+  issueAssignment,
+  submitAssignment
 };
 
 export default UploadService;

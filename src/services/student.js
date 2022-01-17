@@ -5,6 +5,8 @@ const qs = require('qs');
 // const deploymentUrl = 'http://localhost:3001/api';
 const deploymentUrl = 'https://mtgs-backend.herokuapp.com/api';
 
+const token = sessionStorage.getItem('token');
+
 // Student Subjects
 async function getStudentSubjects(classId) {
   // const token = await JSON.parse(localStorage.getItem('token'));
@@ -43,7 +45,6 @@ async function getStudentSubmissions(subjectCode, studentId) {
 
 // Submissions
 async function submitAssignment(data) {
-  const token = await JSON.parse(localStorage.getItem('token'));
   const config = {
     baseURL: `${deploymentUrl}/student`,
     headers: {
@@ -62,7 +63,6 @@ async function submitAssignment(data) {
 }
 
 async function download(data) {
-  const token = await JSON.parse(localStorage.getItem('token'));
   try {
     const res = await axios.post(
       `${deploymentUrl}/upload/get`,
@@ -85,8 +85,6 @@ async function download(data) {
 }
 
 async function deleteResource(data) {
-  const token = await JSON.parse(localStorage.getItem('token'));
-
   try {
     const res = await axios.delete(
       `${deploymentUrl}/upload/delete`,
@@ -105,12 +103,28 @@ async function deleteResource(data) {
   }
 }
 
+async function getStudentReport(studentId) {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/esm/studentMarks/student/${studentId}`,
+    headers: {}
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
 const StudentServices = {
   submitAssignment,
   getStudentSubjects,
   download,
   deleteResource,
-  getStudentSubmissions
+  getStudentSubmissions,
+  getStudentReport
 };
 
 export default StudentServices;

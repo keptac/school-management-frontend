@@ -1,8 +1,12 @@
 import axios from 'axios';
 import qs from 'qs';
 
+import fileDownload from 'js-file-download';
+
 // const deploymentUrl = 'http://localhost:3001';
 const deploymentUrl = 'https://mtgs-backend.herokuapp.com';
+
+const token = sessionStorage.getItem('token');
 
 async function postClasses(data) {
   const config = {
@@ -219,6 +223,35 @@ async function postNewPayment(data) {
   }
 }
 
+async function downloadReports() {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/api/esm/studentMarks/reportgeneration`,
+    headers: { 'Content-Type': 'application/pdf', 'x-access-token': token }
+  };
+
+  return axios(config)
+    .then((response) => {
+      if (response.data.reportsGenerated > 0) {
+        console.log(response.data.files);
+        response.data.files.forEach((file) => {
+          axios.get(`${deploymentUrl}/${file.reportPath}`, {
+            responseType: 'blob',
+          })
+            .then((res) => {
+              fileDownload(res.data, `${file.studentName}.pdf`);
+            });
+        });
+        return { success: true, message: `${response.data.reportsGenerated} reports have generated and saved` };
+      }
+      return { success: false, message: 'Reports not found' };
+    })
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
 const AdminServices = {
   postClasses,
   getAllClasses,
@@ -233,7 +266,8 @@ const AdminServices = {
   postAnnouncement,
   getTeacherSubmissions,
   getStudentReport,
-  getNoticesByTaget
+  getNoticesByTaget,
+  downloadReports
 };
 
 export default AdminServices;

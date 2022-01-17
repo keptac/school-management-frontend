@@ -13,10 +13,10 @@ import {
   Fade,
   Button
 } from '@material-ui/core';
-import { Folder } from '@material-ui/icons';
+import { Upload } from '@material-ui/icons';
 import Visibility from '@material-ui/icons/Visibility';
 
-const AssignmentsFolderCard = ({ resource, ...rest }) => {
+const StudentsAssignmentsFolderCard = ({ resource, ...rest }) => {
   const navigate = useNavigate();
 
   return (
@@ -37,7 +37,7 @@ const AssignmentsFolderCard = ({ resource, ...rest }) => {
           }}
         >
           <Avatar>
-            <Folder />
+            <Upload />
           </Avatar>
         </Box>
         <Typography
@@ -89,11 +89,11 @@ const AssignmentsFolderCard = ({ resource, ...rest }) => {
             <Button
               onClick={() => {
                 localStorage.setItem('recordingAssignment', JSON.stringify(resource));
-                navigate('/teacher/student-submissions', { replace: true });
+                navigate('/student/new-submission', { replace: true });
               }}
             >
-              <Tooltip title="View Submissions" TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
-                <Folder color="default" />
+              <Tooltip title="SUBMIT YOUR WORK" TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
+                <Upload color="default" />
               </Tooltip>
             </Button>
           </Grid>
@@ -104,8 +104,8 @@ const AssignmentsFolderCard = ({ resource, ...rest }) => {
   );
 };
 
-AssignmentsFolderCard.propTypes = {
+StudentsAssignmentsFolderCard.propTypes = {
   resource: PropTypes.object.isRequired
 };
 
-export default AssignmentsFolderCard;
+export default StudentsAssignmentsFolderCard;
