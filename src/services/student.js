@@ -5,19 +5,16 @@ const qs = require('qs');
 // const deploymentUrl = 'http://localhost:3001/api';
 const deploymentUrl = 'https://mtgs-backend.herokuapp.com/api';
 
-// Student Subjects
-async function getStudentSubjects(classId) {
-  // const token = await JSON.parse(localStorage.getItem('token'));
+// Student Work Submissions
+async function getStudentSubmissions(subjectCode, studentId) {
   const config = {
-    baseURL: `${deploymentUrl}/esm/student-enrolment`,
+    baseURL: `${deploymentUrl}/esm/submissions`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      // Authorization: `Bearer ${token}`,
-      // 'Access-Control-Allow-Credentials': true,
     },
   };
   try {
-    const res = await axios.get(`/student/${classId}`, config);
+    const res = await axios.get(`/student/${subjectCode}/${studentId}`, config);
     return res.data;
   } catch (err) {
     console.error(err);
@@ -91,7 +88,7 @@ async function deleteResource(data) {
 
 const StudentServices = {
   submitAssignment,
-  getStudentSubjects,
+  getStudentSubmissions,
   download,
   deleteResource,
 };

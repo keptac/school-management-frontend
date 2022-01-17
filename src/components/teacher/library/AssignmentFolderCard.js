@@ -13,7 +13,7 @@ import {
   Fade,
   Button
 } from '@material-ui/core';
-import { Folder } from '@material-ui/icons';
+import { UploadFile } from '@material-ui/icons';
 import Visibility from '@material-ui/icons/Visibility';
 
 const AssignmentsFolderCard = ({ resource, ...rest }) => {
@@ -37,7 +37,7 @@ const AssignmentsFolderCard = ({ resource, ...rest }) => {
           }}
         >
           <Avatar>
-            <Folder />
+            <UploadFile />
           </Avatar>
         </Box>
         <Typography
@@ -92,8 +92,8 @@ const AssignmentsFolderCard = ({ resource, ...rest }) => {
                 navigate('/teacher/student-submissions', { replace: true });
               }}
             >
-              <Tooltip title="View Submissions" TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
-                <Folder color="default" />
+              <Tooltip title="SUBMIT YOUR WORK" TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
+                <UploadFile color="default" />
               </Tooltip>
             </Button>
           </Grid>

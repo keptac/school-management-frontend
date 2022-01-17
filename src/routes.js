@@ -37,6 +37,7 @@ import StudentWork from './pages/teacher/StudentWork';
 import TeacherVirtualClass from './pages/teacher/TeacherVirtualClass';
 import AssignmentGrading from './pages/teacher/AssignmentGrading';
 import ClassNoticeBoard from './pages/teacher/ClassNoticeBoard';
+import ClassWork from './pages/student/ClassWork';
 
 const routes = [
   // Student Routes
@@ -50,6 +51,7 @@ const routes = [
       { path: 'library', element: <Library /> },
       { path: 'virtual-class', element: <VirtualClass /> },
       { path: 'subject', element: <SubjectContent /> },
+      { path: 'class-work', element: <ClassWork /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },
