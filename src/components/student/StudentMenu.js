@@ -29,12 +29,6 @@ const menuItems = [
     name: 'Class Work',
     page: '/student/class-work',
     imageUrl: ResourcesIcon,
-  },
-  {
-    id: uuid(),
-    name: 'Class Announcements',
-    page: '/teacher/class-announcements',
-    imageUrl: ResourcesIcon,
   }
 ];
 

@@ -36,7 +36,7 @@ const items = [
     title: 'Virtual Class'
   },
   {
-    href: '/student/chat',
+    href: '/student/my-report',
     icon: UsersIcon,
     title: 'End of year Report'
   },

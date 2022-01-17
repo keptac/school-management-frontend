@@ -12,7 +12,6 @@ import TeacherDashboardLayout from 'src/components/teacher/TeacherDashboardLayou
 import TeacherDashboard from 'src/pages/teacher/TeacherDashboard';
 
 import Account from 'src/pages/student/Account';
-import Chat from 'src/pages/student/Chat';
 import Dashboard from 'src/pages/student/Dashboard';
 import Library from 'src/pages/student/Library';
 import VirtualClass from 'src/pages/student/VirtualClass';
@@ -38,6 +37,7 @@ import TeacherVirtualClass from './pages/teacher/TeacherVirtualClass';
 import AssignmentGrading from './pages/teacher/AssignmentGrading';
 import ClassNoticeBoard from './pages/teacher/ClassNoticeBoard';
 import ClassWork from './pages/student/ClassWork';
+import StudentReport from './pages/student/ReportBook';
 
 const routes = [
   // Student Routes
@@ -46,7 +46,7 @@ const routes = [
     element: <StudentDashboardLayout />,
     children: [
       { path: 'account', element: <Account /> },
-      { path: 'chat', element: <Chat /> },
+      { path: 'my-report', element: <StudentReport /> },
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'library', element: <Library /> },
       { path: 'virtual-class', element: <VirtualClass /> },
@@ -69,7 +69,6 @@ const routes = [
       { path: 'student-work', element: <StudentWork /> },
       { path: 'subject-student-records', element: <TeacherSubjectDetails /> },
       { path: 'virtual-classes', element: <TeacherVirtualClass /> },
-      { path: 'virtual-classroom', element: <TeacherSubjectDetails /> },
       { path: 'student-submissions', element: <AssignmentGrading /> },
       { path: 'class-announcements', element: <ClassNoticeBoard /> },
       { path: '*', element: <Navigate to="/404" /> }

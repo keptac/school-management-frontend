@@ -20,36 +20,6 @@ class Dashboard extends React.Component {
     };
   }
 
-  // getAssignments = () => {
-  //   StudentService.getAssignments(this.state.assignment.classId)
-  //     .then((response) => {
-  //       this.setState({ assignments: response }, () => {
-  //         let pages = [];
-  //         let perPage = 5;
-  //         const totalPageCount = Math.ceil(
-  //           this.state.assignments.length / perPage
-  //         );
-
-  //         for (var i = 1; i <= totalPageCount; i++) {
-  //           pages.push(i);
-  //         }
-
-  //         const assignments_ = this.pageArraySplit(this.state.assignments, {
-  //           currentPageNumber: this.state.currentPageNumber,
-  //           perPage,
-  //         });
-  //         this.setState({ pages, assignments_ });
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       M.toast({
-  //         html: "Failed to find assignment folder",
-  //         classes: "red accent-2",
-  //       });
-  //       console.log(error);
-  //     });
-  // };
-
   componentDidMount() {
     this.getDashData();
 
@@ -85,18 +55,35 @@ class Dashboard extends React.Component {
               container
               spacing={3}
             >
-              {subjectData.map((sub) => (
-                <Grid
-                  item
-                  lg={3}
-                  sm={6}
-                  xl={3}
-                  xs={12}
-                >
-                  <Subjectscard sx={{ height: '100%' }} subjectData={sub} />
-                </Grid>
-              ))}
+              <Grid
+                item
+                lg={8}
+                md={6}
+                xl={3}
+                xs={12}
+              >
+                {subjectData.map((sub) => (
+                  <Grid
+                    item
+                    lg={4}
+                    sm={6}
+                    xl={3}
+                    xs={12}
+                  >
+                    <Subjectscard sx={{ height: '100%' }} subjectData={sub} />
+                  </Grid>
+                ))}
+              </Grid>
 
+              <Grid
+                item
+                lg={4}
+                md={6}
+                xl={3}
+                xs={12}
+              >
+                <NoticeBoard sx={{ height: '100%' }} />
+              </Grid>
             </Grid>
             <Grid
               container
@@ -111,15 +98,6 @@ class Dashboard extends React.Component {
                 xs={12}
               >
                 <TimeTable />
-              </Grid>
-              <Grid
-                item
-                lg={4}
-                md={6}
-                xl={3}
-                xs={12}
-              >
-                <NoticeBoard sx={{ height: '100%' }} />
               </Grid>
             </Grid>
           </Container>

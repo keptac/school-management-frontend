@@ -128,7 +128,7 @@ class ClassWork extends React.Component {
 
               <Grid
                 item
-                lg={10}
+                lg={9}
                 md={7}
                 xl={9}
                 xs={12}
@@ -250,7 +250,7 @@ class ClassWork extends React.Component {
               </Grid>
               <Grid
                 item
-                lg={2}
+                lg={3}
                 md={5}
                 xs={12}
               >
