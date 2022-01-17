@@ -2,6 +2,7 @@ import { useAlert, positions } from 'react-alert';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
+import Cookies from 'js-cookie';
 import { Formik } from 'formik';
 import {
   Box,
@@ -12,7 +13,6 @@ import {
   Typography
 } from '@material-ui/core';
 import AuthService from 'src/services/authServices';
-// import Logo from '../components/Logo';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -70,6 +70,9 @@ const Login = () => {
                     sessionStorage.setItem('classId', response.user.classId);
                     sessionStorage.setItem('loggedUserRole', response.user.userType);
                     sessionStorage.setItem('token', response.user.token);
+                    Cookies.set('userId', response.user.studentId);
+                    Cookies.set('name', response.user.name);
+                    Cookies.set('classId', response.user.classId);
 
                     if (response.user.userType === 'STUDENT') {
                       navigate('/student/dashboard', { replace: true });

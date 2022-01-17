@@ -19,9 +19,9 @@ import OndemandVideoIcon from '@material-ui/icons/OndemandVideo';
 import NavItem from '../NavItem';
 
 const user = {
-  avatar: '/static/images/avatars/avatar_1.jpg',
-  jobTitle: 'Student',
-  name: 'Kelvin Chelenje'
+  avatar: sessionStorage.getItem('loggedUserAvatar'),
+  jobTitle: sessionStorage.getItem('loggedUserRole'),
+  name: sessionStorage.getItem('name'),
 };
 
 const items = [

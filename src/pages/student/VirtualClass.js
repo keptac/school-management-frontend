@@ -161,16 +161,18 @@ class VlirtualClass extends React.Component {
                                   display: 'flex'
                                 }}
                               >
-                                <Button
-                                  onClick={() => {
-                                    localStorage.setItem('recordingSubject', JSON.stringify(resource));
-                                  }}
-                                >
-                                  <Tooltip title={`Enter into ${resource.subjectName} virtual class`} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
-                                    <VideoCall color="inherit" />
-                                  </Tooltip>
+                                <a href="https://vividstream.netlify.app" _blank>
+                                  <Button
+                                    onClick={() => {
+                                      localStorage.setItem('recordingSubject', JSON.stringify(resource));
+                                    }}
+                                  >
+                                    <Tooltip title={`Enter into ${resource.subjectName} virtual class`} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
+                                      <VideoCall color="inherit" />
+                                    </Tooltip>
 
-                                </Button>
+                                  </Button>
+                                </a>
                               </Grid>
                             </Grid>
                           </Card>

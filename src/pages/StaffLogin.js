@@ -3,6 +3,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import Cookies from 'js-cookie';
 import {
   Box,
   Button,
@@ -69,6 +70,8 @@ const StaffLogin = () => {
                     sessionStorage.setItem('name', response.user.name);
                     sessionStorage.setItem('loggedUserRole', response.user.userType);
                     sessionStorage.setItem('token', response.user.token);
+                    Cookies.set('userId', response.user.studentId);
+                    Cookies.set('name', response.user.name);
 
                     if (response.user.userType === 'TEACHER') {
                       navigate('/teacher/dashboard', { replace: true });

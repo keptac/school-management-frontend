@@ -3,6 +3,7 @@
 import { Helmet } from 'react-helmet';
 import React from 'react';
 import moment from 'moment';
+import Cookies from 'js-cookie';
 import {
   Box, Container, Grid,
   Card,
@@ -33,10 +34,10 @@ class TeacherVirtualClass extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      teacherClasses: [],
+      meetings: [],
       className: {},
       topicName: null,
-      classDate: null
+      meetingDate: null
     };
   }
 
@@ -53,29 +54,36 @@ class TeacherVirtualClass extends React.Component {
   }
 
   handleChangeDate(event) {
-    this.setState({ classDate: event.target.value });
+    this.setState({ meetingDate: event.target.value });
   }
 
   handleScheduleVirtualClass() {
     const {
-      subject, className, teacherClasses
+      className,
+      meetingDate
     } = this.state;
+
+    const a = Math.floor(10000000 + Math.random() * 90000000);
+    const meetingId = `VCR${String(a).substring(0, 5)}`;
+
     const userId = sessionStorage.getItem('userId');
     const teacherName = sessionStorage.getItem('name');
+    const subject = JSON.parse(localStorage.getItem('recordingSubject'));
+    Cookies.set('meetingId', meetingId);
 
     const data = {
       classId: className.classId,
       className: className.className,
       subjectCode: subject.subjectCode,
-      level: subject.level,
       subjectName: subject.subjectName,
       teacherId: userId,
-      teacherName
+      meetingDate,
+      teacherName,
+      meetingId,
+      meetingLink: ''
     };
 
-    teacherClasses.push(data);
-
-    TeacherServices.addTeacherClass(data)
+    TeacherServices.saveMeeting(data)
       .then((response) => {
         window.location.reload(false);
         console.log(response); // Add alert
@@ -86,9 +94,9 @@ class TeacherVirtualClass extends React.Component {
 
   async getTeacherClasses() {
     const userId = sessionStorage.getItem('userId');
-    TeacherServices.getTeacherClasses(userId)
+    TeacherServices.getMeetings(userId)
       .then((response) => {
-        this.setState({ teacherClasses: response });
+        this.setState({ meetings: response });
       }).catch((error) => {
         console.log(error);
       });
@@ -96,7 +104,7 @@ class TeacherVirtualClass extends React.Component {
 
   render() {
     const {
-      teacherClasses, className, topicName, classDate
+      meetings, className, topicName, meetingDate
     } = this.state;
 
     return (
@@ -128,7 +136,7 @@ class TeacherVirtualClass extends React.Component {
                   container
                   spacing={3}
                 >
-                  {teacherClasses.map((resource) => (
+                  {meetings.map((resource) => (
 
                     <Grid
                       item
@@ -204,16 +212,18 @@ class TeacherVirtualClass extends React.Component {
                               display: 'flex'
                             }}
                           >
-                            <Button
-                              onClick={() => {
-                                localStorage.setItem('recordingSubject', JSON.stringify(resource));
-                              }}
-                            >
-                              <Tooltip title={`Enter into ${resource.subjectName} virtual class`} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
-                                <VideoCall color="inherit" />
-                              </Tooltip>
+                            <a href="https://vividstream.netlify.app" _blank>
+                              <Button
+                                onClick={() => {
+                                  localStorage.setItem('recordingSubject', JSON.stringify(resource));
+                                }}
+                              >
+                                <Tooltip title={`Start ${resource.subjectName} virtual class`} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
+                                  <VideoCall color="inherit" />
+                                </Tooltip>
 
-                            </Button>
+                              </Button>
+                            </a>
                           </Grid>
                         </Grid>
                       </Card>
@@ -257,7 +267,7 @@ class TeacherVirtualClass extends React.Component {
                                 required
                                 variant="outlined"
                               >
-                                {teacherClasses.map((classe) => (
+                                {meetings.map((classe) => (
                                   <MenuItem onClick={() => this.handleChangeClass(classe)} value={classe}>{`${classe.className} - ${classe.subjectName}` }</MenuItem>
                                 ))}
                               </Select>
@@ -292,10 +302,10 @@ class TeacherVirtualClass extends React.Component {
                             <TextField
                               fullWidth
                               type="date"
-                              name="classDate"
+                              name="meetingDate"
                               onChange={() => this.handleChangeDate}
                               required
-                              value={classDate}
+                              value={meetingDate}
                               variant="outlined"
                             />
                           </Grid>
@@ -314,7 +324,7 @@ class TeacherVirtualClass extends React.Component {
                           variant="contained"
                           onClick={() => this.handleScheduleVirtualClass()}
                         >
-                          Save Classes
+                          Schedule Meeting
                         </Button>
                       </Box>
                     </Card>

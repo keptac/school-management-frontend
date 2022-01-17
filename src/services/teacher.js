@@ -204,8 +204,56 @@ async function closeAssignment(data) {
   }
 }
 
+async function saveMeeting(data) {
+  const config = {
+    baseURL: `${deploymentUrl}/api/esm`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  };
+  try {
+    const res = await axios.post('/meetings', qs.stringify(data), config);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+}
+
+async function getMeetings(teacherId) {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/api/esm/meetings/teacher/${teacherId}`,
+    headers: { }
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
+async function getMeetingsPerClass(classId) {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/api/esm/meetings/class/${classId}`,
+    headers: { }
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
 const TeacherServices = {
+  saveMeeting,
   postStudentMarks,
+  getMeetingsPerClass,
   getStudentsPerClass,
   getStudentMarksPerClass,
   addTeacherClass,
@@ -217,7 +265,8 @@ const TeacherServices = {
   gradeAssignment,
   getSubmittedAssignments,
   checkTeacherAssignmentStatus,
-  closeAssignment
+  closeAssignment,
+  getMeetings
 };
 
 export default TeacherServices;
