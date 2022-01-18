@@ -10,7 +10,11 @@ import {
   CardHeader,
   Divider,
   TextField,
-  Button
+  Button,
+  InputLabel,
+  Select,
+  FormControl,
+  MenuItem
 } from '@material-ui/core';
 
 import SchoolAdminServices from '../../services/schoolAdmin';
@@ -21,6 +25,12 @@ const AddClassForm = () => {
   const [values, setValues] = useState({
     className: null,
   });
+
+  const [station, setStation] = useState('');
+
+  const handleChangeStation = (event) => {
+    setStation(event.target.value);
+  };
 
   const handleChange = (event) => {
     setValues({
@@ -34,7 +44,8 @@ const AddClassForm = () => {
     const classIdRef = `CLC${String(a).substring(0, 3)}`;
     const data = {
       className: values.className,
-      classId: classIdRef
+      classId: classIdRef,
+      station
     };
 
     SchoolAdminServices.postClasses(data)
@@ -91,6 +102,26 @@ const AddClassForm = () => {
                     value={values.className}
                     variant="outlined"
                   />
+
+                </Grid>
+                <Grid
+                  item
+                  md={4}
+                  xs={12}
+                >
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Station</InputLabel>
+                    <Select
+                      value={station}
+                      label="Station"
+                      onChange={handleChangeStation}
+                      required
+                      variant="outlined"
+                    >
+                      <MenuItem value="PRIMARY">PRIMARY / JUNIOR SCHOOL</MenuItem>
+                      <MenuItem value="SENIOR">SENIOR SCHOOL</MenuItem>
+                    </Select>
+                  </FormControl>
                 </Grid>
               </Grid>
             </CardContent>

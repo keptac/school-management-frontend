@@ -127,6 +127,7 @@ const AddSubjectForm = () => {
                         required
                         variant="outlined"
                       >
+                        <MenuItem value="PRIMARY">PRIMARY / JUNIOR SCHOOL</MenuItem>
                         <MenuItem value="GCSE">O Level</MenuItem>
                         <MenuItem value="AS Level">AS Level</MenuItem>
                         <MenuItem value="A Level">A Level</MenuItem>
