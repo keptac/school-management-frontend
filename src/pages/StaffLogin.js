@@ -70,6 +70,7 @@ const StaffLogin = () => {
                     sessionStorage.setItem('name', response.user.name);
                     sessionStorage.setItem('loggedUserRole', response.user.userType);
                     sessionStorage.setItem('token', response.user.token);
+                    sessionStorage.setItem('station', response.user.station);
                     Cookies.set('userId', response.user.studentId);
                     Cookies.set('name', response.user.name);
 

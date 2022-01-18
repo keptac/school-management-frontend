@@ -39,7 +39,8 @@ const Register = () => {
               password: '',
               idNumber: '',
               userType: 'TEACHER',
-              staffId: `TCM${String(Math.floor(100000 + Math.random() * 900000)).substring(0, 3)}`
+              staffId: `TCM${String(Math.floor(100000 + Math.random() * 900000)).substring(0, 3)}`,
+              station: 'JUNIOR'
             }}
             validationSchema={
               Yup.object().shape({

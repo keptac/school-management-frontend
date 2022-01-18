@@ -118,7 +118,7 @@ const AddClassForm = () => {
                       required
                       variant="outlined"
                     >
-                      <MenuItem value="PRIMARY">JUNIOR SCHOOL</MenuItem>
+                      <MenuItem value="JUNIOR">JUNIOR SCHOOL</MenuItem>
                       <MenuItem value="SENIOR">SENIOR SCHOOL</MenuItem>
                     </Select>
                   </FormControl>

@@ -9,7 +9,11 @@ import {
   CardHeader,
   Divider,
   TextField,
-  Button
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select
 } from '@material-ui/core';
 import AdminServices from 'src/services/schoolAdmin';
 
@@ -20,6 +24,12 @@ const AddNoticeForm = () => {
     noticeBody: null,
     noticeTitle: null,
   });
+
+  const [target, setTarget] = useState('');
+
+  const handleChangeTarget = (event) => {
+    setTarget(event.target.value);
+  };
 
   const handleChange = (event) => {
     setValues({
@@ -32,6 +42,7 @@ const AddNoticeForm = () => {
     const data = {
       noticeBody: values.noticeBody,
       noticeTitle: values.noticeTitle,
+      target
     };
 
     AdminServices.postAnnouncement(data)
@@ -99,6 +110,28 @@ const AddNoticeForm = () => {
                       value={values.noticeTitle}
                       variant="outlined"
                     />
+                  </Grid>
+                  <Grid
+                    item
+                    md={4}
+                    xs={12}
+                  >
+                    <FormControl fullWidth>
+                      <InputLabel id="demo-simple-select-label">Target</InputLabel>
+                      <Select
+                        value={target}
+                        label="Target"
+                        onChange={handleChangeTarget}
+                        required
+                        variant="outlined"
+                      >
+                        <MenuItem value="ALL">ALL</MenuItem>
+                        <MenuItem value="STAFF">STAFF</MenuItem>
+                        <MenuItem value="STUDENTS">STUDENTS</MenuItem>
+                        <MenuItem value="JUNIOR">JUNIOR SCHOOL</MenuItem>
+                        <MenuItem value="SENIOR">SENIOR SCHOOL</MenuItem>
+                      </Select>
+                    </FormControl>
                   </Grid>
                   <Grid
                     item

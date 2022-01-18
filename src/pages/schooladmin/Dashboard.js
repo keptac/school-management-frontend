@@ -81,7 +81,7 @@ class AdminDashboard extends React.Component {
       });
     SchoolAdminServices.getAllTeachers()
       .then((response) => {
-        subjectData.push({ name: 'Teachers', count: response.length });
+        subjectData.push({ name: 'Staff', count: response.length });
         this.setState({ subjectData });
       });
   }
