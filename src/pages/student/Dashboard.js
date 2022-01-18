@@ -2,10 +2,12 @@ import { Helmet } from 'react-helmet';
 import {
   Box,
   Container,
-  Grid
+  Grid,
+  CardContent,
+  Card
 } from '@material-ui/core';
 
-import TimeTable from 'src/components/student/dashboard/TimeTable';
+// import TimeTable from 'src/components/student/dashboard/TimeTable';
 import NoticeBoard from 'src/components/NoticeBoard';
 import Subjectscard from 'src/components/student/dashboard/Subjectscard';
 import React from 'react';
@@ -97,7 +99,20 @@ class Dashboard extends React.Component {
                 xl={9}
                 xs={12}
               >
-                <TimeTable />
+                <Card
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '100%',
+                    borderRadius: '10px',
+                    elevation: '10px'
+                  }}
+                >
+                  <CardContent>
+                    Time Table under development. Bear with us it appear soon
+                  </CardContent>
+                </Card>
+                {/* <TimeTable /> */}
               </Grid>
             </Grid>
           </Container>
