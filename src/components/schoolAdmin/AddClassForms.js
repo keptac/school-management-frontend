@@ -90,7 +90,7 @@ const AddClassForm = () => {
               >
                 <Grid
                   item
-                  md={8}
+                  md={7}
                   xs={12}
                 >
                   <TextField
@@ -106,7 +106,7 @@ const AddClassForm = () => {
                 </Grid>
                 <Grid
                   item
-                  md={4}
+                  md={5}
                   xs={12}
                 >
                   <FormControl fullWidth>
@@ -118,7 +118,7 @@ const AddClassForm = () => {
                       required
                       variant="outlined"
                     >
-                      <MenuItem value="PRIMARY">PRIMARY / JUNIOR SCHOOL</MenuItem>
+                      <MenuItem value="PRIMARY">JUNIOR SCHOOL</MenuItem>
                       <MenuItem value="SENIOR">SENIOR SCHOOL</MenuItem>
                     </Select>
                   </FormControl>

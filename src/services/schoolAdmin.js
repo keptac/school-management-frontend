@@ -71,6 +71,36 @@ async function postSubject(data) {
   }
 }
 
+async function deleteClass(classId) {
+  const config = {
+    method: 'delete',
+    url: `${deploymentUrl}/api/esm/class/${classId}`,
+    headers: { }
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
+async function deleteSubject(subjectCode) {
+  const config = {
+    method: 'delete',
+    url: `${deploymentUrl}/api/esm/subjects/${subjectCode}`,
+    headers: { }
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
 async function getAllClasses() {
   const config = {
     method: 'get',
@@ -267,7 +297,9 @@ const AdminServices = {
   getTeacherSubmissions,
   getStudentReport,
   getNoticesByTaget,
-  downloadReports
+  downloadReports,
+  deleteClass,
+  deleteSubject
 };
 
 export default AdminServices;

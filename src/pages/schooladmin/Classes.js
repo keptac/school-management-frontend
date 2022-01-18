@@ -12,6 +12,7 @@ import {
   TablePagination,
   TableRow,
   Typography,
+  Button
 } from '@material-ui/core';
 
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -45,6 +46,15 @@ class AddClass extends React.Component {
 
   async getAllClasses() {
     SchoolAdminServices.getAllClasses()
+      .then((response) => {
+        this.setState({ classes: response });
+      }).catch((error) => {
+        console.log(error);
+      });
+  }
+
+  async deleteClass(classId) {
+    SchoolAdminServices.deleteClass(classId)
       .then((response) => {
         this.setState({ classes: response });
       }).catch((error) => {
@@ -95,6 +105,12 @@ class AddClass extends React.Component {
                               <TableCell>
                                 Class Name
                               </TableCell>
+                              <TableCell>
+                                Station
+                              </TableCell>
+                              <TableCell>
+                                Action
+                              </TableCell>
                             </TableRow>
                           </TableHead>
                           <TableBody>
@@ -120,6 +136,19 @@ class AddClass extends React.Component {
                                 </TableCell>
                                 <TableCell>
                                   {`${classe.className}`}
+                                </TableCell>
+                                <TableCell>
+                                  {`${classe.station}`}
+                                </TableCell>
+                                <TableCell>
+                                  <Button
+                                    size="small"
+                                    color="error"
+                                    variant="contained"
+                                    onClick={() => this.deleteClass(classe.classId)}
+                                  >
+                                    Delete
+                                  </Button>
                                 </TableCell>
                               </TableRow>
                             ))}

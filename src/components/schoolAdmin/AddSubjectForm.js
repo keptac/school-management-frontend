@@ -98,7 +98,7 @@ const AddSubjectForm = () => {
                 >
                   <Grid
                     item
-                    md={8}
+                    md={4}
                     xs={12}
                   >
                     <TextField
@@ -113,7 +113,7 @@ const AddSubjectForm = () => {
                   </Grid>
                   <Grid
                     item
-                    md={4}
+                    md={5}
                     xs={12}
                   >
                     <FormControl fullWidth>
@@ -127,7 +127,7 @@ const AddSubjectForm = () => {
                         required
                         variant="outlined"
                       >
-                        <MenuItem value="PRIMARY">PRIMARY / JUNIOR SCHOOL</MenuItem>
+                        <MenuItem value="PRIMARY">JUNIOR SCHOOL</MenuItem>
                         <MenuItem value="GCSE">O Level</MenuItem>
                         <MenuItem value="AS Level">AS Level</MenuItem>
                         <MenuItem value="A Level">A Level</MenuItem>
