@@ -30,6 +30,7 @@ import {
 import TeacherServices from 'src/services/teacher';
 import { VideoCall } from '@material-ui/icons';
 
+let newDate = '';
 class TeacherVirtualClass extends React.Component {
   constructor(props) {
     super(props);
@@ -37,12 +38,14 @@ class TeacherVirtualClass extends React.Component {
       meetings: [],
       className: {},
       topicName: null,
-      meetingDate: null
+      meetingDate: null,
+      classes: []
     };
   }
 
   componentDidMount() {
-    this.getTeacherClasses();
+    this.getTeacherClsses();
+    this.getMeetings();
   }
 
   handleChangeClass(selectedClass) {
@@ -53,14 +56,14 @@ class TeacherVirtualClass extends React.Component {
     this.setState({ topicName: event.target.value });
   }
 
+  // eslint-disable-next-line class-methods-use-this
   handleChangeDate(event) {
-    this.setState({ meetingDate: event.target.value });
+    newDate = event.target.value;
   }
 
   handleScheduleVirtualClass() {
     const {
       className,
-      meetingDate
     } = this.state;
 
     const a = Math.floor(10000000 + Math.random() * 90000000);
@@ -77,7 +80,7 @@ class TeacherVirtualClass extends React.Component {
       subjectCode: subject.subjectCode,
       subjectName: subject.subjectName,
       teacherId: userId,
-      meetingDate,
+      meetingDate: newDate,
       teacherName,
       meetingId,
       meetingLink: ''
@@ -85,16 +88,16 @@ class TeacherVirtualClass extends React.Component {
 
     TeacherServices.saveMeeting(data)
       .then((response) => {
-        window.location.reload(false);
+        // window.location.reload(false);
         console.log(response); // Add alert
       }).catch((error) => {
         console.log(error);
       });
   }
 
-  async getTeacherClasses() {
+  async getMeetings() {
     const userId = sessionStorage.getItem('userId');
-    TeacherServices.getMeetings(userId)
+    TeacherServices.getMeetingsByTeacher(userId)
       .then((response) => {
         this.setState({ meetings: response });
       }).catch((error) => {
@@ -102,9 +105,19 @@ class TeacherVirtualClass extends React.Component {
       });
   }
 
+  async getTeacherClsses() {
+    const userId = sessionStorage.getItem('userId');
+    TeacherServices.getTeacherClasses(userId)
+      .then((response) => {
+        this.setState({ classes: response });
+      }).catch((error) => {
+        console.log(error);
+      });
+  }
+
   render() {
     const {
-      meetings, className, topicName, meetingDate
+      meetings, className, topicName, meetingDate, classes
     } = this.state;
 
     return (
@@ -216,6 +229,7 @@ class TeacherVirtualClass extends React.Component {
                               <Button
                                 onClick={() => {
                                   localStorage.setItem('recordingSubject', JSON.stringify(resource));
+                                  Cookies.set('meetingId', resource.meetingId);
                                 }}
                               >
                                 <Tooltip title={`Start ${resource.subjectName} virtual class`} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
@@ -267,7 +281,7 @@ class TeacherVirtualClass extends React.Component {
                                 required
                                 variant="outlined"
                               >
-                                {meetings.map((classe) => (
+                                {classes.map((classe) => (
                                   <MenuItem onClick={() => this.handleChangeClass(classe)} value={classe}>{`${classe.className} - ${classe.subjectName}` }</MenuItem>
                                 ))}
                               </Select>
@@ -303,7 +317,7 @@ class TeacherVirtualClass extends React.Component {
                               fullWidth
                               type="date"
                               name="meetingDate"
-                              onChange={() => this.handleChangeDate}
+                              onChange={this.handleChangeDate}
                               required
                               value={meetingDate}
                               variant="outlined"

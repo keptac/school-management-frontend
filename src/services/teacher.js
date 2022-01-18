@@ -220,7 +220,7 @@ async function saveMeeting(data) {
   }
 }
 
-async function getMeetings(teacherId) {
+async function getMeetingsByTeacher(teacherId) {
   const config = {
     method: 'get',
     url: `${deploymentUrl}/api/esm/meetings/teacher/${teacherId}`,
@@ -251,9 +251,7 @@ async function getMeetingsPerClass(classId) {
 }
 
 const TeacherServices = {
-  saveMeeting,
   postStudentMarks,
-  getMeetingsPerClass,
   getStudentsPerClass,
   getStudentMarksPerClass,
   addTeacherClass,
@@ -266,7 +264,9 @@ const TeacherServices = {
   getSubmittedAssignments,
   checkTeacherAssignmentStatus,
   closeAssignment,
-  getMeetings
+  saveMeeting,
+  getMeetingsByTeacher,
+  getMeetingsPerClass,
 };
 
 export default TeacherServices;

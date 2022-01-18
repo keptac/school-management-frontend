@@ -324,9 +324,8 @@ class StudentReport extends React.Component {
           }
           if (count === 1) {
             console.log('Processed');
-            alert(`${count} Report generated successfully. Kindly check your downloads folder.`);
           } else {
-            alert('Report Failed to generate');
+            console.log('Report Failed to generate');
           }
         });
     } else {
