@@ -56,7 +56,8 @@ class AddClass extends React.Component {
   async deleteClass(classId) {
     SchoolAdminServices.deleteClass(classId)
       .then((response) => {
-        this.setState({ classes: response });
+        console.log(response);
+        this.setState({ page: 0 });
       }).catch((error) => {
         console.log(error);
       });

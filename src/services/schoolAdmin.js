@@ -78,11 +78,13 @@ async function deleteClass(classId) {
     headers: { }
   };
 
-  return axios(config)
-    .then((response) => response.data)
+  axios(config)
+    .then((response) => {
+      console.log(JSON.stringify(response.data));
+      return response.data;
+    })
     .catch((error) => {
       console.log(error);
-      return [];
     });
 }
 
@@ -93,11 +95,13 @@ async function deleteSubject(subjectCode) {
     headers: { }
   };
 
-  return axios(config)
-    .then((response) => response.data)
+  axios(config)
+    .then((response) => {
+      console.log(JSON.stringify(response.data));
+      return response.data;
+    })
     .catch((error) => {
       console.log(error);
-      return [];
     });
 }
 
