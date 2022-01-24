@@ -34,11 +34,11 @@ class AddClass extends React.Component {
   }
 
   handleLimitChange(event) {
-    this.setState({ limit: event });
+    this.setState({ limit: event.target.value });
   }
 
-  handlePageChange(newPage) {
-    this.setState({ page: newPage });
+  handlePageChange(event, page) {
+    this.setState({ page });
   }
 
   async getAllSubjects() {
@@ -160,7 +160,7 @@ class AddClass extends React.Component {
                       component="div"
                       count={subjects.length}
                       onPageChange={() => this.handlePageChange(page)}
-                      onRowsPerPageChange={() => this.handleLimitChange(limit)}
+                      onRowsPerPageChange={(e) => this.handleLimitChange(e)}
                       page={page}
                       rowsPerPage={limit}
                       rowsPerPageOptions={[5, 10, 25]}

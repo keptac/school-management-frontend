@@ -244,10 +244,9 @@ class AddStudents extends React.Component {
                       component="div"
                       count={students.length}
                       onPageChange={() => this.handlePageChange}
-                      onRowsPerPageChange={() => this.handleLimitChange}
+                      onRowsPerPageChange={(e) => this.handleLimitChange(e)}
                       page={page}
                       rowsPerPage={limit}
-                      rowsPerPageOptions={[5, 10, 25]}
                     />
                   </Card>
 

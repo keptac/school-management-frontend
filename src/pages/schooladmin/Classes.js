@@ -34,13 +34,10 @@ class AddClass extends React.Component {
   }
 
   handleLimitChange(event) {
-    this.setState({ limit: event });
+    this.setState({ limit: event.target.value });
   }
 
   handlePageChange(newPage) {
-    // eslint-disable-next-line no-alert
-    alert(newPage);
-    console.log(newPage);
     this.setState({ page: newPage });
   }
 
@@ -161,10 +158,10 @@ class AddClass extends React.Component {
                       component="div"
                       count={classes.length}
                       onPageChange={() => this.handlePageChange(page)}
-                      onRowsPerPageChange={() => this.handleLimitChange(limit)}
+                      onRowsPerPageChange={(e) => this.handleLimitChange(e)}
                       page={page}
                       rowsPerPage={limit}
-                      rowsPerPageOptions={[5, 10, 25]}
+                      // rowsPerPageOptions={[5, 10, 25]}
                     />
                   </Card>
 
