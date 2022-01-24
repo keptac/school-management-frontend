@@ -254,7 +254,7 @@ class TeacherSubjectDetails extends React.Component {
                       component="div"
                       count={students.length}
                       onPageChange={() => this.handlePageChange}
-                      onRowsPerPageChange={() => this.handleLimitChange}
+                      onRowsPerPageChange={(event) => this.handleLimitChange(event)}
                       page={page}
                       rowsPerPage={limit}
                       rowsPerPageOptions={[5, 10, 25]}

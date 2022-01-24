@@ -84,9 +84,11 @@ class AddTeacherClass extends React.Component {
     TeacherServices.addTeacherClass(data)
       .then((response) => {
         window.location.reload(false);
+        alert('Sucess');
         console.log(response); // Add alert
       }).catch((error) => {
         console.log(error);
+        alert('Failed');
       });
   }
 
@@ -209,13 +211,12 @@ class AddTeacherClass extends React.Component {
                       component="div"
                       count={teacherClasses.length}
                       onPageChange={() => this.handlePageChange}
-                      onRowsPerPageChange={() => this.handleLimitChange}
+                      onRowsPerPageChange={(e) => this.handleLimitChange(e)}
                       page={page}
                       rowsPerPage={limit}
                       rowsPerPageOptions={[5, 10, 25]}
                     />
                   </Card>
-
                 </Box>
               </Grid>
               <Grid
