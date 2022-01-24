@@ -55,11 +55,17 @@ class AddTeacherClass extends React.Component {
   }
 
   handleLimitChange(event) {
-    this.setState({ limit: event.target.value });
+    this.setState({ limit: +event.target.value, page: 0 });
   }
 
-  handlePageChange(newPage) {
-    this.setState({ page: newPage + 1 });
+  handlePageChange(event, newPage) {
+    let s = new XMLSerializer();
+    let str = s.serializeToString(event.target);
+    if (str.includes('KeyboardArrowRightIcon')) {
+      this.setState({ page: newPage + 1 });
+    } else if (newPage !== 0) {
+      this.setState({ page: newPage - 1 });
+    }
   }
 
   handleAddTeacherClass() {
@@ -172,7 +178,7 @@ class AddTeacherClass extends React.Component {
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            {teacherClasses.slice(page, limit).map((classe) => (
+                            {teacherClasses.slice(page * limit, page * limit + limit).map((classe) => (
                               <TableRow
                                 hover
                                 key={classe.classId}
@@ -210,7 +216,7 @@ class AddTeacherClass extends React.Component {
                     <TablePagination
                       component="div"
                       count={teacherClasses.length}
-                      onPageChange={() => this.handlePageChange(page)}
+                      onPageChange={(e) => this.handlePageChange(e, page)}
                       onRowsPerPageChange={(e) => this.handleLimitChange(e)}
                       page={page}
                       rowsPerPage={limit}

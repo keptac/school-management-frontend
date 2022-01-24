@@ -77,7 +77,7 @@ const StudentResults = ({ students, ...rest }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {students.slice(0, limit).map((student) => (
+              {students.slice(page * limit, page * limit + limit).map((student) => (
                 <TableRow
                   hover
                   key={student.id}

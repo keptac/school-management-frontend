@@ -55,8 +55,14 @@ class ClassWork extends React.Component {
     this.setState({ limit: event.target.value });
   }
 
-  handlePageChange(newPage) {
-    this.setState({ page: newPage });
+  handlePageChange(event, newPage) {
+    let s = new XMLSerializer();
+    let str = s.serializeToString(event.target);
+    if (str.includes('KeyboardArrowRightIcon')) {
+      this.setState({ page: newPage + 1 });
+    } else if (newPage !== 0) {
+      this.setState({ page: newPage - 1 });
+    }
   }
 
   async getStudentSubmissions() {
@@ -179,7 +185,7 @@ class ClassWork extends React.Component {
                                 </TableRow>
                               </TableHead>
                               <TableBody>
-                                {marksResults.slice(0, limit).map((student) => (
+                                {marksResults.slice(page * limit, page * limit + limit).map((student) => (
                                   <SubmittedWork student={student} />
                                 ))}
                               </TableBody>
@@ -189,7 +195,7 @@ class ClassWork extends React.Component {
                         <TablePagination
                           component="div"
                           count={students.length}
-                          onPageChange={() => this.handlePageChange}
+                          onPageChange={(e) => this.handlePageChange(e, page)}
                           onRowsPerPageChange={(e) => this.handleLimitChange(e)}
                           page={page}
                           rowsPerPage={limit}

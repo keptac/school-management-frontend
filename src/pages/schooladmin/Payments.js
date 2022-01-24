@@ -52,8 +52,14 @@ class PaymentClass extends React.Component {
     this.setState({ limit: event.target.value });
   }
 
-  handlePageChange(newPage) {
-    this.setState({ page: newPage });
+  handlePageChange(event, newPage) {
+    let s = new XMLSerializer();
+    let str = s.serializeToString(event.target);
+    if (str.includes('KeyboardArrowRightIcon')) {
+      this.setState({ page: newPage + 1 });
+    } else if (newPage !== 0) {
+      this.setState({ page: newPage - 1 });
+    }
   }
 
   handleChangeAdd() {
@@ -155,7 +161,7 @@ class PaymentClass extends React.Component {
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            {payments.slice(0, limit).map((payment) => (
+                            {payments.slice(page * limit, page * limit + limit).map((payment) => (
                               <TableRow
                                 hover
                                 key={payment.studentId}
@@ -200,7 +206,7 @@ class PaymentClass extends React.Component {
                     <TablePagination
                       component="div"
                       count={payments.length}
-                      onPageChange={() => this.handlePageChange}
+                      onPageChange={(e) => this.handlePageChange(e, page)}
                       onRowsPerPageChange={(e) => this.handleLimitChange(e)}
                       page={page}
                       rowsPerPage={limit}

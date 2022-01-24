@@ -98,7 +98,7 @@ class AddClass extends React.Component {
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            {notices.slice(0, limit).map((notice) => (
+                            {notices.slice(page * limit, page * limit + limit).map((notice) => (
                               <TableRow
                                 hover
                                 key={notice.id}

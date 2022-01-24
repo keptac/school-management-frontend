@@ -37,8 +37,14 @@ class AddClass extends React.Component {
     this.setState({ limit: event.target.value });
   }
 
-  handlePageChange(event, page) {
-    this.setState({ page });
+  handlePageChange(event, newPage) {
+    let s = new XMLSerializer();
+    let str = s.serializeToString(event.target);
+    if (str.includes('KeyboardArrowRightIcon')) {
+      this.setState({ page: newPage + 1 });
+    } else if (newPage !== 0) {
+      this.setState({ page: newPage - 1 });
+    }
   }
 
   async getAllSubjects() {
@@ -113,7 +119,7 @@ class AddClass extends React.Component {
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            {subjects.slice(0, limit).map((subject) => (
+                            {subjects.slice(page * limit, page * limit + limit).map((subject) => (
                               <TableRow
                                 hover
                                 key={subject.subjectCode}
@@ -159,7 +165,7 @@ class AddClass extends React.Component {
                     <TablePagination
                       component="div"
                       count={subjects.length}
-                      onPageChange={() => this.handlePageChange(page)}
+                      onPageChange={(e) => this.handlePageChange(e, page)}
                       onRowsPerPageChange={(e) => this.handleLimitChange(e)}
                       page={page}
                       rowsPerPage={limit}
