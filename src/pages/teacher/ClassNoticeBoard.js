@@ -1,6 +1,7 @@
 /* eslint-disable prefer-const */
 import { Helmet } from 'react-helmet';
 import React from 'react';
+import moment from 'moment';
 
 import {
   Box, Container, Grid,
@@ -12,25 +13,24 @@ import {
   TablePagination,
   TableRow,
   Typography,
-  Button
 } from '@material-ui/core';
 
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import AddClassForm from 'src/components/schoolAdmin/AddClassForms';
+import ClassNoticeForm from 'src/components/teacher/NoticeBoardForm';
 import SchoolAdminServices from '../../services/schoolAdmin';
 
-class AddClass extends React.Component {
+class ClassNoticeBoard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       limit: 10,
       page: 0,
-      classes: []
+      notices: []
     };
   }
 
   componentDidMount() {
-    this.getAllClasses();
+    this.getNotices();
   }
 
   handleLimitChange(event) {
@@ -38,40 +38,29 @@ class AddClass extends React.Component {
   }
 
   handlePageChange(newPage) {
-    // eslint-disable-next-line no-alert
-    alert(newPage);
-    console.log(newPage);
     this.setState({ page: newPage });
   }
 
-  async getAllClasses() {
-    SchoolAdminServices.getAllClasses()
-      .then((response) => {
-        this.setState({ classes: response });
-      }).catch((error) => {
-        console.log(error);
-      });
-  }
+  async getNotices() {
+    const { classId } = JSON.parse(localStorage.getItem('recordingSubject'));
 
-  async deleteClass(classId) {
-    SchoolAdminServices.deleteClass(classId)
+    SchoolAdminServices.getNoticesByTaget(classId)
       .then((response) => {
-        console.log(response);
-        this.setState({ page: 0 });
+        this.setState({ notices: response });
       }).catch((error) => {
         console.log(error);
       });
   }
 
   render() {
-    let {
-      limit, page, classes,
+    const {
+      limit, page, notices,
     } = this.state;
 
     return (
       <>
         <Helmet>
-          <title>Subjects | Vivid Learn</title>
+          <title>Announcements | Vivid Learn</title>
         </Helmet>
         <Box
           sx={{
@@ -101,24 +90,24 @@ class AddClass extends React.Component {
                           <TableHead>
                             <TableRow>
                               <TableCell>
-                                Class Code
+                                Notice Title
                               </TableCell>
                               <TableCell>
-                                Class Name
+                                Notice Message
                               </TableCell>
                               <TableCell>
-                                Station
+                                Sent to
                               </TableCell>
                               <TableCell>
-                                Action
+                                Notice Date
                               </TableCell>
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            {classes.slice(0, limit).map((classe) => (
+                            {notices.slice(0, limit).map((notice) => (
                               <TableRow
                                 hover
-                                key={classe.className}
+                                key={notice.id}
                               >
                                 <TableCell>
                                   <Box
@@ -131,25 +120,18 @@ class AddClass extends React.Component {
                                       color="textPrimary"
                                       variant="body1"
                                     >
-                                      {`${classe.classId}` }
+                                      {`${notice.noticeTitle}` }
                                     </Typography>
                                   </Box>
                                 </TableCell>
                                 <TableCell>
-                                  {`${classe.className}`}
+                                  {`${notice.noticeBody}`}
                                 </TableCell>
                                 <TableCell>
-                                  {`${classe.station}`}
+                                  {`${notice.target}`}
                                 </TableCell>
                                 <TableCell>
-                                  <Button
-                                    size="small"
-                                    color="error"
-                                    variant="contained"
-                                    onClick={() => this.deleteClass(classe.classId)}
-                                  >
-                                    Delete
-                                  </Button>
+                                  {moment(notice.updatedAt).format('DD/MM/YYYY')}
                                 </TableCell>
                               </TableRow>
                             ))}
@@ -159,7 +141,7 @@ class AddClass extends React.Component {
                     </PerfectScrollbar>
                     <TablePagination
                       component="div"
-                      count={classes.length}
+                      count={notices.length}
                       onPageChange={() => this.handlePageChange(page)}
                       onRowsPerPageChange={() => this.handleLimitChange(limit)}
                       page={page}
@@ -171,7 +153,7 @@ class AddClass extends React.Component {
                 </Box>
               </Grid>
 
-              <AddClassForm />
+              <ClassNoticeForm />
 
             </Grid>
 
@@ -182,4 +164,4 @@ class AddClass extends React.Component {
   }
 }
 
-export default AddClass;
+export default ClassNoticeBoard;

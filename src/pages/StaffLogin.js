@@ -3,6 +3,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import Cookies from 'js-cookie';
 import {
   Box,
   Button,
@@ -12,7 +13,7 @@ import {
   Typography
 } from '@material-ui/core';
 import AuthService from 'src/services/authServices';
-import Logo from '../components/Logo';
+// import Logo from '../components/Logo';
 
 const StaffLogin = () => {
   const navigate = useNavigate();
@@ -44,13 +45,13 @@ const StaffLogin = () => {
             width: '6%'
           }}
         >
-          <Logo />
+          {/* <Logo /> */}
         </Container>
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: 'admin@mtgs.com',
-              password: 'admin@123'
+              email: '',
+              password: ''
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string()
@@ -69,6 +70,9 @@ const StaffLogin = () => {
                     sessionStorage.setItem('name', response.user.name);
                     sessionStorage.setItem('loggedUserRole', response.user.userType);
                     sessionStorage.setItem('token', response.user.token);
+                    sessionStorage.setItem('station', response.user.station);
+                    Cookies.set('userId', response.user.studentId);
+                    Cookies.set('name', response.user.name);
 
                     if (response.user.userType === 'TEACHER') {
                       navigate('/teacher/dashboard', { replace: true });

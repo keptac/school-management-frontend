@@ -11,26 +11,19 @@ import {
   Divider,
   TextField,
   Button,
-  InputLabel,
-  Select,
-  FormControl,
-  MenuItem
+  // Input
 } from '@material-ui/core';
 
-import SchoolAdminServices from '../../services/schoolAdmin';
+import UploadService from '../../services/upload';
 
-const AddClassForm = () => {
+const UploadLearningResourcesForm = () => {
   const alert = useAlert();
   const navigate = useNavigate();
+  const [vividlearn, setSelectedFile] = useState(null);
   const [values, setValues] = useState({
-    className: null,
+    resourceName: null,
+    topicName: null,
   });
-
-  const [station, setStation] = useState('');
-
-  const handleChangeStation = (event) => {
-    setStation(event.target.value);
-  };
 
   const handleChange = (event) => {
     setValues({
@@ -40,28 +33,31 @@ const AddClassForm = () => {
   };
 
   const handleSubmit = () => {
-    let a = Math.floor(100000 + Math.random() * 900000);
-    const classIdRef = `CLC${String(a).substring(0, 3)}`;
+    const subjectData = JSON.parse(localStorage.getItem('recordingSubject'));
+    const a = Math.floor(1000000 + Math.random() * 9000000);
+    const resourceId = `RSC${String(a).substring(0, 5)}`;
     const data = {
-      className: values.className,
-      classId: classIdRef,
-      station
+      resourceName: values.resourceName,
+      subjectCode: subjectData.subjectCode,
+      topicName: values.topicName,
+      resourcePath: '',
+      teacherId: subjectData.teacherId,
+      type: 'RESOURCE',
+      vividlearn,
+      resourceId
     };
 
-    SchoolAdminServices.postClasses(data)
+    UploadService.postMaterial(data)
       .then((response) => {
-        navigate('/school-admin/dashboard', { replace: true });
-        navigate('/school-admin/classes', { replace: true });
+        navigate('/teacher/subject-student-records', { replace: true });
+        navigate('/teacher/teaching-resources', { replace: true });
         alert.info(response.message, { position: positions.MIDDLE }, {
           timeout: 2000,
         });
       }).catch((error) => {
+        console.log(error);
         alert.error('Snap, an error occured. Please try again later.', { position: positions.MIDDLE }, {
           timeout: 2000,
-          onOpen: () => {
-            console.log(error);
-          },
-
         });
       });
   };
@@ -69,18 +65,18 @@ const AddClassForm = () => {
   return (
     <Grid
       item
-      lg={5}
+      lg={8}
       md={12}
       xs={12}
     >
-      <Box sx={{ pt: 3 }}>
+      <Box>
         <form
           autoComplete="off"
           noValidate
         >
           <Card>
             <CardHeader
-              title="Add New Class"
+              title="Upload Learning Material"
             />
             <Divider />
             <CardContent>
@@ -90,40 +86,61 @@ const AddClassForm = () => {
               >
                 <Grid
                   item
-                  md={7}
+                  md={6}
                   xs={12}
                 >
                   <TextField
                     fullWidth
-                    label="Class Name"
-                    name="className"
+                    label="Resource Name"
+                    name="resourceName"
                     onChange={handleChange}
                     required
-                    value={values.className}
+                    value={values.resourceName}
                     variant="outlined"
                   />
-
                 </Grid>
                 <Grid
                   item
-                  md={5}
+                  md={6}
                   xs={12}
                 >
-                  <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Station</InputLabel>
-                    <Select
-                      value={station}
-                      label="Station"
-                      onChange={handleChangeStation}
-                      required
-                      variant="outlined"
-                    >
-                      <MenuItem value="JUNIOR">JUNIOR SCHOOL</MenuItem>
-                      <MenuItem value="SENIOR">SENIOR SCHOOL</MenuItem>
-                    </Select>
-                  </FormControl>
+                  <TextField
+                    fullWidth
+                    label="Topic Name"
+                    name="topicName"
+                    onChange={handleChange}
+                    required
+                    value={values.topicName}
+                    variant="outlined"
+                  />
                 </Grid>
               </Grid>
+              <Box
+                sx={{
+                  pt: 3
+                }}
+              >
+                <Grid
+                  container
+                  spacing={3}
+                >
+                  <Grid
+                    item
+                    md={12}
+                    xs={12}
+                  >
+                    <TextField
+                      type="file"
+                      fullWidth
+                      name="vividlearn"
+                      onChange={(e) => setSelectedFile(e.target.files[0])}
+                      required
+                      value={values.vividlearn}
+                      variant="outlined"
+                    />
+                  </Grid>
+                </Grid>
+              </Box>
             </CardContent>
             <Divider />
             <Box
@@ -138,7 +155,7 @@ const AddClassForm = () => {
                 variant="contained"
                 onClick={handleSubmit}
               >
-                Add Class
+                Upload Resource
               </Button>
             </Box>
           </Card>
@@ -149,4 +166,4 @@ const AddClassForm = () => {
   );
 };
 
-export default AddClassForm;
+export default UploadLearningResourcesForm;

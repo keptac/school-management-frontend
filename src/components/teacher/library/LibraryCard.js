@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+
 import {
   Box,
   Card,
@@ -7,7 +8,7 @@ import {
   Grid,
   Typography,
   Tooltip,
-  Fade
+  Fade,
 } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 
@@ -64,6 +65,7 @@ const LibraryCard = ({ resource, ...rest }) => (
               <Visibility color="default" />
             </Tooltip>
           </a>
+
         </Grid>
 
       </Grid>

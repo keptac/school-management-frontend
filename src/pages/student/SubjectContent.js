@@ -4,18 +4,16 @@ import { Helmet } from 'react-helmet';
 import {
   Box,
   Container,
-  Grid
+  Grid,
+  Typography
 } from '@material-ui/core';
 
-import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
+import DocViewer from 'react-doc-viewer';
 
 import MenuBoard from 'src/components/student/StudentMenu';
 import LibraryCard from 'src/components/student/library/LibraryCard';
 import React from 'react';
-import resources from 'src/__mocks__/subjectResources';
-
-const subject = 'Shonsa';
-const siteName = ' | Vivid Learn ';
+import TeacherServices from 'src/services/teacher';
 
 class SubjectContent extends React.Component {
   constructor(props) {
@@ -24,31 +22,39 @@ class SubjectContent extends React.Component {
       subjectName: '',
       viewDoc: false,
       docs: [],
+      resources: []
     };
   }
 
   componentDidMount() {
+    const subjectData = JSON.parse(localStorage.getItem('subjectData'));
     this.setState({
-      subjectName: subject + siteName
+      subjectName: subjectData.subjectName
     });
+    this.getAllSubjectResources();
   }
 
-  readDocument() {
+  async getAllSubjectResources() {
+    const subjectData = JSON.parse(localStorage.getItem('subjectData'));
+    TeacherServices.getResourcesBySubjectCode(subjectData.subjectCode)
+      .then((response) => {
+        this.setState({ resources: response });
+      }).catch((error) => {
+        console.log(error);
+      });
+  }
+
+  readDocument(path) {
     this.setState({
       viewDoc: true,
-      docs: [{ uri: '../../files/monetary.pdf' }]
+      docs: [{ uri: path }]
     });
   }
 
   render() {
-    // const location = useLocation();
-    // const subjectDetails = location.state;
-
-    // if (this.state.redirect === true) {
-    //   return <Redirect to="/class-coursework" />;
-    // }
-
-    const { subjectName, viewDoc, docs } = this.state;
+    const {
+      subjectName, viewDoc, docs, resources
+    } = this.state;
     return (
       <>
         <Helmet>
@@ -74,53 +80,64 @@ class SubjectContent extends React.Component {
                   }}
                 >
 
-                  <DocViewer pluginRenderers={DocViewerRenderers} documents={docs} />
+                  <DocViewer documents={docs} />
                 </Box>
               )
               : (
-                <Grid
-                  container
-                  spacing={2}
-                  sx={{ marginTop: '0.1%' }}
-                >
+                <Box>
+                  <Typography
+                    align="center"
+                    color="#997b2f"
+                    gutterBottom
+                    variant="h3"
+                  >
+                    {`${subjectName} Resource Library`}
+                  </Typography>
                   <Grid
-                    item
                     container
                     spacing={2}
+                    sx={{ marginTop: '0.1%' }}
+                  >
+                    <Grid
+                      item
+                      container
+                      spacing={2}
                   // sx={{ marginTop: '0.1%' }}
-                    lg={10}
-                    md={9}
-                    xl={9}
-                    xs={12}
-                  >
-                    {resources.map((resource) => (
-                      <Grid
-                        item
-                        key={resource.id}
-                        lg={3}
-                        md={6}
-                        xl={9}
-                        xs={12}
-                      >
-                        <div onClick={() => this.readDocument()} aria-hidden="true">
-                          <LibraryCard resource={resource} />
-                        </div>
-                      </Grid>
-                    ))}
+                      lg={9}
+                      md={9}
+                      xl={9}
+                      xs={12}
+                    >
+
+                      {resources.map((resource) => (
+                        <Grid
+                          item
+                          key={resource.id}
+                          lg={3}
+                          md={6}
+                          xl={9}
+                          xs={12}
+                        >
+                          <div onClick={() => this.readDocument(resource.resourcePath)} aria-hidden="true">
+                            <LibraryCard resource={resource} />
+                          </div>
+                        </Grid>
+                      ))}
+                    </Grid>
+
+                    <Grid
+                      item
+                      lg={3}
+                      md={3}
+                      xl={3}
+                      xs={12}
+                    >
+                      <MenuBoard sx={{ height: '100%' }} />
+
+                    </Grid>
+
                   </Grid>
-
-                  <Grid
-                    item
-                    lg={2}
-                    md={3}
-                    xl={3}
-                    xs={12}
-                  >
-                    <MenuBoard sx={{ height: '100%' }} />
-
-                  </Grid>
-
-                </Grid>
+                </Box>
               )}
           </Container>
         </Box>

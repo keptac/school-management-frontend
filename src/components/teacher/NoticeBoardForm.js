@@ -9,28 +9,17 @@ import {
   CardHeader,
   Divider,
   TextField,
-  Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem
+  Button
 } from '@material-ui/core';
+import AdminServices from 'src/services/schoolAdmin';
 
-import SchoolAdminServices from '../../services/schoolAdmin';
-
-const AddSubjectForm = () => {
+const ClassNoticeForm = () => {
   const alert = useAlert();
   const navigate = useNavigate();
-
-  const [level, setLevel] = useState('');
-
   const [values, setValues] = useState({
-    subject: null,
+    noticeBody: null,
+    noticeTitle: null,
   });
-
-  const handleChangeLevel = (event) => {
-    setLevel(event.target.value);
-  };
 
   const handleChange = (event) => {
     setValues({
@@ -40,41 +29,40 @@ const AddSubjectForm = () => {
   };
 
   const handleSubmit = () => {
-    const a = Math.floor(100000 + Math.random() * 900000);
-    const subjectCodeRef = `SUB${String(a).substring(0, 3)}`;
+    const { classId } = JSON.parse(localStorage.getItem('recordingSubject'));
     const data = {
-      level,
-      subjectName: values.subjectName,
-      subjectCode: subjectCodeRef
+      noticeBody: values.noticeBody,
+      noticeTitle: values.noticeTitle,
+      target: classId
     };
 
-    SchoolAdminServices.postSubject(data)
+    AdminServices.postAnnouncement(data)
       .then((response) => {
-        navigate('/school-admin/dashboard/', { replace: true });
+        navigate('/teacher/csubject-student-records', { replace: true });
+        navigate('/teacher/class-announcements', { replace: true });
         alert.info(response.message, { position: positions.MIDDLE }, {
           timeout: 2000,
           onOpen: () => {
             console.log(response);
-          },
+          }
         });
-        navigate('/school-admin/subjects/', { replace: true });
       }).catch((error) => {
-        console.log();
-        alert.error('Oh snap, an error occured.', { position: positions.MIDDLE }, {
+        console.log(error);
+        alert.error('Snap, an error occured. Please contact the admin.', { position: positions.MIDDLE }, {
           timeout: 2000,
           onOpen: () => {
             console.log(error);
           },
           onClose: () => {
-            navigate('/school-admin/subjects/', { replace: true });
+            navigate('/school-admin/notices/', { replace: true });
           }
         });
       });
+    // Pass to api
   };
 
   return (
     <>
-
       <Grid
         item
         lg={5}
@@ -88,7 +76,7 @@ const AddSubjectForm = () => {
           >
             <Card>
               <CardHeader
-                title="Add New Subject"
+                title="Add New Notice"
               />
               <Divider />
               <CardContent>
@@ -98,41 +86,34 @@ const AddSubjectForm = () => {
                 >
                   <Grid
                     item
-                    md={4}
+                    md={8}
                     xs={12}
                   >
                     <TextField
                       fullWidth
-                      label="Subject Name"
-                      name="subjectName"
+                      label="Notice Title"
+                      name="noticeTitle"
                       onChange={handleChange}
                       required
-                      value={values.subjectName}
+                      value={values.noticeTitle}
                       variant="outlined"
                     />
                   </Grid>
                   <Grid
                     item
-                    md={5}
+                    md={12}
                     xs={12}
                   >
-                    <FormControl fullWidth>
-                      <InputLabel id="demo-simple-select-label">Level</InputLabel>
-                      <Select
-                              // labelId="demo-simple-select-label"
-                              // id="demo-simple-select"
-                        value={level}
-                        label="Level"
-                        onChange={handleChangeLevel}
-                        required
-                        variant="outlined"
-                      >
-                        <MenuItem value="PRIMARY">JUNIOR SCHOOL</MenuItem>
-                        <MenuItem value="GCSE">O Level</MenuItem>
-                        <MenuItem value="AS Level">AS Level</MenuItem>
-                        <MenuItem value="A Level">A Level</MenuItem>
-                      </Select>
-                    </FormControl>
+                    <TextField
+                      fullWidth
+                      label="Message"
+                      name="noticeBody"
+                      onChange={handleChange}
+                      multiline="true"
+                      required
+                      value={values.noticeBody}
+                      variant="outlined"
+                    />
                   </Grid>
                 </Grid>
               </CardContent>
@@ -149,7 +130,7 @@ const AddSubjectForm = () => {
                   variant="contained"
                   onClick={handleSubmit}
                 >
-                  Add Subject
+                  Add Notice
                 </Button>
               </Box>
             </Card>
@@ -161,4 +142,4 @@ const AddSubjectForm = () => {
   );
 };
 
-export default AddSubjectForm;
+export default ClassNoticeForm;

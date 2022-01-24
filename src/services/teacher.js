@@ -1,8 +1,8 @@
 import axios from 'axios';
 import qs from 'qs';
 
-const deploymentUrl = 'http://localhost:3001';
-// const deploymentUrl = 'https://esm-backend.herokuapp.com';
+// const deploymentUrl = 'http://localhost:3001';
+const deploymentUrl = 'https://mtgs-backend.herokuapp.com';
 
 async function postStudentMarks(data) {
   const config = {
@@ -112,6 +112,144 @@ async function submitReports(data) {
   }
 }
 
+async function getResourcesBySubjectCode(subjectCode) {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/api/esm/teacher/resources/subject/${subjectCode}`,
+    headers: { }
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
+async function getSubjectAssignments(subjectCode) {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/api/esm/teacher/assignments/subject/${subjectCode}`,
+    headers: { }
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
+async function getSubmittedAssignments(assignmentId) {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/api/esm/submissions/${assignmentId}`,
+    headers: { }
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
+async function gradeAssignment(data) {
+  const config = {
+    baseURL: `${deploymentUrl}/api/esm`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  };
+  try {
+    const res = await axios.put(`/submissions/${data.submissionId}`, qs.stringify(data), config);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+}
+
+async function checkTeacherAssignmentStatus(teacherId, assignmentId) {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/api/esm/teacher/assignmentStatus/${teacherId}/${assignmentId}`,
+    headers: { }
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
+async function closeAssignment(data) {
+  const config = {
+    baseURL: `${deploymentUrl}/api/esm/api/esm/teacher`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  };
+  try {
+    const res = await axios.put(`/assignments/${data.assignmentId}`, qs.stringify(data), config);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+}
+
+async function saveMeeting(data) {
+  const config = {
+    baseURL: `${deploymentUrl}/api/esm`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  };
+  try {
+    const res = await axios.post('/meetings', qs.stringify(data), config);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+}
+
+async function getMeetingsByTeacher(teacherId) {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/api/esm/meetings/teacher/${teacherId}`,
+    headers: { }
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
+async function getMeetingsPerClass(classId) {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/api/esm/meetings/class/${classId}`,
+    headers: { }
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
 const TeacherServices = {
   postStudentMarks,
   getStudentsPerClass,
@@ -119,7 +257,16 @@ const TeacherServices = {
   addTeacherClass,
   getTeacherClasses,
   checkTeacherSubmissionStatus,
-  submitReports
+  submitReports,
+  getResourcesBySubjectCode,
+  getSubjectAssignments,
+  gradeAssignment,
+  getSubmittedAssignments,
+  checkTeacherAssignmentStatus,
+  closeAssignment,
+  saveMeeting,
+  getMeetingsByTeacher,
+  getMeetingsPerClass,
 };
 
 export default TeacherServices;

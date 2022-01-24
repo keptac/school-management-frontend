@@ -24,10 +24,24 @@ class NoticeBoard extends React.Component {
   }
 
   getDashData() {
+    // const { classId } = JSON.parse(sessionStorage.getItem('classId'));
+    // const { userType } = JSON.parse(sessionStorage.getItem('loggedUserRole'));
+    // const { notices } = this.state;
+
     AdminServices.getAllNotices()
       .then((response) => {
         this.setState({ notices: response });
       });
+
+    // AdminServices.getNoticesByTaget(classId)
+    //   .then((response) => {
+    //     this.setState({ notices: response });
+    //   });
+
+    // AdminServices.getNoticesByTaget(userType)
+    //   .then((response) => {
+    //     this.setState({ notices: notices.concat(response) });
+    //   });
   }
 
   render() {

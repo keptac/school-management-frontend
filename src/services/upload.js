@@ -1,25 +1,104 @@
 import axios from 'axios';
 
-const qs = require('qs');
+const FormData = require('form-data');
+// const fs = require('fs');
 
-async function postMaterial(data) {
+const data = new FormData();
+
+// const deploymentUrl = 'http://localhost:3001';
+const deploymentUrl = 'https://mtgs-backend.herokuapp.com';
+
+async function postMaterial(body) {
+  data.append('resourceName', body.resourceName);
+  data.append('subjectCode', body.subjectCode);
+  data.append('topicName', body.topicName);
+  data.append('resourcePath', '');
+  data.append('teacherId', body.teacherId);
+  data.append('vividlearn', body.vividlearn);
+  data.append('type', body.type);
+  data.append('resourceId', body.resourceId);
+
   const config = {
-    baseURL: 'https://esm-backend.herokuapp.com/api/teacher',
+    method: 'post',
+    url: `${deploymentUrl}/api/esm/teacher/resources`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
+    data
   };
-  try {
-    const res = await axios.post('/new_material', qs.stringify(data), config);
-    return res.data;
-  } catch (err) {
-    console.error(err);
-    return [];
-  }
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return { message: error };
+    });
+}
+
+async function issueAssignment(body) {
+  data.append('assignmentTitle', body.assignmentTitle);
+  data.append('subjectCode', body.subjectCode);
+  data.append('assignmentPath', '');
+  data.append('vividlearn', body.vividlearn);
+  data.append('category', body.category);
+  data.append('dueDate', body.dueDate);
+  data.append('totalMarks', body.totalMarks);
+  data.append('assignmentId', body.assignmentId);
+  data.append('status', body.status);
+  data.append('assignmentDescription', body.description);
+
+  const config = {
+    method: 'post',
+    url: `${deploymentUrl}/api/esm/teacher/assignments`,
+
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    data
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return { message: error };
+    });
+}
+
+async function submitAssignment(body) {
+  data.append('submissionId', body.submissionId);
+  data.append('subjectName', body.subjectName);
+  data.append('subjectCode', body.subjectCode);
+  data.append('studentName', body.studentName);
+  data.append('studentId', body.studentId);
+  data.append('submissionPath', '');
+  data.append('assignmentId', body.assignmentId);
+  data.append('graded', body.graded);
+  data.append('mark', body.mark);
+  data.append('grade', body.grade);
+  data.append('vividlearn', body.vividlearn);
+
+  const config = {
+    method: 'post',
+    url: `${deploymentUrl}/api/esm/submissions/subject`,
+    headers: {
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    data
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return { message: error };
+    });
 }
 
 const UploadService = {
-  postMaterial
+  postMaterial,
+  issueAssignment,
+  submitAssignment
 };
 
 export default UploadService;

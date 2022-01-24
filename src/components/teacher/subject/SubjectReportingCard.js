@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 
-const Subjectscard = ({ subjectData, ...rest }) => {
+const SubjectReportingCard = ({ resource, ...rest }) => {
   const navigate = useNavigate();
 
   return (
@@ -37,7 +37,7 @@ const Subjectscard = ({ subjectData, ...rest }) => {
           }}
         >
           <Avatar
-            alt={subjectData.subjectName}
+            alt={resource.subjectName}
             src="src/media.png"
             variant="round"
             sx={{ width: 66, height: 66 }}
@@ -49,14 +49,7 @@ const Subjectscard = ({ subjectData, ...rest }) => {
           gutterBottom
           variant="h5"
         >
-          {`${subjectData.subjectName} (${subjectData.subjectCode})`}
-        </Typography>
-        <Typography
-          align="center"
-          color="primary"
-          variant="body1"
-        >
-          {`Form Class: ${subjectData.className}`}
+          {`${resource.subjectName} - ${resource.className}`}
         </Typography>
       </CardContent>
       <Box sx={{ flexGrow: 1 }} />
@@ -67,7 +60,6 @@ const Subjectscard = ({ subjectData, ...rest }) => {
           spacing={2}
           sx={{ justifyContent: 'space-between' }}
         >
-
           <Grid
             item
             sx={{
@@ -75,14 +67,13 @@ const Subjectscard = ({ subjectData, ...rest }) => {
               display: 'flex'
             }}
           >
-            {/* <PeopleOutline color="action" /> */}
             <Typography
               color="secondaey"
               display="inline"
               sx={{ pl: 1 }}
               variant="body2"
             >
-              { `Class Teacher ${subjectData.teacherName} `}
+              { ' '}
             </Typography>
           </Grid>
           <Grid
@@ -92,27 +83,27 @@ const Subjectscard = ({ subjectData, ...rest }) => {
               display: 'flex'
             }}
           >
-
             <Button
               onClick={() => {
-                localStorage.setItem('subjectData', JSON.stringify(subjectData));
-                navigate('/student/subject', { replace: true });
+                localStorage.setItem('recordingSubject', JSON.stringify(resource));
+                navigate('/teacher/report', { replace: true });
               }}
             >
-              <Tooltip title={`View ${subjectData.subjectName}`} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
-                <Visibility color="inherit" align="right" />
+              <Tooltip title={`Add Student Assessment Marks for ${resource.subjectName}`} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
+                <Visibility color="inherit" />
               </Tooltip>
 
             </Button>
           </Grid>
+
         </Grid>
       </Box>
     </Card>
   );
 };
 
-Subjectscard.propTypes = {
-  subjectData: PropTypes.object.isRequired
+SubjectReportingCard.propTypes = {
+  resource: PropTypes.object.isRequired
 };
 
-export default Subjectscard;
+export default SubjectReportingCard;

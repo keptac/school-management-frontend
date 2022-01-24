@@ -39,7 +39,8 @@ const Register = () => {
               password: '',
               idNumber: '',
               userType: 'TEACHER',
-              staffId: `TCM${String(Math.floor(100000 + Math.random() * 900000)).substring(0, 3)}`
+              staffId: `TCM${String(Math.floor(100000 + Math.random() * 900000)).substring(0, 3)}`,
+              station: 'JUNIOR'
             }}
             validationSchema={
               Yup.object().shape({
@@ -64,16 +65,15 @@ const Register = () => {
                         navigate('/staff', { replace: true });
                       }
                     });
+                    navigate('/staff', { replace: true });
                   } else {
                     alert.error(response.message, { position: positions.MIDDLE }, {
                       timeout: 2000,
                       onOpen: () => {
                         console.log(response.error);
                       },
-                      onClose: () => {
-                        navigate('/register', { replace: true });
-                      }
                     });
+                    navigate('/register', { replace: true });
                   }
                 }).catch((error) => {
                   alert.error('An error occured. Please contact Admin', { position: positions.MIDDLE }, {

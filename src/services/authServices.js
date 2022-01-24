@@ -2,8 +2,8 @@ import axios from 'axios';
 
 const qs = require('qs');
 
-const apiUrl = 'http://localhost:3001/api';
-// const apiUrl = 'https://esm-backend.herokuapp.com/api';
+// const apiUrl = 'http://localhost:3001/api';
+const apiUrl = 'https://mtgs-backend.herokuapp.com/api';
 
 const config = {
   baseURL: `${apiUrl}/esm`,
@@ -32,9 +32,30 @@ async function login(data) {
   }
 }
 
+async function studentAuthRegister(data) {
+  try {
+    const res = await axios.post('/student/authenticateReg', qs.stringify(data), config);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return { success: false, message: 'Connection failed. Please check your connection.' };
+  }
+}
+async function studentLogin(data) {
+  try {
+    const res = await axios.post('/student/authenticate', qs.stringify(data), config);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+}
+
 const AuthService = {
   register,
-  login
+  login,
+  studentLogin,
+  studentAuthRegister
 };
 
 export default AuthService;

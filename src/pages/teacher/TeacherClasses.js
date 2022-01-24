@@ -83,8 +83,8 @@ class AddTeacherClass extends React.Component {
 
     TeacherServices.addTeacherClass(data)
       .then((response) => {
+        window.location.reload(false);
         console.log(response); // Add alert
-        alert('Success. Refresh your the page to load classes.');
       }).catch((error) => {
         console.log(error);
       });

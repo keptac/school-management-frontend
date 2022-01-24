@@ -1,8 +1,12 @@
 import axios from 'axios';
 import qs from 'qs';
 
-const deploymentUrl = 'http://localhost:3001';
-// const deploymentUrl = 'https://esm-backend.herokuapp.com';
+import fileDownload from 'js-file-download';
+
+// const deploymentUrl = 'http://localhost:3001';
+const deploymentUrl = 'https://mtgs-backend.herokuapp.com';
+
+const token = sessionStorage.getItem('token');
 
 async function postClasses(data) {
   const config = {
@@ -67,6 +71,40 @@ async function postSubject(data) {
   }
 }
 
+async function deleteClass(classId) {
+  const config = {
+    method: 'delete',
+    url: `${deploymentUrl}/api/esm/class/${classId}`,
+    headers: { }
+  };
+
+  axios(config)
+    .then((response) => {
+      console.log(JSON.stringify(response.data));
+      return response.data;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+async function deleteSubject(subjectCode) {
+  const config = {
+    method: 'delete',
+    url: `${deploymentUrl}/api/esm/subjects/${subjectCode}`,
+    headers: { }
+  };
+
+  axios(config)
+    .then((response) => {
+      console.log(JSON.stringify(response.data));
+      return response.data;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
 async function getAllClasses() {
   const config = {
     method: 'get',
@@ -100,7 +138,7 @@ async function getAllSubjects() {
 async function getAllTeachers() {
   const config = {
     method: 'get',
-    url: `${deploymentUrl}/api/esm/staffType/Teacher`,
+    url: `${deploymentUrl}/api/esm/staffType/TEACHER`,
     headers: { }
   };
 
@@ -132,6 +170,21 @@ async function getAllNotices() {
   const config = {
     method: 'get',
     url: `${deploymentUrl}/api/esm/announcements`,
+    headers: {}
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
+async function getNoticesByTaget(target) {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/api/esm/announcements/${target}`,
     headers: {}
   };
 
@@ -204,6 +257,35 @@ async function postNewPayment(data) {
   }
 }
 
+async function downloadReports() {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/api/esm/studentMarks/reportgeneration`,
+    headers: { 'Content-Type': 'application/pdf', 'x-access-token': token }
+  };
+
+  return axios(config)
+    .then((response) => {
+      if (response.data.reportsGenerated > 0) {
+        console.log(response.data.files);
+        response.data.files.forEach((file) => {
+          axios.get(`${deploymentUrl}/${file.reportPath}`, {
+            responseType: 'blob',
+          })
+            .then((res) => {
+              fileDownload(res.data, `${file.studentName}.pdf`);
+            });
+        });
+        return { success: true, message: `${response.data.reportsGenerated} reports have generated and saved` };
+      }
+      return { success: false, message: 'Reports not found' };
+    })
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
 const AdminServices = {
   postClasses,
   getAllClasses,
@@ -215,10 +297,13 @@ const AdminServices = {
   getAllStudents,
   getAllPayments,
   postNewPayment,
-  // downloadReports,
   postAnnouncement,
   getTeacherSubmissions,
-  getStudentReport
+  getStudentReport,
+  getNoticesByTaget,
+  downloadReports,
+  deleteClass,
+  deleteSubject
 };
 
 export default AdminServices;

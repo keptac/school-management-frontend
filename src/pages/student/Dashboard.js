@@ -2,10 +2,12 @@ import { Helmet } from 'react-helmet';
 import {
   Box,
   Container,
-  Grid
+  Grid,
+  CardContent,
+  Card
 } from '@material-ui/core';
 
-import TimeTable from 'src/components/student/dashboard/TimeTable';
+// import TimeTable from 'src/components/student/dashboard/TimeTable';
 import NoticeBoard from 'src/components/NoticeBoard';
 import Subjectscard from 'src/components/student/dashboard/Subjectscard';
 import React from 'react';
@@ -20,53 +22,17 @@ class Dashboard extends React.Component {
     };
   }
 
-  // getAssignments = () => {
-  //   StudentService.getAssignments(this.state.assignment.classId)
-  //     .then((response) => {
-  //       this.setState({ assignments: response }, () => {
-  //         let pages = [];
-  //         let perPage = 5;
-  //         const totalPageCount = Math.ceil(
-  //           this.state.assignments.length / perPage
-  //         );
-
-  //         for (var i = 1; i <= totalPageCount; i++) {
-  //           pages.push(i);
-  //         }
-
-  //         const assignments_ = this.pageArraySplit(this.state.assignments, {
-  //           currentPageNumber: this.state.currentPageNumber,
-  //           perPage,
-  //         });
-  //         this.setState({ pages, assignments_ });
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       M.toast({
-  //         html: "Failed to find assignment folder",
-  //         classes: "red accent-2",
-  //       });
-  //       console.log(error);
-  //     });
-  // };
-
   componentDidMount() {
-    // this.getDashData();
+    this.getDashData();
 
     this.setState({
-      subjectData: [
-        { name: 'Shona', subjectCode: 'SUB123', color: '#ffc107' },
-        { name: 'Maths', subjectCode: 'SUB241', color: '#c62828' },
-        { name: 'General Paper', subjectCode: 'SUB251', color: '#00796b' },
-        { name: 'English', subjectCode: 'SUB243', color: '#0288d1' }
-      ]
+      subjectData: []
     });
   }
 
   getDashData() {
-    // const studentData = JSON.parse(localStorage.getItem('userAll'));
-    // StudentServices.getStudentSubjects(studentData.studentId) // Get all courses by userid
-    StudentServices.getStudentSubjects('STUD128') // Get all subjects for student
+    const classid = sessionStorage.getItem('classId');
+    StudentServices.getStudentSubjects(classid)
       .then((response) => {
         this.setState({ subjectData: response });
       });
@@ -91,18 +57,35 @@ class Dashboard extends React.Component {
               container
               spacing={3}
             >
-              {subjectData.map((sub) => (
-                <Grid
-                  item
-                  lg={3}
-                  sm={6}
-                  xl={3}
-                  xs={12}
-                >
-                  <Subjectscard sx={{ height: '100%' }} subjectData={sub} />
-                </Grid>
-              ))}
+              <Grid
+                item
+                lg={8}
+                md={6}
+                xl={3}
+                xs={12}
+              >
+                {subjectData.map((sub) => (
+                  <Grid
+                    item
+                    lg={4}
+                    sm={6}
+                    xl={3}
+                    xs={12}
+                  >
+                    <Subjectscard sx={{ height: '100%' }} subjectData={sub} />
+                  </Grid>
+                ))}
+              </Grid>
 
+              <Grid
+                item
+                lg={4}
+                md={6}
+                xl={3}
+                xs={12}
+              >
+                <NoticeBoard sx={{ height: '100%' }} />
+              </Grid>
             </Grid>
             <Grid
               container
@@ -116,16 +99,20 @@ class Dashboard extends React.Component {
                 xl={9}
                 xs={12}
               >
-                <TimeTable />
-              </Grid>
-              <Grid
-                item
-                lg={4}
-                md={6}
-                xl={3}
-                xs={12}
-              >
-                <NoticeBoard sx={{ height: '100%' }} />
+                <Card
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '100%',
+                    borderRadius: '10px',
+                    elevation: '10px'
+                  }}
+                >
+                  <CardContent>
+                    Time Table under development. Bear with us it appear soon
+                  </CardContent>
+                </Card>
+                {/* <TimeTable /> */}
               </Grid>
             </Grid>
           </Container>

@@ -8,12 +8,17 @@ import {
   Drawer,
   Hidden,
   List,
-  Typography
+  Typography,
+  ListItem,
+  Button
 } from '@material-ui/core';
 import {
   BarChart as BarChartIcon,
   Lock as LockIcon,
-  Edit as EditIcon
+  Settings as EditIcon,
+  Link as LinkIcon,
+  Book as ReportIcon,
+  Video as VideoIcon
 } from 'react-feather';
 
 import NavItem from '../NavItem';
@@ -23,19 +28,30 @@ const items = [
     href: '/teacher/dashboard',
     icon: BarChartIcon,
     title: 'Home'
+  },
+  {
+    href: '/teacher/virtual-classes',
+    icon: VideoIcon,
+    title: 'Virtual Classes'
+  },
+  {
+    href: '/teacher/classes',
+    icon: EditIcon,
+    title: 'Configure Classes'
+  },
+  {
+    href: '/teacher/reporting',
+    icon: ReportIcon,
+    title: 'End of Term Reporting'
   }
 ];
 
 const quickAccess = [
-  {
-    href: '/teacher/classes',
-    icon: EditIcon,
-    title: 'Create Class'
-  }
+
 ];
 
 const login = {
-  href: '/login',
+  href: '/staff',
   icon: LockIcon,
   title: 'Logout'
 };
@@ -119,6 +135,37 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
               icon={item.icon}
             />
           ))}
+          <a href="http://mtgs.techvividholdings.com/" target="blank">
+            <ListItem
+              disableGutters
+              sx={{
+                display: 'flex',
+                py: 0
+              }}
+            >
+              <Button
+                sx={{
+                  color: 'text.secondary',
+                  fontWeight: 'medium',
+                  justifyContent: 'flex-start',
+                  letterSpacing: 0,
+                  py: 1.25,
+                  textTransform: 'none',
+                  width: '100%',
+                  '& svg': {
+                    mr: 1
+                  }
+                }}
+              >
+                {LinkIcon && (
+                  <LinkIcon size="20" />
+                )}
+                <span>
+                  HR Functions
+                </span>
+              </Button>
+            </ListItem>
+          </a>
           <NavItem
             href={login.href}
             key={login.title}

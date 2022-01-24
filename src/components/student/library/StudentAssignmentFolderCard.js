@@ -1,20 +1,22 @@
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 import {
-  Avatar,
   Box,
   Card,
   CardContent,
   Divider,
-  Grid,
   Typography,
+  Avatar,
+  Grid,
   Tooltip,
   Fade,
   Button
 } from '@material-ui/core';
+import { Upload } from '@material-ui/icons';
 import Visibility from '@material-ui/icons/Visibility';
 
-const Subjectscard = ({ subjectData, ...rest }) => {
+const StudentsAssignmentsFolderCard = ({ resource, ...rest }) => {
   const navigate = useNavigate();
 
   return (
@@ -22,9 +24,7 @@ const Subjectscard = ({ subjectData, ...rest }) => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        height: '100%',
-        borderRadius: '10px',
-        elevation: '10px'
+        height: '100%'
       }}
       {...rest}
     >
@@ -33,41 +33,41 @@ const Subjectscard = ({ subjectData, ...rest }) => {
           sx={{
             display: 'flex',
             justifyContent: 'center',
-            pb: 3
+            pb: 1
           }}
         >
-          <Avatar
-            alt={subjectData.subjectName}
-            src="src/media.png"
-            variant="round"
-            sx={{ width: 66, height: 66 }}
-          />
+          <Avatar>
+            <Upload />
+          </Avatar>
         </Box>
         <Typography
           align="center"
-          // color="#997b2f"
+          color="#997b2f"
           gutterBottom
-          variant="h5"
+          variant="h4"
+          fontSize={15}
         >
-          {`${subjectData.subjectName} (${subjectData.subjectCode})`}
+          {resource.assignmentTitle}
         </Typography>
         <Typography
           align="center"
-          color="primary"
+          color="textPrimary"
           variant="body1"
         >
-          {`Form Class: ${subjectData.className}`}
+          Due on
+          {' '}
+          {moment(resource.dueDatet).format('DD/MM/YYYY')}
+
         </Typography>
       </CardContent>
       <Box sx={{ flexGrow: 1 }} />
       <Divider />
-      <Box sx={{ p: 2 }}>
+      <Box sx={{ p: 1 }}>
         <Grid
           container
           spacing={2}
           sx={{ justifyContent: 'space-between' }}
         >
-
           <Grid
             item
             sx={{
@@ -75,15 +75,9 @@ const Subjectscard = ({ subjectData, ...rest }) => {
               display: 'flex'
             }}
           >
-            {/* <PeopleOutline color="action" /> */}
-            <Typography
-              color="secondaey"
-              display="inline"
-              sx={{ pl: 1 }}
-              variant="body2"
-            >
-              { `Class Teacher ${subjectData.teacherName} `}
-            </Typography>
+            <Tooltip title="View Question Paper" TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
+              <Visibility color="default" />
+            </Tooltip>
           </Grid>
           <Grid
             item
@@ -92,27 +86,26 @@ const Subjectscard = ({ subjectData, ...rest }) => {
               display: 'flex'
             }}
           >
-
             <Button
               onClick={() => {
-                localStorage.setItem('subjectData', JSON.stringify(subjectData));
-                navigate('/student/subject', { replace: true });
+                localStorage.setItem('recordingAssignment', JSON.stringify(resource));
+                navigate('/student/new-submission', { replace: true });
               }}
             >
-              <Tooltip title={`View ${subjectData.subjectName}`} TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
-                <Visibility color="inherit" align="right" />
+              <Tooltip title="SUBMIT YOUR WORK" TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} aria-label="add">
+                <Upload color="default" />
               </Tooltip>
-
             </Button>
           </Grid>
+
         </Grid>
       </Box>
     </Card>
   );
 };
 
-Subjectscard.propTypes = {
-  subjectData: PropTypes.object.isRequired
+StudentsAssignmentsFolderCard.propTypes = {
+  resource: PropTypes.object.isRequired
 };
 
-export default Subjectscard;
+export default StudentsAssignmentsFolderCard;

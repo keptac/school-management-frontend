@@ -25,6 +25,7 @@ import {
 
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import AdminServices from 'src/services/schoolAdmin';
+import AuthService from 'src/services/authServices';
 
 class AddStudents extends React.Component {
   constructor(props) {
@@ -78,7 +79,7 @@ class AddStudents extends React.Component {
     } = this.state;
 
     const a = Math.floor(100000 + Math.random() * 900000);
-    const studentIdRef = `STUD${String(a).substring(0, 4)}`;
+    const studentIdRef = `STUD${String(a).substring(0, 5)}`;
 
     const data = {
       name,
@@ -88,15 +89,34 @@ class AddStudents extends React.Component {
       dob,
       phoneNumber,
       emailAddress,
-      idNumber
+      idNumber,
+      guardianName: '',
+      relationshipToGuardian: '',
+      gender: '',
+      address: ''
     };
 
-    console.log(`Saving data ${data}`);
+    const dataReg = {
+      studentId: studentIdRef,
+      firstName: name,
+      surname,
+      classId: className.classId,
+      email: emailAddress,
+      password: 'pass@123'
+    };
 
     AdminServices.postNewStudent(data)
       .then((response) => {
-        console.log(response); // Add alert
-        alert('Success. Refresh your the page to update students.');
+        if (response.success) {
+          AuthService.studentAuthRegister(dataReg)
+            .then((res) => {
+              console.log(res);
+              window.location.reload(false);
+            });
+        } else {
+          alert(response.message);
+          window.location.reload(false);
+        }
       }).catch((error) => {
         console.log(error);
       });

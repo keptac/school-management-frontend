@@ -12,6 +12,7 @@ import {
   TablePagination,
   TableRow,
   Typography,
+  Button
 } from '@material-ui/core';
 
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -44,6 +45,16 @@ class AddClass extends React.Component {
     SchoolAdminServices.getAllSubjects()
       .then((response) => {
         this.setState({ subjects: response });
+      }).catch((error) => {
+        console.log(error);
+      });
+  }
+
+  async deleteSubject(subjectCode) {
+    SchoolAdminServices.deleteSubject(subjectCode)
+      .then((response) => {
+        this.setState({ page: 0 });
+        console.log(response);
       }).catch((error) => {
         console.log(error);
       });
@@ -96,6 +107,9 @@ class AddClass extends React.Component {
                               <TableCell>
                                 Level
                               </TableCell>
+                              <TableCell>
+                                Action
+                              </TableCell>
                             </TableRow>
                           </TableHead>
                           <TableBody>
@@ -124,6 +138,16 @@ class AddClass extends React.Component {
                                 </TableCell>
                                 <TableCell>
                                   {subject.level}
+                                </TableCell>
+                                <TableCell>
+                                  <Button
+                                    size="small"
+                                    color="error"
+                                    variant="contained"
+                                    onClick={() => this.deleteSubject(subject.subjectCode)}
+                                  >
+                                    Delete
+                                  </Button>
                                 </TableCell>
                               </TableRow>
                             ))}

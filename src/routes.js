@@ -12,7 +12,6 @@ import TeacherDashboardLayout from 'src/components/teacher/TeacherDashboardLayou
 import TeacherDashboard from 'src/pages/teacher/TeacherDashboard';
 
 import Account from 'src/pages/student/Account';
-import Chat from 'src/pages/student/Chat';
 import Dashboard from 'src/pages/student/Dashboard';
 import Library from 'src/pages/student/Library';
 import VirtualClass from 'src/pages/student/VirtualClass';
@@ -30,6 +29,16 @@ import AddNotice from './pages/schooladmin/NoticeBoard';
 import StaffLogin from './pages/StaffLogin';
 import NewStudentRegister from './pages/NewStudentRegister';
 import PaymentClass from './pages/schooladmin/Payments';
+import TeacherSubjectDetails from './pages/teacher/SubjectDetails';
+import ReportingDashboard from './pages/teacher/ReportingDashboard';
+import TeachingResources from './pages/teacher/TeachingResources';
+import StudentWork from './pages/teacher/StudentWork';
+import TeacherVirtualClass from './pages/teacher/TeacherVirtualClass';
+import AssignmentGrading from './pages/teacher/AssignmentGrading';
+import ClassNoticeBoard from './pages/teacher/ClassNoticeBoard';
+import ClassWork from './pages/student/ClassWork';
+import StudentReport from './pages/student/ReportBook';
+import SubmitAssignment from './pages/student/SubmitAssignment';
 
 const routes = [
   // Student Routes
@@ -38,11 +47,13 @@ const routes = [
     element: <StudentDashboardLayout />,
     children: [
       { path: 'account', element: <Account /> },
-      { path: 'chat', element: <Chat /> },
+      { path: 'my-report', element: <StudentReport /> },
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'library', element: <Library /> },
       { path: 'virtual-class', element: <VirtualClass /> },
       { path: 'subject', element: <SubjectContent /> },
+      { path: 'class-work', element: <ClassWork /> },
+      { path: 'new-submission', element: <SubmitAssignment /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },
@@ -53,8 +64,15 @@ const routes = [
     element: <TeacherDashboardLayout />,
     children: [
       { path: 'dashboard', element: <TeacherDashboard /> },
+      { path: 'reporting', element: <ReportingDashboard /> },
       { path: 'report', element: <ProgressReport /> },
       { path: 'classes', element: <AddTeacherClass /> },
+      { path: 'teaching-resources', element: <TeachingResources /> },
+      { path: 'student-work', element: <StudentWork /> },
+      { path: 'subject-student-records', element: <TeacherSubjectDetails /> },
+      { path: 'virtual-classes', element: <TeacherVirtualClass /> },
+      { path: 'student-submissions', element: <AssignmentGrading /> },
+      { path: 'class-announcements', element: <ClassNoticeBoard /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },
@@ -74,8 +92,6 @@ const routes = [
     ]
   },
 
-  // Super Admin Routes
-
   // Default Routes
   {
     path: '/',
@@ -86,7 +102,7 @@ const routes = [
       { path: 'register', element: <Register /> },
       { path: 'new-registration', element: <NewStudentRegister /> },
       { path: '404', element: <NotFound /> },
-      { path: '/', element: <Navigate to="/login" /> },
+      { path: '/', element: <Navigate to="/staff" /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   }

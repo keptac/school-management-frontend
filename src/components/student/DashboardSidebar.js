@@ -13,16 +13,15 @@ import {
 import {
   BarChart as BarChartIcon,
   Lock as LockIcon,
-  BookOpen as Library,
   MessageCircle as UsersIcon
 } from 'react-feather';
 import OndemandVideoIcon from '@material-ui/icons/OndemandVideo';
 import NavItem from '../NavItem';
 
 const user = {
-  avatar: '/static/images/avatars/avatar_1.jpg',
-  jobTitle: 'Student',
-  name: 'Kelvin Chelenje'
+  avatar: sessionStorage.getItem('loggedUserAvatar'),
+  jobTitle: sessionStorage.getItem('loggedUserRole'),
+  name: sessionStorage.getItem('name'),
 };
 
 const items = [
@@ -32,19 +31,14 @@ const items = [
     title: 'Dashboard'
   },
   {
-    href: '/student/library',
-    icon: Library,
-    title: 'Library'
-  },
-  {
     href: '/student/virtual-class',
     icon: OndemandVideoIcon,
     title: 'Virtual Class'
   },
   {
-    href: '/student/chat',
+    href: '/student/my-report',
     icon: UsersIcon,
-    title: 'Chat'
+    title: 'End of year Report'
   },
   {
     href: '/login',

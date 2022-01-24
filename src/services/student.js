@@ -2,15 +2,54 @@ import axios from 'axios';
 
 const qs = require('qs');
 
+// const deploymentUrl = 'http://localhost:3001/api';
+const deploymentUrl = 'https://mtgs-backend.herokuapp.com/api';
+
+const token = sessionStorage.getItem('token');
+
+// Student Subjects
+async function getStudentSubjects(classId) {
+  // const token = await JSON.parse(localStorage.getItem('token'));
+  const config = {
+    baseURL: `${deploymentUrl}/esm/student-enrolment`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      // Authorization: `Bearer ${token}`,
+      // 'Access-Control-Allow-Credentials': true,
+    },
+  };
+  try {
+    const res = await axios.get(`/student/${classId}`, config);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+}
+
+async function getStudentSubmissions(subjectCode, studentId) {
+  const config = {
+    baseURL: `${deploymentUrl}/esm/submissions`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  };
+  try {
+    const res = await axios.get(`/student/${subjectCode}/${studentId}`, config);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+}
+
 // Submissions
 async function submitAssignment(data) {
-  const token = await JSON.parse(localStorage.getItem('token'));
   const config = {
-    baseURL: 'http://localhost:3001/api/student',
+    baseURL: `${deploymentUrl}/student`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       Authorization: `Bearer ${token}`,
-      'Access-Control-Allow-Origin': 'https://pawacyberschool.net',
       'Access-Control-Allow-Credentials': true,
     },
   };
@@ -23,31 +62,10 @@ async function submitAssignment(data) {
   }
 }
 
-// Student Subjects
-async function getStudentSubjects(studentId) {
-  // const token = await JSON.parse(localStorage.getItem('token'));
-  const config = {
-    baseURL: 'http://localhost:3001/api/esm/student-enrolment',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      // Authorization: `Bearer ${token}`,
-      // 'Access-Control-Allow-Credentials': true,
-    },
-  };
-  try {
-    const res = await axios.get(`/student/${studentId}`, config);
-    return res.data.data;
-  } catch (err) {
-    console.error(err);
-    return [];
-  }
-}
-
 async function download(data) {
-  const token = await JSON.parse(localStorage.getItem('token'));
   try {
     const res = await axios.post(
-      'http://localhost:3001/api/upload/get',
+      `${deploymentUrl}/upload/get`,
       qs.stringify(data),
       {
         headers: {
@@ -67,11 +85,9 @@ async function download(data) {
 }
 
 async function deleteResource(data) {
-  const token = await JSON.parse(localStorage.getItem('token'));
-
   try {
     const res = await axios.delete(
-      'http://localhost:3001/api/upload/delete',
+      `${deploymentUrl}/upload/delete`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -87,11 +103,28 @@ async function deleteResource(data) {
   }
 }
 
+async function getStudentReport(studentId) {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/esm/studentMarks/student/${studentId}`,
+    headers: {}
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
 const StudentServices = {
   submitAssignment,
   getStudentSubjects,
   download,
   deleteResource,
+  getStudentSubmissions,
+  getStudentReport
 };
 
 export default StudentServices;
