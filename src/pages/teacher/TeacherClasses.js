@@ -59,7 +59,7 @@ class AddTeacherClass extends React.Component {
   }
 
   handlePageChange(newPage) {
-    this.setState({ page: newPage });
+    this.setState({ page: newPage + 1 });
   }
 
   handleAddTeacherClass() {
@@ -172,7 +172,7 @@ class AddTeacherClass extends React.Component {
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            {teacherClasses.slice(0, limit).map((classe) => (
+                            {teacherClasses.slice(page, limit).map((classe) => (
                               <TableRow
                                 hover
                                 key={classe.classId}
@@ -210,7 +210,7 @@ class AddTeacherClass extends React.Component {
                     <TablePagination
                       component="div"
                       count={teacherClasses.length}
-                      onPageChange={() => this.handlePageChange}
+                      onPageChange={() => this.handlePageChange(page)}
                       onRowsPerPageChange={(e) => this.handleLimitChange(e)}
                       page={page}
                       rowsPerPage={limit}
