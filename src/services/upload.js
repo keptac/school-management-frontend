@@ -76,10 +76,9 @@ async function submitAssignment(body) {
   data.append('studentId', body.studentId);
   data.append('submissionPath', '');
   data.append('assignmentId', body.assignmentId);
-  data.append('graded', body.graded);
-  data.append('mark', body.mark);
-  data.append('grade', body.grade);
+  data.append('assignmentTitle', body.assignmentTitle);
   data.append('vividlearn', body.vividlearn);
+  data.append('total', body.total);
 
   const config = {
     method: 'post',
@@ -207,10 +206,9 @@ async function submitAssignmentIpfs(body) {
     data.append('studentId', body.studentId);
     data.append('submissionPath', uploadedImageUrl);
     data.append('assignmentId', body.assignmentId);
-    data.append('graded', body.graded);
-    data.append('mark', body.mark);
-    data.append('grade', body.grade);
+    data.append('assignmentTitle', body.assignmentTitle);
     data.append('vividlearn', body.vividlearn);
+    data.append('total', body.total);
 
     const config = {
       method: 'post',

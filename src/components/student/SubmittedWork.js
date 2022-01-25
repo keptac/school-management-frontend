@@ -28,18 +28,21 @@ const SubmittedWork = ({ student }) => (
           src={student.avatarUrl}
           sx={{ mr: 2 }}
         >
-          {getInitials(`${student.firstName} ${student.surname}`)}
+          {getInitials(`${student.studentName}`)}
         </Avatar>
-        <Typography
-          color="textPrimary"
-          variant="body1"
-        >
-          {`${student.firstName} ${student.surname}` }
-        </Typography>
+
       </Box>
     </TableCell>
     <TableCell>
-      {`${student.mark}`}
+      <Typography
+        color="textPrimary"
+        variant="body1"
+      >
+        {`${student.assignmentTitle}` }
+      </Typography>
+    </TableCell>
+    <TableCell>
+      {`${student.mark} / ${student.total}`}
     </TableCell>
     <TableCell>
       {student.grade}

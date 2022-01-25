@@ -27,28 +27,34 @@ const AssignmentMarksForm = ({ studentName }, props) => {
   const handleChange = (event) => {
     const recordingAssignment = JSON.parse(localStorage.getItem('recordingAssignment'));
     if (event.target.name === 'mark') {
-      let comment = '';
-      const percentage = (event.target.value / recordingAssignment.totalMarks) * 100;
-      if (percentage < 30) {
-        comment = 'Below average. Put more effort and work harder next time.';
-      } else if (percentage >= 30 && percentage < 40) {
-        comment = 'Put more effort and aim higher';
-      } else if (percentage >= 40 && percentage < 50) {
-        comment = 'Work hard for better results';
-      } else if (percentage >= 50 && percentage < 60) {
-        comment = 'You can do better with more focus and hard work';
-      } else if (percentage >= 60 && percentage < 70) {
-        comment = 'Good work, keep on pushing!';
-      } else if (percentage >= 70 && percentage < 80) {
-        comment = 'Good results. There is more for you to achieve.';
+      if (event.target.value > recordingAssignment.totalMarks) {
+        alert.error(`Result should not be exceed ${recordingAssignment.totalMarks}`, { position: positions.MIDDLE_RIGHT }, {
+          timeout: 10,
+        });
       } else {
-        comment = 'Excellent work. Keep it up with consistency!';
+        let comment = '';
+        const percentage = (event.target.value / recordingAssignment.totalMarks) * 100;
+        if (percentage < 30) {
+          comment = 'Below average. Put more effort and work harder next time.';
+        } else if (percentage >= 30 && percentage < 40) {
+          comment = 'Put more effort and aim higher';
+        } else if (percentage >= 40 && percentage < 50) {
+          comment = 'Work hard for better results';
+        } else if (percentage >= 50 && percentage < 60) {
+          comment = 'You can do better with more focus and hard work';
+        } else if (percentage >= 60 && percentage < 70) {
+          comment = 'Good work, keep on pushing!';
+        } else if (percentage >= 70 && percentage < 80) {
+          comment = 'Good results. There is more for you to achieve.';
+        } else {
+          comment = 'Excellent work. Keep it up with consistency!';
+        }
+        setValues({
+          ...values,
+          [event.target.name]: event.target.value,
+          comment
+        });
       }
-      setValues({
-        ...values,
-        [event.target.name]: event.target.value,
-        comment
-      });
     } else {
       setValues({
         ...values,
@@ -64,7 +70,11 @@ const AssignmentMarksForm = ({ studentName }, props) => {
     const percentage = (values.mark / recordingAssignment.totalMarks) * 100;
 
     let grade = '';
-    if (subjectRecord.level === 'GCSE') {
+    if (percentage > 100) {
+      alert.error(`Result should not be exceed ${recordingAssignment.totalMarks}`, { position: positions.MIDDLE_RIGHT }, {
+        timeout: 10,
+      });
+    } else if (subjectRecord.level === 'GCSE') {
       if (percentage < 20) {
         grade = 'U';
       } else if (percentage >= 20 && percentage < 30) {
@@ -123,10 +133,12 @@ const AssignmentMarksForm = ({ studentName }, props) => {
     }
 
     const data = {
-      submissionId: submissionRecord.submissionCode,
+      submissionId: submissionRecord.submissionId,
       mark: values.mark,
       grade,
-      comment: values.comment
+      comment: values.comment,
+      graded: true,
+      total: recordingAssignment.totalMarks
       // firstName: submissionRecord.firstName,
       // surname: submissionRecord.surname,
       // studentId: submissionRecord.studentId,

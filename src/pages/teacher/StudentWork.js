@@ -140,23 +140,21 @@ class StudentWork extends React.Component {
                       <Container maxWidth={false}>
                         {viewDoc
                           ? (
-                            <Box
-                              sx={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                pt: 3
-                              }}
-                            >
-                              {
-                                download ? (<Button>Download</Button>) : (
-                                  <FileViewer
-                                    fileType={type}
-                                    filePath={docs}
-                                    onError={(e) => this.onError(e)}
-                                  />
-                                  // {/* <DocViewer pluginRenderers={DocViewerRenderers} documents={docs} /> */}
-                                )
-                              }
+                            <Box sx={{ pt: 3, justifyContent: 'center', display: 'flex' }}>
+                              <Card style={{ height: '780px', width: '70%', justifyContent: 'center', }}>
+                                {
+                                  download ? (<Button>Download</Button>) : (
+
+                                    <FileViewer
+                                      fileType={type}
+                                      filePath={docs}
+                                      allowFullScreen
+                                      onError={() => this.setState({ download: true })}
+                                    />
+
+                                  )
+                                }
+                              </Card>
                             </Box>
                           )
                           : (
@@ -174,7 +172,7 @@ class StudentWork extends React.Component {
                                       md={6}
                                       xs={12}
                                     >
-                                      <div onClick={() => this.readDocument(resource.resourcePath, resource.ext)} aria-hidden="true">
+                                      <div onClick={() => this.readDocument(resource.assignmentPath, resource.ext)} aria-hidden="true">
                                         <AssignmentsFolderCard resource={resource} />
                                       </div>
                                     </Grid>

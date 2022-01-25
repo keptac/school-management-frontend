@@ -6,7 +6,8 @@ import {
   Container,
   Grid,
   Button,
-  Typography
+  Typography,
+  Card
 } from '@material-ui/core';
 
 // import DocViewer from 'react-doc-viewer';
@@ -25,6 +26,7 @@ class SubjectContent extends React.Component {
       docs: [],
       resources: [],
       type: '',
+      download: false
     };
   }
 
@@ -78,84 +80,88 @@ class SubjectContent extends React.Component {
           }}
         >
           <Container maxWidth={false}>
-            {viewDoc
-              ? (
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    pt: 3
-                  }}
+
+            <Box>
+              <Typography
+                align="center"
+                color="#997b2f"
+                gutterBottom
+                variant="h3"
+              >
+                {`${subjectName} Resource Library`}
+              </Typography>
+              <Grid
+                container
+                spacing={2}
+                sx={{ marginTop: '0.1%' }}
+              >
+                <Grid
+                  item
+                  container
+                  spacing={2}
+                  sx={{ marginTop: '0.1%' }}
+                  lg={9}
+                  md={9}
+                  xl={9}
+                  xs={12}
                 >
+                  {viewDoc
+                    ? (
+                      <Card style={{
+                        height: '800px',
+                        width: '70%',
+                        marginLeft: '100px',
+                        paddingLeft: '10px'
+                      }}
+                      >
+                        {
+                                  download ? (<Button>Download</Button>) : (
 
-                  {
-                                download ? (<Button>Download</Button>) : (
-                                  <FileViewer
-                                    fileType={type}
-                                    filePath={docs}
-                                    onError={(e) => this.onError(e)}
-                                  />
-                                  // {/* <DocViewer pluginRenderers={DocViewerRenderers} documents={docs} /> */}
-                                )
-                              }
-                </Box>
-              )
-              : (
-                <Box>
-                  <Typography
-                    align="center"
-                    color="#997b2f"
-                    gutterBottom
-                    variant="h3"
-                  >
-                    {`${subjectName} Resource Library`}
-                  </Typography>
-                  <Grid
-                    container
-                    spacing={2}
-                    sx={{ marginTop: '0.1%' }}
-                  >
-                    <Grid
-                      item
-                      container
-                      spacing={2}
-                  // sx={{ marginTop: '0.1%' }}
-                      lg={9}
-                      md={9}
-                      xl={9}
-                      xs={12}
-                    >
+                                    <FileViewer
+                                      fileType={type}
+                                      filePath={docs}
+                                      onError={() => this.setState({ download: true })}
+                                    />
 
-                      {resources.map((resource) => (
-                        <Grid
-                          item
-                          key={resource.id}
-                          lg={3}
-                          md={6}
-                          xl={9}
-                          xs={12}
-                        >
-                          <div onClick={() => this.readDocument(resource.resourcePath, resource.ext)} aria-hidden="true">
-                            <LibraryCard resource={resource} />
-                          </div>
-                        </Grid>
-                      ))}
-                    </Grid>
+                                  )
+                                }
+                      </Card>
+                  // </Box>
+                    )
+                    : (
+                      <>
+                        {resources.map((resource) => (
+                          <Grid
+                            item
+                            key={resource.id}
+                            lg={3}
+                            md={6}
+                            xl={9}
+                            xs={12}
+                          >
+                            <div onClick={() => this.readDocument(resource.resourcePath, resource.ext)} aria-hidden="true">
+                              <LibraryCard resource={resource} />
+                            </div>
+                          </Grid>
+                        ))}
+                      </>
+                    )}
+                </Grid>
 
-                    <Grid
-                      item
-                      lg={3}
-                      md={3}
-                      xl={3}
-                      xs={12}
-                    >
-                      <MenuBoard sx={{ height: '100%' }} />
+                <Grid
+                  item
+                  lg={3}
+                  md={3}
+                  xl={3}
+                  xs={12}
+                >
+                  <MenuBoard />
 
-                    </Grid>
+                </Grid>
 
-                  </Grid>
-                </Box>
-              )}
+              </Grid>
+            </Box>
+
           </Container>
         </Box>
       </>

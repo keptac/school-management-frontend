@@ -41,6 +41,7 @@ class ClassWork extends React.Component {
       marksResults: [],
       students: [],
       recordingSubject: {},
+      download: false
     };
   }
 
@@ -175,7 +176,10 @@ class ClassWork extends React.Component {
                               <TableHead>
                                 <TableRow>
                                   <TableCell>
-                                    Student Name
+                                    Initials
+                                  </TableCell>
+                                  <TableCell>
+                                    Title
                                   </TableCell>
                                   <TableCell>
                                     Mark
@@ -215,24 +219,23 @@ class ClassWork extends React.Component {
                       <Container maxWidth={false}>
                         {viewDoc
                           ? (
-                            <Box
-                              sx={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                pt: 3
-                              }}
+                            <Card style={{
+                              height: '800px',
+                              width: '70%',
+                              marginLeft: '100px',
+                              paddingLeft: '10px'
+                            }}
                             >
                               {
-                                download ? (<Button>Download</Button>) : (
-                                  <FileViewer
-                                    fileType={type}
-                                    filePath={docs}
-                                    onError={(e) => this.onError(e)}
-                                  />
-                                  // {/* <DocViewer pluginRenderers={DocViewerRenderers} documents={docs} /> */}
-                                )
-                              }
-                            </Box>
+                                        download ? (<Button>Download</Button>) : (
+                                          <FileViewer
+                                            fileType={type}
+                                            filePath={docs}
+                                            onError={() => this.setState({ download: true })}
+                                          />
+                                        )
+                                      }
+                            </Card>
                           )
                           : (
                             <>
@@ -249,7 +252,7 @@ class ClassWork extends React.Component {
                                       md={6}
                                       xs={12}
                                     >
-                                      <div onClick={() => this.readDocument(resource.resourcePath, resource.ext)} aria-hidden="true">
+                                      <div onClick={() => this.readDocument(resource.assignmentPath, resource.ext)} aria-hidden="true">
                                         <StudentsAssignmentsFolderCard resource={resource} />
                                       </div>
                                     </Grid>
