@@ -47,19 +47,28 @@ const UploadLearningResourcesForm = () => {
       resourceId
     };
 
-    UploadService.postMaterial(data)
-      .then((response) => {
-        navigate('/teacher/subject-student-records', { replace: true });
-        navigate('/teacher/teaching-resources', { replace: true });
-        alert.info(response.message, { position: positions.MIDDLE }, {
-          timeout: 2000,
+    // UploadService.postMaterial(data)
+    try {
+      UploadService.postMaterialIpfs(data)
+        .then((response) => {
+          navigate('/teacher/subject-student-records', { replace: true });
+          navigate('/teacher/teaching-resources', { replace: true });
+          alert.info(response.message, { position: positions.MIDDLE }, {
+            timeout: 2000,
+          });
+        }).catch((error) => {
+          console.log(error);
+          alert.error('Snap, an error occured. Please try again later.', { position: positions.MIDDLE }, {
+            timeout: 2000,
+          });
+          navigate('/teacher/subject-student-records', { replace: true });
+          navigate('/teacher/teaching-resources', { replace: true });
         });
-      }).catch((error) => {
-        console.log(error);
-        alert.error('Snap, an error occured. Please try again later.', { position: positions.MIDDLE }, {
-          timeout: 2000,
-        });
-      });
+    } catch (error) {
+      console.log(error);
+      navigate('/teacher/subject-student-records', { replace: true });
+      navigate('/teacher/teaching-resources', { replace: true });
+    }
   };
 
   return (

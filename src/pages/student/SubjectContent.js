@@ -5,11 +5,12 @@ import {
   Box,
   Container,
   Grid,
+  Button,
   Typography
 } from '@material-ui/core';
 
-import DocViewer from 'react-doc-viewer';
-
+// import DocViewer from 'react-doc-viewer';
+import FileViewer from 'react-file-viewer';
 import MenuBoard from 'src/components/student/StudentMenu';
 import LibraryCard from 'src/components/student/library/LibraryCard';
 import React from 'react';
@@ -22,7 +23,8 @@ class SubjectContent extends React.Component {
       subjectName: '',
       viewDoc: false,
       docs: [],
-      resources: []
+      resources: [],
+      type: '',
     };
   }
 
@@ -32,6 +34,11 @@ class SubjectContent extends React.Component {
       subjectName: subjectData.subjectName
     });
     this.getAllSubjectResources();
+  }
+
+  onError(e) {
+    this.setState({ download: true });
+    console.log(e, 'error in file-viewer');
   }
 
   async getAllSubjectResources() {
@@ -44,16 +51,17 @@ class SubjectContent extends React.Component {
       });
   }
 
-  readDocument(path) {
+  readDocument(path, ext) {
     this.setState({
       viewDoc: true,
-      docs: [{ uri: path }]
+      docs: path,
+      type: ext.replace('.', '')
     });
   }
 
   render() {
     const {
-      subjectName, viewDoc, docs, resources
+      subjectName, viewDoc, docs, resources, type, download
     } = this.state;
     return (
       <>
@@ -80,7 +88,16 @@ class SubjectContent extends React.Component {
                   }}
                 >
 
-                  <DocViewer documents={docs} />
+                  {
+                                download ? (<Button>Download</Button>) : (
+                                  <FileViewer
+                                    fileType={type}
+                                    filePath={docs}
+                                    onError={(e) => this.onError(e)}
+                                  />
+                                  // {/* <DocViewer pluginRenderers={DocViewerRenderers} documents={docs} /> */}
+                                )
+                              }
                 </Box>
               )
               : (
@@ -118,7 +135,7 @@ class SubjectContent extends React.Component {
                           xl={9}
                           xs={12}
                         >
-                          <div onClick={() => this.readDocument(resource.resourcePath)} aria-hidden="true">
+                          <div onClick={() => this.readDocument(resource.resourcePath, resource.ext)} aria-hidden="true">
                             <LibraryCard resource={resource} />
                           </div>
                         </Grid>

@@ -55,11 +55,17 @@ class AddTeacherClass extends React.Component {
   }
 
   handleLimitChange(event) {
-    this.setState({ limit: event.target.value });
+    this.setState({ limit: +event.target.value, page: 0 });
   }
 
-  handlePageChange(newPage) {
-    this.setState({ page: newPage });
+  handlePageChange(event, newPage) {
+    let s = new XMLSerializer();
+    let str = s.serializeToString(event.target);
+    if (str.includes('KeyboardArrowRightIcon')) {
+      this.setState({ page: newPage + 1 });
+    } else if (newPage !== 0) {
+      this.setState({ page: newPage - 1 });
+    }
   }
 
   handleAddTeacherClass() {
@@ -84,9 +90,11 @@ class AddTeacherClass extends React.Component {
     TeacherServices.addTeacherClass(data)
       .then((response) => {
         window.location.reload(false);
+        alert('Sucess');
         console.log(response); // Add alert
       }).catch((error) => {
         console.log(error);
+        alert('Failed');
       });
   }
 
@@ -170,7 +178,7 @@ class AddTeacherClass extends React.Component {
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            {teacherClasses.slice(0, limit).map((classe) => (
+                            {teacherClasses.slice(page * limit, page * limit + limit).map((classe) => (
                               <TableRow
                                 hover
                                 key={classe.classId}
@@ -208,14 +216,13 @@ class AddTeacherClass extends React.Component {
                     <TablePagination
                       component="div"
                       count={teacherClasses.length}
-                      onPageChange={() => this.handlePageChange}
-                      onRowsPerPageChange={() => this.handleLimitChange}
+                      onPageChange={(e) => this.handlePageChange(e, page)}
+                      onRowsPerPageChange={(e) => this.handleLimitChange(e)}
                       page={page}
                       rowsPerPage={limit}
                       rowsPerPageOptions={[5, 10, 25]}
                     />
                   </Card>
-
                 </Box>
               </Grid>
               <Grid

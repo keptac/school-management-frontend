@@ -33,11 +33,11 @@ class AddClass extends React.Component {
   }
 
   handleLimitChange(event) {
-    this.setState({ limit: event });
+    this.setState({ limit: event.target.value });
   }
 
-  handlePageChange(newPage) {
-    this.setState({ page: newPage });
+  handlePageChange(event) {
+    this.setState({ page: event.target.value });
   }
 
   async getNotices() {
@@ -98,7 +98,7 @@ class AddClass extends React.Component {
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            {notices.slice(0, limit).map((notice) => (
+                            {notices.slice(page * limit, page * limit + limit).map((notice) => (
                               <TableRow
                                 hover
                                 key={notice.id}
@@ -133,11 +133,10 @@ class AddClass extends React.Component {
                     <TablePagination
                       component="div"
                       count={notices.length}
-                      onPageChange={() => this.handlePageChange(page)}
-                      onRowsPerPageChange={() => this.handleLimitChange(limit)}
+                      onPageChange={(e) => this.handlePageChange(e)}
+                      onRowsPerPageChange={(e) => this.handleLimitChange(e)}
                       page={page}
                       rowsPerPage={limit}
-                      rowsPerPageOptions={[5, 10, 25]}
                     />
                   </Card>
 

@@ -14,7 +14,8 @@ import {
 
 import LibraryCard from 'src/components/teacher/library/LibraryCard';
 
-import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
+// import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
+import FileViewer from 'react-file-viewer';
 
 import TeacherServices from 'src/services/teacher';
 import TeacherMenuBoard from 'src/components/teacher/TeacherMenuBoard';
@@ -27,7 +28,9 @@ class TeachingResources extends React.Component {
       learningResources: [],
       viewDoc: false,
       uploadDoc: false,
-      docs: []
+      docs: [],
+      type: '',
+      download: false
     };
   }
 
@@ -36,6 +39,11 @@ class TeachingResources extends React.Component {
     this.setState({
       viewDoc: false,
     });
+  }
+
+  onError(e) {
+    this.setState({ download: true });
+    console.log(e, 'error in file-viewer');
   }
 
   async getAllSubjectResources() {
@@ -48,10 +56,11 @@ class TeachingResources extends React.Component {
       });
   }
 
-  readDocument(path) {
+  readDocument(path, ext) {
     this.setState({
+      docs: path,
+      type: ext.replace('.', ''),
       viewDoc: true,
-      docs: [{ uri: path }]
     });
   }
 
@@ -63,7 +72,7 @@ class TeachingResources extends React.Component {
 
   render() {
     const {
-      viewDoc, docs, uploadDoc, learningResources
+      viewDoc, docs, uploadDoc, learningResources, type, download
     } = this.state;
 
     console.log(learningResources);
@@ -141,7 +150,16 @@ class TeachingResources extends React.Component {
                                 pt: 3
                               }}
                             >
-                              <DocViewer pluginRenderers={DocViewerRenderers} documents={docs} />
+                              {
+                                download ? (<Button>Download</Button>) : (
+                                  <FileViewer
+                                    fileType={type}
+                                    filePath={docs}
+                                    onError={() => this.setState({ download: true })}
+                                  />
+                                  // {/* <DocViewer pluginRenderers={DocViewerRenderers} documents={docs} /> */}
+                                )
+                              }
                             </Box>
                           )
                           : (
@@ -159,7 +177,7 @@ class TeachingResources extends React.Component {
                                       md={6}
                                       xs={12}
                                     >
-                                      <div onClick={() => this.readDocument(resource.resourcePath)} aria-hidden="true">
+                                      <div onClick={() => this.readDocument(resource.resourcePath, resource.ext)} aria-hidden="true">
                                         <LibraryCard resource={resource} />
                                       </div>
                                     </Grid>

@@ -67,7 +67,7 @@ class TeacherDashboard extends React.Component {
                     <Grid
                       item
                       key={resource.subjectCode}
-                      lg={6}
+                      lg={4}
                       md={6}
                       xs={12}
                     >

@@ -44,19 +44,30 @@ const IssueAssignment = () => {
       vividlearn
     };
 
-    UploadService.submitAssignment(data)
-      .then((response) => {
-        navigate('/student/subject', { replace: true });
-        navigate('/student/class-work', { replace: true });
-        alert.info(response.message, { position: positions.MIDDLE }, {
-          timeout: 2000,
+    try {
+      UploadService.submitAssignmentIpfs(data)
+        .then((response) => {
+          navigate('/student/subject', { replace: true });
+          navigate('/student/class-work', { replace: true });
+          alert.info(response.message, { position: positions.MIDDLE }, {
+            timeout: 2000,
+          });
+        }).catch((error) => {
+          console.log(error);
+          alert.error('Snap, an error occured. Please try again later.', { position: positions.MIDDLE }, {
+            timeout: 2000,
+          });
+          navigate('/student/subject', { replace: true });
+          navigate('/student/class-work', { replace: true });
         });
-      }).catch((error) => {
-        console.log(error);
-        alert.error('Snap, an error occured. Please try again later.', { position: positions.MIDDLE }, {
-          timeout: 2000,
-        });
+    } catch (error) {
+      console.log(error);
+      alert.error('Snap, an error occured. Please try again later.', { position: positions.MIDDLE }, {
+        timeout: 2000,
       });
+      navigate('/student/subject', { replace: true });
+      navigate('/student/class-work', { replace: true });
+    }
   };
 
   return (

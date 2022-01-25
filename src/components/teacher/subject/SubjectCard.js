@@ -82,7 +82,7 @@ const SubjectCard = ({ resource, ...rest }) => {
               sx={{ pl: 1 }}
               variant="body2"
             >
-              { `${resource.studentCount} Students Enrolled`}
+              View Students Enrolled
             </Typography>
           </Grid>
           <Grid

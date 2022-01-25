@@ -183,6 +183,9 @@ const Login = () => {
               </form>
             )}
           </Formik>
+          <Typography color="textSecondary" variant="caption" display="block" gutterBottom>
+            Version 0.16
+          </Typography>
         </Container>
       </Box>
     </>
