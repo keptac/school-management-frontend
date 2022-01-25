@@ -249,7 +249,7 @@ class ClassWork extends React.Component {
                                       md={6}
                                       xs={12}
                                     >
-                                      <div onClick={() => this.readDocument(resource.resourcePath, resource.ext)} aria-hidden="true">
+                                      <div onClick={() => this.readDocument(resource.assignmentPath, resource.ext)} aria-hidden="true">
                                         <StudentsAssignmentsFolderCard resource={resource} />
                                       </div>
                                     </Grid>
