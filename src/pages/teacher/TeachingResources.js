@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-alert */
 /* eslint-disable prefer-const */
 
@@ -14,7 +15,6 @@ import {
 
 import LibraryCard from 'src/components/teacher/library/LibraryCard';
 
-// import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
 import FileViewer from 'react-file-viewer';
 
 import TeacherServices from 'src/services/teacher';
@@ -28,7 +28,7 @@ class TeachingResources extends React.Component {
       learningResources: [],
       viewDoc: false,
       uploadDoc: false,
-      docs: [],
+      docs: '',
       type: '',
       download: false
     };
@@ -139,74 +139,61 @@ class TeachingResources extends React.Component {
                     }}
                   />
                   {uploadDoc ? (<UploadLearningResourcesForm />) : (
-                    <Card>
-                      <Container maxWidth={false}>
-                        {viewDoc
-                          ? (
+                    <>
+                      {/* <Container maxWidth> */}
+                      {viewDoc
+                        ? (
+                          <Box sx={{ pt: 3, justifyContent: 'center', display: 'flex' }}>
+                            <Card style={{ height: '780px', width: '70%', justifyContent: 'center', }}>
+                              {
+                                  download ? (<Button>Download</Button>) : (
+
+                                    <FileViewer
+                                      fileType={type}
+                                      filePath={docs}
+                                      allowFullScreen
+                                      onError={() => this.setState({ download: true })}
+                                    />
+
+                                  )
+                                }
+                            </Card>
+                          </Box>
+                        )
+                        : (
+                          <Card>
+                            <Box sx={{ pt: 3 }}>
+                              <Grid
+                                container
+                                spacing={3}
+                              >
+                                {learningResources.map((resource) => (
+                                  <Grid
+                                    item
+                                    key={resource.id}
+                                    lg={3}
+                                    md={6}
+                                    xs={12}
+                                  >
+                                    <div onClick={() => this.readDocument(resource.resourcePath, resource.ext)} aria-hidden="true">
+                                      <LibraryCard resource={resource} />
+                                    </div>
+                                  </Grid>
+                                ))}
+                              </Grid>
+                            </Box>
+
                             <Box
                               sx={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                pt: 3
+                                pt: 2
                               }}
-                            >
-                              {
-                                download ? (<Button>Download</Button>) : (
-                                  <FileViewer
-                                    fileType={type}
-                                    filePath={docs}
-                                    onError={() => this.setState({ download: true })}
-                                  />
-                                  // {/* <DocViewer pluginRenderers={DocViewerRenderers} documents={docs} /> */}
-                                )
-                              }
-                            </Box>
-                          )
-                          : (
-                            <>
-                              <Box sx={{ pt: 3 }}>
-                                <Grid
-                                  container
-                                  spacing={3}
-                                >
-                                  {learningResources.map((resource) => (
-                                    <Grid
-                                      item
-                                      key={resource.id}
-                                      lg={3}
-                                      md={6}
-                                      xs={12}
-                                    >
-                                      <div onClick={() => this.readDocument(resource.resourcePath, resource.ext)} aria-hidden="true">
-                                        <LibraryCard resource={resource} />
-                                      </div>
-                                    </Grid>
-                                  ))}
-                                </Grid>
-                              </Box>
-                              <Box
-                                sx={{
-                                  display: 'flex',
-                                  justifyContent: 'center',
-                                  pt: 3
-                                }}
-                              >
-                                <Pagination
-                                  color="primary"
-                                  count={3}
-                                  size="small"
-                                />
-                              </Box>
-                            </>
-                          )}
-                      </Container>
+                            />
 
-                      <Box
-                        sx={{
-                          pt: 2
-                        }}
-                      />
-                    </Card>
+                          </Card>
+                        )}
+
+                      {/* </Container> */}
+                    </>
                   )}
                 </Box>
               </Grid>

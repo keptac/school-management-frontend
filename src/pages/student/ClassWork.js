@@ -227,7 +227,7 @@ class ClassWork extends React.Component {
                                   <FileViewer
                                     fileType={type}
                                     filePath={docs}
-                                    onError={(e) => this.onError(e)}
+                                    onError={this.onError}
                                   />
                                   // {/* <DocViewer pluginRenderers={DocViewerRenderers} documents={docs} /> */}
                                 )
