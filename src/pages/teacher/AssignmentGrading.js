@@ -307,7 +307,7 @@ class AssignmentGrading extends React.Component {
                       />
                       <Divider />
                     </Card>
-                  ) : (<AssignmentMarksForm studentName={`${submissionRecord.firstName} ${submissionRecord.surname}`} />) }
+                  ) : (<AssignmentMarksForm studentName={`${submissionRecord.studentName}`} />) }
                 </Box>
               </Grid>
             </Grid>
