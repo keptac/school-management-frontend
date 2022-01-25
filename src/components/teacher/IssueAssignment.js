@@ -58,19 +58,30 @@ const IssueAssignment = () => {
       assignmentDescription: values.description
     };
 
-    UploadService.issueAssignment(data)
-      .then((response) => {
-        navigate('/teacher/subject-student-records', { replace: true });
-        navigate('/teacher/student-work', { replace: true });
-        alert.info(response.message, { position: positions.MIDDLE }, {
-          timeout: 2000,
+    try {
+      UploadService.issueAssignmentIpfs(data)
+        .then((response) => {
+          navigate('/teacher/subject-student-records', { replace: true });
+          navigate('/teacher/student-work', { replace: true });
+          alert.info(response.message, { position: positions.MIDDLE }, {
+            timeout: 2000,
+          });
+        }).catch((error) => {
+          console.log(error);
+          navigate('/teacher/subject-student-records', { replace: true });
+          navigate('/teacher/student-work', { replace: true });
+          alert.error('Snap, an error occured. Please try again later.', { position: positions.MIDDLE }, {
+            timeout: 2000,
+          });
         });
-      }).catch((error) => {
-        console.log(error);
-        alert.error('Snap, an error occured. Please try again later.', { position: positions.MIDDLE }, {
-          timeout: 2000,
-        });
+    } catch (error) {
+      console.log(error);
+      navigate('/teacher/subject-student-records', { replace: true });
+      navigate('/teacher/student-work', { replace: true });
+      alert.error('Snap, an error occured. Please try again later.', { position: positions.MIDDLE }, {
+        timeout: 2000,
       });
+    }
   };
 
   return (

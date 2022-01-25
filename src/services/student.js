@@ -42,26 +42,7 @@ async function getStudentSubmissions(subjectCode, studentId) {
     return [];
   }
 }
-
 // Submissions
-async function submitAssignment(data) {
-  const config = {
-    baseURL: `${deploymentUrl}/student`,
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      Authorization: `Bearer ${token}`,
-      'Access-Control-Allow-Credentials': true,
-    },
-  };
-  try {
-    const res = await axios.post('/new_submission', qs.stringify(data), config);
-    return res.data;
-  } catch (err) {
-    console.error(err);
-    return err;
-  }
-}
-
 async function download(data) {
   try {
     const res = await axios.post(
@@ -119,7 +100,6 @@ async function getStudentReport(studentId) {
 }
 
 const StudentServices = {
-  submitAssignment,
   getStudentSubjects,
   download,
   deleteResource,
