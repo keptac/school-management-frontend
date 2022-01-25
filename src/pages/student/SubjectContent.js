@@ -5,6 +5,7 @@ import {
   Box,
   Container,
   Grid,
+  Button,
   Typography
 } from '@material-ui/core';
 
@@ -35,6 +36,11 @@ class SubjectContent extends React.Component {
     this.getAllSubjectResources();
   }
 
+  onError(e) {
+    this.setState({ download: true });
+    console.log(e, 'error in file-viewer');
+  }
+
   async getAllSubjectResources() {
     const subjectData = JSON.parse(localStorage.getItem('subjectData'));
     TeacherServices.getResourcesBySubjectCode(subjectData.subjectCode)
@@ -55,7 +61,7 @@ class SubjectContent extends React.Component {
 
   render() {
     const {
-      subjectName, viewDoc, docs, resources, type
+      subjectName, viewDoc, docs, resources, type, download
     } = this.state;
     return (
       <>
@@ -82,11 +88,16 @@ class SubjectContent extends React.Component {
                   }}
                 >
 
-                  <FileViewer
-                    fileType={type}
-                    filePath={docs}
-                  />
-                  {/* <DocViewer pluginRenderers={DocViewerRenderers} documents={docs} /> */}
+                  {
+                                download ? (<Button>Download</Button>) : (
+                                  <FileViewer
+                                    fileType={type}
+                                    filePath={docs}
+                                    onError={(e) => this.onError(e)}
+                                  />
+                                  // {/* <DocViewer pluginRenderers={DocViewerRenderers} documents={docs} /> */}
+                                )
+                              }
                 </Box>
               )
               : (

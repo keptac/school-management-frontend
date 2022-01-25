@@ -4,9 +4,55 @@ const FormData = require('form-data');
 // const fs = require('fs');
 
 const data = new FormData();
+const { create } = require('ipfs-http-client');
 
+const client = create('https://ipfs.infura.io:5001/api/v0');
 // const deploymentUrl = 'http://localhost:3001';
 const deploymentUrl = 'https://mtgs-backend.herokuapp.com';
+
+async function postMaterialIpfs(body) {
+  try {
+    const url = await client.add(body.vividlearn);
+    const uploadedImageUrl = `https://ipfs.infura.io/ipfs/${url.path}`;
+
+    const metadata = body;
+
+    const metadataRes = await client.add(JSON.stringify(metadata));
+    const tokenURI = `https://ipfs.infura.io/ipfs/${metadataRes.path}`;
+
+    console.log(body);
+    console.log(tokenURI);
+    console.log(uploadedImageUrl);
+
+    data.append('resourceName', body.resourceName);
+    data.append('subjectCode', body.subjectCode);
+    data.append('topicName', body.topicName);
+    data.append('resourcePath', uploadedImageUrl);
+    data.append('teacherId', body.teacherId);
+    data.append('vividlearn', body.vividlearn);
+    data.append('type', body.type);
+    data.append('resourceId', body.resourceId);
+
+    const config = {
+      method: 'post',
+      url: `${deploymentUrl}/api/esm/teacher/resources/upload-ipfs`,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      data
+    };
+
+    return axios(config)
+      .then((response) => response.data)
+      .catch((error) => {
+        console.log(error);
+        return { message: error };
+      });
+  } catch (error) {
+    console.log('error uploading to IPFS ', error);
+    return { message: error };
+  }
+}
 
 async function postMaterial(body) {
   data.append('resourceName', body.resourceName);
@@ -98,7 +144,8 @@ async function submitAssignment(body) {
 const UploadService = {
   postMaterial,
   issueAssignment,
-  submitAssignment
+  submitAssignment,
+  postMaterialIpfs
 };
 
 export default UploadService;

@@ -2,7 +2,8 @@ import { Helmet } from 'react-helmet';
 import {
   Box,
   Container,
-  Grid
+  Grid,
+  Button
 } from '@material-ui/core';
 
 // import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
@@ -32,6 +33,11 @@ class SubjectContent extends React.Component {
     });
   }
 
+  onError(e) {
+    this.setState({ download: true });
+    console.log(e, 'error in file-viewer');
+  }
+
   readDocument(path, ext) {
     this.setState({
       viewDoc: true,
@@ -42,7 +48,7 @@ class SubjectContent extends React.Component {
 
   render() {
     const {
-      subjectName, viewDoc, docs, type
+      subjectName, viewDoc, docs, type, download
     } = this.state;
     return (
       <>
@@ -69,11 +75,16 @@ class SubjectContent extends React.Component {
                   }}
                 >
 
-                  <FileViewer
-                    fileType={type}
-                    filePath={docs}
-                  />
-                  {/* <DocViewer pluginRenderers={DocViewerRenderers} documents={docs} /> */}
+                  {
+                                download ? (<Button>Download</Button>) : (
+                                  <FileViewer
+                                    fileType={type}
+                                    filePath={docs}
+                                    onError={(e) => this.onError(e)}
+                                  />
+                                  // {/* <DocViewer pluginRenderers={DocViewerRenderers} documents={docs} /> */}
+                                )
+                              }
                 </Box>
               )
               : (

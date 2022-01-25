@@ -47,7 +47,8 @@ const UploadLearningResourcesForm = () => {
       resourceId
     };
 
-    UploadService.postMaterial(data)
+    // UploadService.postMaterial(data)
+    UploadService.postMaterialIpfs(data)
       .then((response) => {
         navigate('/teacher/subject-student-records', { replace: true });
         navigate('/teacher/teaching-resources', { replace: true });

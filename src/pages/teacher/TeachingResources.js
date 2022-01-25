@@ -29,7 +29,8 @@ class TeachingResources extends React.Component {
       viewDoc: false,
       uploadDoc: false,
       docs: [],
-      type: ''
+      type: '',
+      download: false
     };
   }
 
@@ -38,6 +39,11 @@ class TeachingResources extends React.Component {
     this.setState({
       viewDoc: false,
     });
+  }
+
+  onError(e) {
+    this.setState({ download: true });
+    console.log(e, 'error in file-viewer');
   }
 
   async getAllSubjectResources() {
@@ -52,9 +58,9 @@ class TeachingResources extends React.Component {
 
   readDocument(path, ext) {
     this.setState({
-      viewDoc: true,
       docs: path,
-      type: ext.replace('.', '')
+      type: ext.replace('.', ''),
+      viewDoc: true,
     });
   }
 
@@ -66,7 +72,7 @@ class TeachingResources extends React.Component {
 
   render() {
     const {
-      viewDoc, docs, uploadDoc, learningResources, type
+      viewDoc, docs, uploadDoc, learningResources, type, download
     } = this.state;
 
     console.log(learningResources);
@@ -144,13 +150,16 @@ class TeachingResources extends React.Component {
                                 pt: 3
                               }}
                             >
-                              <FileViewer
-                                fileType={type}
-                                filePath={docs}
-                                // errorComponent={CustomErrorComponent}
-                                // onError={this.onError}
-                              />
-                              {/* <DocViewer pluginRenderers={DocViewerRenderers} documents={docs} /> */}
+                              {
+                                download ? (<Button>Download</Button>) : (
+                                  <FileViewer
+                                    fileType={type}
+                                    filePath={docs}
+                                    onError={() => this.setState({ download: true })}
+                                  />
+                                  // {/* <DocViewer pluginRenderers={DocViewerRenderers} documents={docs} /> */}
+                                )
+                              }
                             </Box>
                           )
                           : (

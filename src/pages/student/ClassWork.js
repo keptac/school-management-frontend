@@ -66,6 +66,11 @@ class ClassWork extends React.Component {
     }
   }
 
+  onError(e) {
+    this.setState({ download: true });
+    console.log(e, 'error in file-viewer');
+  }
+
   async getStudentSubmissions() {
     const subjectData = JSON.parse(localStorage.getItem('subjectData'));
     const userId = sessionStorage.getItem('userId');
@@ -104,7 +109,7 @@ class ClassWork extends React.Component {
 
   render() {
     const {
-      viewDoc, docs, viewSubmissions, classWork, marksResults, limit, page, students, recordingSubject, type
+      viewDoc, docs, viewSubmissions, classWork, marksResults, limit, page, students, recordingSubject, type, download
     } = this.state;
 
     console.log(classWork);
@@ -217,11 +222,16 @@ class ClassWork extends React.Component {
                                 pt: 3
                               }}
                             >
-                              <FileViewer
-                                fileType={type}
-                                filePath={docs}
-                              />
-                              {/* <DocViewer pluginRenderers={DocViewerRenderers} documents={docs} /> */}
+                              {
+                                download ? (<Button>Download</Button>) : (
+                                  <FileViewer
+                                    fileType={type}
+                                    filePath={docs}
+                                    onError={(e) => this.onError(e)}
+                                  />
+                                  // {/* <DocViewer pluginRenderers={DocViewerRenderers} documents={docs} /> */}
+                                )
+                              }
                             </Box>
                           )
                           : (
