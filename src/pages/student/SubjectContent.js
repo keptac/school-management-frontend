@@ -6,7 +6,8 @@ import {
   Container,
   Grid,
   Button,
-  Typography
+  Typography,
+  Card
 } from '@material-ui/core';
 
 // import DocViewer from 'react-doc-viewer';
@@ -25,6 +26,7 @@ class SubjectContent extends React.Component {
       docs: [],
       resources: [],
       type: '',
+      download: false
     };
   }
 
@@ -97,7 +99,7 @@ class SubjectContent extends React.Component {
                   item
                   container
                   spacing={2}
-                  // sx={{ marginTop: '0.1%' }}
+                  sx={{ marginTop: '0.1%' }}
                   lg={9}
                   md={9}
                   xl={9}
@@ -105,25 +107,26 @@ class SubjectContent extends React.Component {
                 >
                   {viewDoc
                     ? (
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          justifyContent: 'center',
-                          pt: 3
-                        }}
+                      <Card style={{
+                        height: '800px',
+                        width: '70%',
+                        marginLeft: '100px',
+                        paddingLeft: '10px'
+                      }}
                       >
-
                         {
-                                download ? (<Button>Download</Button>) : (
-                                  <FileViewer
-                                    fileType={type}
-                                    filePath={docs}
-                                    onError={(e) => this.onError(e)}
-                                  />
-                                  // {/* <DocViewer pluginRenderers={DocViewerRenderers} documents={docs} /> */}
-                                )
-                              }
-                      </Box>
+                                  download ? (<Button>Download</Button>) : (
+
+                                    <FileViewer
+                                      fileType={type}
+                                      filePath={docs}
+                                      onError={() => this.setState({ download: true })}
+                                    />
+
+                                  )
+                                }
+                      </Card>
+                  // </Box>
                     )
                     : (
                       <>

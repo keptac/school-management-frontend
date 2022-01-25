@@ -41,6 +41,7 @@ class ClassWork extends React.Component {
       marksResults: [],
       students: [],
       recordingSubject: {},
+      download: false
     };
   }
 
@@ -215,24 +216,23 @@ class ClassWork extends React.Component {
                       <Container maxWidth={false}>
                         {viewDoc
                           ? (
-                            <Box
-                              sx={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                pt: 3
-                              }}
+                            <Card style={{
+                              height: '800px',
+                              width: '70%',
+                              marginLeft: '100px',
+                              paddingLeft: '10px'
+                            }}
                             >
                               {
-                                download ? (<Button>Download</Button>) : (
-                                  <FileViewer
-                                    fileType={type}
-                                    filePath={docs}
-                                    onError={this.onError}
-                                  />
-                                  // {/* <DocViewer pluginRenderers={DocViewerRenderers} documents={docs} /> */}
-                                )
-                              }
-                            </Box>
+                                        download ? (<Button>Download</Button>) : (
+                                          <FileViewer
+                                            fileType={type}
+                                            filePath={docs}
+                                            onError={() => this.setState({ download: true })}
+                                          />
+                                        )
+                                      }
+                            </Card>
                           )
                           : (
                             <>
