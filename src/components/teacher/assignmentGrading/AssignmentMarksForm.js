@@ -123,10 +123,12 @@ const AssignmentMarksForm = ({ studentName }, props) => {
     }
 
     const data = {
-      submissionId: submissionRecord.submissionCode,
+      submissionId: submissionRecord.submissionId,
       mark: values.mark,
       grade,
-      comment: values.comment
+      comment: values.comment,
+      graded: true,
+      total: recordingAssignment.totalMarks
       // firstName: submissionRecord.firstName,
       // surname: submissionRecord.surname,
       // studentId: submissionRecord.studentId,

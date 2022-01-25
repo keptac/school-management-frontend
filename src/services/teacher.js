@@ -165,7 +165,7 @@ async function gradeAssignment(data) {
     },
   };
   try {
-    const res = await axios.put(`/submissions/${data.submissionId}`, qs.stringify(data), config);
+    const res = await axios.post(`/submissions/student/${data.submissionId}`, qs.stringify(data), config);
     return res.data;
   } catch (err) {
     console.error(err);

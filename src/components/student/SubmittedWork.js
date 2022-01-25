@@ -30,16 +30,19 @@ const SubmittedWork = ({ student }) => (
         >
           {getInitials(`${student.studentName}`)}
         </Avatar>
-        <Typography
-          color="textPrimary"
-          variant="body1"
-        >
-          {`${student.studentName}` }
-        </Typography>
+
       </Box>
     </TableCell>
     <TableCell>
-      {`${student.mark}`}
+      <Typography
+        color="textPrimary"
+        variant="body1"
+      >
+        {`${student.assignmentTitle}` }
+      </Typography>
+    </TableCell>
+    <TableCell>
+      {`${student.mark} / ${student.total}`}
     </TableCell>
     <TableCell>
       {student.grade}

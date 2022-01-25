@@ -176,7 +176,10 @@ class ClassWork extends React.Component {
                               <TableHead>
                                 <TableRow>
                                   <TableCell>
-                                    Student Name
+                                    Initials
+                                  </TableCell>
+                                  <TableCell>
+                                    Title
                                   </TableCell>
                                   <TableCell>
                                     Mark

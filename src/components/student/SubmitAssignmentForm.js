@@ -37,8 +37,10 @@ const IssueAssignment = () => {
       studentName,
       studentId: userId,
       assignmentId: recordingAssignment.assignmentId,
+      assignmentTitle: recordingAssignment.assignmentTitle,
       submissionPath: '',
-      vividlearn
+      vividlearn,
+      total: recordingAssignment.totalMarks
     };
 
     try {
