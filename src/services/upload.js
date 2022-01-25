@@ -8,8 +8,8 @@ const { create } = require('ipfs-http-client');
 
 const client = create('https://ipfs.infura.io:5001/api/v0');
 
-// const deploymentUrl = 'http://localhost:3001';
-const deploymentUrl = 'https://mtgs-backend.herokuapp.com';
+const deploymentUrl = 'http://localhost:3001';
+// const deploymentUrl = 'https://mtgs-backend.herokuapp.com';
 
 async function postMaterial(body) {
   data.append('resourceName', body.resourceName);
@@ -207,9 +207,6 @@ async function submitAssignmentIpfs(body) {
     data.append('studentId', body.studentId);
     data.append('submissionPath', uploadedImageUrl);
     data.append('assignmentId', body.assignmentId);
-    data.append('graded', body.graded);
-    data.append('mark', body.mark);
-    data.append('grade', body.grade);
     data.append('vividlearn', body.vividlearn);
 
     const config = {

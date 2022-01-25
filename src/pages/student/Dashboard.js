@@ -67,6 +67,7 @@ class Dashboard extends React.Component {
                 {subjectData.map((sub) => (
                   <Grid
                     item
+                    container
                     lg={4}
                     sm={6}
                     xl={3}
@@ -84,7 +85,7 @@ class Dashboard extends React.Component {
                 xl={3}
                 xs={12}
               >
-                <NoticeBoard sx={{ height: '100%' }} />
+                <NoticeBoard />
               </Grid>
             </Grid>
             <Grid

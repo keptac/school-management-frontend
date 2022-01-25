@@ -38,9 +38,6 @@ const IssueAssignment = () => {
       studentId: userId,
       assignmentId: recordingAssignment.assignmentId,
       submissionPath: '',
-      graded: false,
-      grade: '',
-      mark: 0,
       vividlearn
     };
 

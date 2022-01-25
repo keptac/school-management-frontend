@@ -28,13 +28,13 @@ const SubmittedWork = ({ student }) => (
           src={student.avatarUrl}
           sx={{ mr: 2 }}
         >
-          {getInitials(`${student.firstName} ${student.surname}`)}
+          {getInitials(`${student.studentName}`)}
         </Avatar>
         <Typography
           color="textPrimary"
           variant="body1"
         >
-          {`${student.firstName} ${student.surname}` }
+          {`${student.studentName}` }
         </Typography>
       </Box>
     </TableCell>
