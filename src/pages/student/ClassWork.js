@@ -19,8 +19,8 @@ import {
 
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
-import DocViewer from 'react-doc-viewer';
-
+// import DocViewer from 'react-doc-viewer';
+import FileViewer from 'react-file-viewer';
 import TeacherServices from 'src/services/teacher';
 import MenuBoard from 'src/components/student/StudentMenu';
 import SubmittedWork from 'src/components/student/SubmittedWork';
@@ -35,6 +35,7 @@ class ClassWork extends React.Component {
       viewDoc: false,
       viewSubmissions: false,
       docs: [],
+      type: '',
       limit: 10,
       page: 0,
       marksResults: [],
@@ -87,10 +88,11 @@ class ClassWork extends React.Component {
       });
   }
 
-  readDocument(path) {
+  readDocument(path, ext) {
     this.setState({
       viewDoc: true,
-      docs: [{ uri: path }]
+      docs: path,
+      type: ext.replace('.', '')
     });
   }
 
@@ -102,7 +104,7 @@ class ClassWork extends React.Component {
 
   render() {
     const {
-      viewDoc, docs, viewSubmissions, classWork, marksResults, limit, page, students, recordingSubject
+      viewDoc, docs, viewSubmissions, classWork, marksResults, limit, page, students, recordingSubject, type
     } = this.state;
 
     console.log(classWork);
@@ -215,7 +217,11 @@ class ClassWork extends React.Component {
                                 pt: 3
                               }}
                             >
-                              <DocViewer documents={docs} />
+                              <FileViewer
+                                fileType={type}
+                                filePath={docs}
+                              />
+                              {/* <DocViewer pluginRenderers={DocViewerRenderers} documents={docs} /> */}
                             </Box>
                           )
                           : (
@@ -233,7 +239,7 @@ class ClassWork extends React.Component {
                                       md={6}
                                       xs={12}
                                     >
-                                      <div onClick={() => this.readDocument(resource.resourcePath)} aria-hidden="true">
+                                      <div onClick={() => this.readDocument(resource.resourcePath, resource.ext)} aria-hidden="true">
                                         <StudentsAssignmentsFolderCard resource={resource} />
                                       </div>
                                     </Grid>
