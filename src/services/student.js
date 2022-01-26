@@ -99,12 +99,29 @@ async function getStudentReport(studentId) {
     });
 }
 
+async function getAllDummyTests(subjectId, classId) {
+  const config = {
+    baseURL: `${deploymentUrl}/esm/`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  };
+  try {
+    const res = await axios.get(`multiplechoice/${subjectId}/${classId}`, config);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+}
+
 const StudentServices = {
   getStudentSubjects,
   download,
   deleteResource,
   getStudentSubmissions,
-  getStudentReport
+  getStudentReport,
+  getAllDummyTests
 };
 
 export default StudentServices;

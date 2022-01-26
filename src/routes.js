@@ -39,6 +39,7 @@ import ClassNoticeBoard from './pages/teacher/ClassNoticeBoard';
 import ClassWork from './pages/student/ClassWork';
 import StudentReport from './pages/student/ReportBook';
 import SubmitAssignment from './pages/student/SubmitAssignment';
+import Dummy from './pages/Dummy';
 
 const routes = [
   // Student Routes
@@ -46,6 +47,7 @@ const routes = [
     path: 'student',
     element: <StudentDashboardLayout />,
     children: [
+      { path: 'dummy', element: <Dummy /> },
       { path: 'account', element: <Account /> },
       { path: 'my-report', element: <StudentReport /> },
       { path: 'dashboard', element: <Dashboard /> },
