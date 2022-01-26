@@ -184,7 +184,7 @@ const Login = () => {
             )}
           </Formik>
           <Typography color="textSecondary" variant="caption" display="block" gutterBottom>
-            Version 0.2.16
+            Version 0.2.17
           </Typography>
         </Container>
       </Box>
