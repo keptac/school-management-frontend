@@ -8,8 +8,8 @@ const { create } = require('ipfs-http-client');
 
 const client = create('https://ipfs.infura.io:5001/api/v0');
 
-// const deploymentUrl = 'http://localhost:3001';
-const deploymentUrl = 'https://mtgs-backend.herokuapp.com';
+const deploymentUrl = 'http://localhost:3001';
+// const deploymentUrl = 'https://mtgs-backend.herokuapp.com';
 
 async function postMaterial(body) {
   data.append('resourceName', body.resourceName);

@@ -70,11 +70,7 @@ const AssignmentMarksForm = ({ studentName }, props) => {
     const percentage = (values.mark / recordingAssignment.totalMarks) * 100;
 
     let grade = '';
-    if (percentage > 100) {
-      alert.error(`Result should not be exceed ${recordingAssignment.totalMarks}`, { position: positions.MIDDLE_RIGHT }, {
-        timeout: 10,
-      });
-    } else if (subjectRecord.level === 'GCSE') {
+    if (subjectRecord.level === 'GCSE') {
       if (percentage < 20) {
         grade = 'U';
       } else if (percentage >= 20 && percentage < 30) {
@@ -129,6 +125,26 @@ const AssignmentMarksForm = ({ studentName }, props) => {
         grade = 'A';
       } else {
         grade = 'A*';
+      }
+    } else if (subjectRecord.level === 'PRIMARY') {
+      if (values.mark < 20) {
+        grade = '9';
+      } else if (values.mark >= 20 && values.mark < 30) {
+        grade = '8';
+      } else if (values.mark >= 30 && values.mark < 40) {
+        grade = '7';
+      } else if (values.mark >= 40 && values.mark < 50) {
+        grade = '6';
+      } else if (values.mark >= 50 && values.mark < 60) {
+        grade = '5';
+      } else if (values.mark >= 60 && values.mark < 70) {
+        grade = '4';
+      } else if (values.mark >= 70 && values.mark < 80) {
+        grade = '3';
+      } else if (values.mark >= 80 && values.mark < 90) {
+        grade = '2';
+      } else {
+        grade = '1';
       }
     }
 
