@@ -17,13 +17,8 @@ import {
   Typography,
   CardHeader,
   Divider,
-  Button,
-  CardContent,
-  TextField,
-  InputAdornment,
-  SvgIcon
+  Button
 } from '@material-ui/core';
-import { Search as SearchIcon } from 'react-feather';
 import MarksForm from 'src/components/teacher/progressReport/MarksForm';
 import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -171,82 +166,60 @@ class ProgressReport extends React.Component {
           <Container maxWidth={false}>
             <Box>
               <Box sx={{ mt: 3 }}>
-                <Card>
-                  <CardContent>
-                    <Grid
-                      container
-                    >
-                      <Grid
-                        lg={6}
-                        md={12}
-                        xl={9}
-                        xs={12}
-                      >
-                        <Box sx={{ maxWidth: 500 }}>
-                          <TextField
-                            fullWidth
-                            InputProps={{
-                              startAdornment: (
-                                <InputAdornment position="start">
-                                  <SvgIcon
-                                    fontSize="small"
-                                    color="action"
-                                  >
-                                    <SearchIcon />
-                                  </SvgIcon>
-                                </InputAdornment>
-                              )
-                            }}
-                            placeholder="Search student"
-                            variant="outlined"
-                          />
+                <Grid
+                  container
+                >
+                  <Grid
+                    lg={6}
+                    md={12}
+                    xl={9}
+                    xs={12}
+                  >
+                    <Box sx={{ maxWidth: 500 }} />
+                  </Grid>
+                  <Grid
+                    lg={6}
+                    md={12}
+                    xl={9}
+                    xs={12}
+                  >
+                    {reportsSubmitted
+                      ? (
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            justifyContent: 'flex-end'
+                          }}
+                        >
+                          <Button
+                            color="primary"
+                            variant="contained"
+                          >
+                            Reports Submitted For Processing
+                          </Button>
                         </Box>
-                      </Grid>
-                      <Grid
-                        lg={6}
-                        md={12}
-                        xl={9}
-                        xs={12}
-                      >
-                        {reportsSubmitted
-                          ? (
-                            <Box
-                              sx={{
-                                display: 'flex',
-                                justifyContent: 'flex-end'
-                              }}
-                            >
-                              <Button
-                                color="primary"
-                                variant="contained"
-                              >
-                                Reports Submitted For Processing
-                              </Button>
-                            </Box>
-                          )
-                          : (
-                            <Box
-                              sx={{
-                                display: 'flex',
-                                justifyContent: 'flex-end'
-                              }}
-                            >
-                              <Button sx={{ mx: 1 }} onClick={() => this.handleReviewRecordChange()}>
-                                {reviewRecord ? 'View Students List' : 'Review Records'}
-                              </Button>
-                              <Button
-                                onClick={() => this.handleReportSubmission()}
-                                color="primary"
-                                variant="contained"
-                              >
-                                Submit Reports
-                              </Button>
-                            </Box>
-                          )}
-                      </Grid>
-                    </Grid>
-                  </CardContent>
-                </Card>
+                      )
+                      : (
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            justifyContent: 'flex-end'
+                          }}
+                        >
+                          <Button sx={{ mx: 1 }} onClick={() => this.handleReviewRecordChange()}>
+                            {reviewRecord ? 'View Students List' : 'Review Records'}
+                          </Button>
+                          <Button
+                            onClick={() => this.handleReportSubmission()}
+                            color="primary"
+                            variant="contained"
+                          >
+                            Submit Reports
+                          </Button>
+                        </Box>
+                      )}
+                  </Grid>
+                </Grid>
               </Box>
             </Box>
             <Grid
