@@ -49,7 +49,7 @@ class Dummy extends React.Component {
   }
 
   async getDashData() {
-    await StudentServices.getAllDummyTests('SUB124', 'TEST1')
+    await StudentServices.getAllDummyTests('SUB125', 'TEST1')
       .then(async (response) => {
         this.setState({ dummyTestData: response[0], questionsList: response[0].questionsList });
       });

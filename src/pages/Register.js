@@ -48,7 +48,10 @@ const Register = () => {
                 firstName: Yup.string().max(255).required('First name is required'),
                 surname: Yup.string().max(255).required('Last name is required'),
                 idNumber: Yup.string().max(255).required('ID Number is required'),
-                password: Yup.string().max(255).required('password is required'),
+                password: Yup.string().required('password is required').matches(
+                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
+                  'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
+                ),
               })
             }
             onSubmit={(values) => {

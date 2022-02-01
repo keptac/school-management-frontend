@@ -366,11 +366,11 @@ class AdminDashboard extends React.Component {
             if (count + failedCount >= students.length) {
               console.log('Processed');
               this.setState({ downloaded: true });
-              alert(`${count} Reports generated successfully. Kindly check your downloads folder. \n\n${failedCount} Failed`);
             }
           });
         count++;
       });
+      alert(`${count} Reports generated successfully. Kindly check your downloads folder. \n\n${failedCount} Failed`);
     } else {
       alert('No reports have been submitted for processing. Kindly request teachers to submit reports');
     }
