@@ -153,6 +153,14 @@ class AddClass extends React.Component {
                                   >
                                     Delete
                                   </Button>
+                                  <Button
+                                    size="small"
+                                    color="inherit"
+                                    variant="contained"
+                                    onClick={() => this.deleteClass(classe.classId)}
+                                  >
+                                    Edit
+                                  </Button>
                                 </TableCell>
                               </TableRow>
                             ))}

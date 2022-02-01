@@ -3,19 +3,30 @@ import { useAlert, positions } from 'react-alert';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import { useState } from 'react';
 import {
   Box,
   Button,
   Container,
   Link,
   TextField,
-  Typography
+  Typography,
+  InputLabel,
+  Select,
+  FormControl,
+  MenuItem
 } from '@material-ui/core';
 import AuthService from 'src/services/authServices';
 
 const Register = () => {
   const alert = useAlert();
   const navigate = useNavigate();
+  const [station, setStation] = useState('JUNIOR');
+
+  const handleChangeStation = (event) => {
+    setStation(event.target.value);
+  };
+
   return (
     <>
       <Helmet>
@@ -40,7 +51,7 @@ const Register = () => {
               idNumber: '',
               userType: 'TEACHER',
               staffId: `TCM${String(Math.floor(100000 + Math.random() * 900000)).substring(0, 3)}`,
-              station: 'JUNIOR'
+              station
             }}
             validationSchema={
               Yup.object().shape({
@@ -116,6 +127,19 @@ const Register = () => {
                     Use your email to create new account
                   </Typography>
                 </Box>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Station</InputLabel>
+                  <Select
+                    value={station}
+                    label="Station"
+                    onChange={handleChangeStation}
+                    required
+                    variant="outlined"
+                  >
+                    <MenuItem value="JUNIOR">JUNIOR SCHOOL</MenuItem>
+                    <MenuItem value="SENIOR">SENIOR SCHOOL</MenuItem>
+                  </Select>
+                </FormControl>
                 <TextField
                   error={Boolean(touched.firstName && errors.firstName)}
                   fullWidth
