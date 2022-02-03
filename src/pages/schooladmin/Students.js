@@ -55,6 +55,7 @@ class AddStudents extends React.Component {
       phoneNumber: null,
       emailAddress: null,
       idNumber: null,
+      studentId: null,
       classId: null,
       modalIsOpen: false,
       closeModal: false
@@ -96,6 +97,7 @@ class AddStudents extends React.Component {
       phoneNumber,
       emailAddress,
       idNumber,
+      studentId,
       classId
     } = this.state;
 
@@ -107,6 +109,7 @@ class AddStudents extends React.Component {
     let differenceInYears = duration.asYears();
     if (differenceInYears > 4.5) {
       const data = {
+        studentId,
         name,
         surname,
         classId,
@@ -213,6 +216,7 @@ class AddStudents extends React.Component {
   updateStudentModal(studentData) {
     this.setState({ modalIsOpen: true });
     this.setState({
+      studentId: studentData.studentId,
       name: studentData.name,
       surname: studentData.surname,
       classId: studentData.classId,
