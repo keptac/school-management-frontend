@@ -1,7 +1,6 @@
 /* eslint-disable prefer-const */
 import { Helmet } from 'react-helmet';
 import React from 'react';
-
 import {
   Box, Container, Grid,
   Card,
