@@ -23,10 +23,22 @@ import {
   MenuItem
 } from '@material-ui/core';
 
+import Moment from 'moment';
+
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import AdminServices from 'src/services/schoolAdmin';
 import AuthService from 'src/services/authServices';
+import Modal from 'react-modal';
 
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    transform: 'translate(-50%, -50%)',
+  },
+};
 class AddStudents extends React.Component {
   constructor(props) {
     super(props);
@@ -42,7 +54,11 @@ class AddStudents extends React.Component {
       dob: null,
       phoneNumber: null,
       emailAddress: null,
-      idNumber: null
+      idNumber: null,
+      studentId: null,
+      classId: null,
+      modalIsOpen: false,
+      closeModal: false
     };
   }
 
@@ -52,7 +68,7 @@ class AddStudents extends React.Component {
   }
 
   handleChangeClass(selectedClass) {
-    this.setState({ className: selectedClass });
+    this.setState({ className: selectedClass, classId: selectedClass.classId });
   }
 
   handleLimitChange(event) {
@@ -73,6 +89,47 @@ class AddStudents extends React.Component {
     this.setState({ addStudentForm: true });
   }
 
+  handleUpdate() {
+    const {
+      name,
+      surname,
+      dob,
+      phoneNumber,
+      emailAddress,
+      idNumber,
+      studentId,
+      classId
+    } = this.state;
+
+    let date1 = Moment(dob);
+    let date2 = Moment(Date.now());
+
+    let differenceInMs = date2.diff(date1);
+    let duration = Moment.duration(differenceInMs);
+    let differenceInYears = duration.asYears();
+    if (differenceInYears > 4.5) {
+      const data = {
+        studentId,
+        name,
+        surname,
+        classId,
+        dob,
+        phoneNumber,
+        emailAddress,
+        idNumber,
+      };
+
+      AdminServices.updateStudentRecord(data)
+        .then((response) => {
+          alert(response.message);
+        }).catch((error) => {
+          console.log(error);
+        });
+    } else {
+      alert('Ineligible age. Pupils should be older than 4 years');
+    }
+  }
+
   handleSubmit() {
     const {
       name,
@@ -84,48 +141,58 @@ class AddStudents extends React.Component {
       className
     } = this.state;
 
-    const a = Math.floor(100000 + Math.random() * 900000);
-    const studentIdRef = `STUD${String(a).substring(0, 5)}`;
+    let date1 = Moment(dob);
+    let date2 = Moment(Date.now());
 
-    const data = {
-      name,
-      surname,
-      studentId: studentIdRef,
-      classId: className.classId,
-      dob,
-      phoneNumber,
-      emailAddress,
-      idNumber,
-      guardianName: '',
-      relationshipToGuardian: '',
-      gender: '',
-      address: ''
-    };
+    let differenceInMs = date2.diff(date1);
+    let duration = Moment.duration(differenceInMs);
+    let differenceInYears = duration.asYears();
+    if (differenceInYears > 4.5) {
+      const a = Math.floor(100000 + Math.random() * 900000);
+      const studentIdRef = `STUD${String(a).substring(0, 5)}`;
 
-    const dataReg = {
-      studentId: studentIdRef,
-      firstName: name,
-      surname,
-      classId: className.classId,
-      email: emailAddress,
-      password: 'pass@123'
-    };
+      const data = {
+        name,
+        surname,
+        studentId: studentIdRef,
+        classId: className.classId,
+        dob,
+        phoneNumber,
+        emailAddress,
+        idNumber,
+        guardianName: '',
+        relationshipToGuardian: '',
+        gender: '',
+        address: ''
+      };
 
-    AdminServices.postNewStudent(data)
-      .then((response) => {
-        if (response.success) {
-          AuthService.studentAuthRegister(dataReg)
-            .then((res) => {
-              console.log(res);
-              window.location.reload(false);
-            });
-        } else {
-          alert(response.message);
-          window.location.reload(false);
-        }
-      }).catch((error) => {
-        console.log(error);
-      });
+      const dataReg = {
+        studentId: studentIdRef,
+        firstName: name,
+        surname,
+        classId: className.classId,
+        email: emailAddress,
+        password: 'pass@123'
+      };
+
+      AdminServices.postNewStudent(data)
+        .then((response) => {
+          if (response.success) {
+            AuthService.studentAuthRegister(dataReg)
+              .then((res) => {
+                console.log(res);
+                window.location.reload(false);
+              });
+          } else {
+            alert(response.message);
+            window.location.reload(false);
+          }
+        }).catch((error) => {
+          console.log(error);
+        });
+    } else {
+      alert('Ineligible age. Pupils should be older than 4 years');
+    }
   }
 
   async getAllClasses() {
@@ -146,9 +213,33 @@ class AddStudents extends React.Component {
       });
   }
 
+  updateStudentModal(studentData) {
+    this.setState({ modalIsOpen: true });
+    this.setState({
+      studentId: studentData.studentId,
+      name: studentData.name,
+      surname: studentData.surname,
+      classId: studentData.classId,
+      dob: studentData.dob,
+      phoneNumber: studentData.phoneNumber,
+      emailAddress: studentData.emailAddress,
+      idNumber: studentData.idNumber
+    });
+  }
+
+  async deleteStudent(studentId) {
+    AdminServices.deleteStudent(studentId)
+      .then((response) => {
+        console.log(response);
+        this.setState({ page: 0 });
+      }).catch((error) => {
+        console.log(error);
+      });
+  }
+
   render() {
     const {
-      students, limit, page, classes, className, addStudentForm, name, surname, dob, phoneNumber, emailAddress, idNumber
+      students, limit, page, classes, className, addStudentForm, name, surname, dob, phoneNumber, emailAddress, idNumber, modalIsOpen, closeModal
     } = this.state;
 
     return (
@@ -201,6 +292,9 @@ class AddStudents extends React.Component {
                               <TableCell>
                                 Class
                               </TableCell>
+                              <TableCell>
+                                Action
+                              </TableCell>
                             </TableRow>
                           </TableHead>
                           <TableBody>
@@ -228,7 +322,7 @@ class AddStudents extends React.Component {
                                   {`${student.surname} ${student.name}` }
                                 </TableCell>
                                 <TableCell>
-                                  {`${student.dob}`}
+                                  {Moment(`${student.dob}`).format('YYYY-MM-DD')}
                                 </TableCell>
                                 <TableCell>
                                   {student.phoneNumber}
@@ -238,6 +332,25 @@ class AddStudents extends React.Component {
                                 </TableCell>
                                 <TableCell>
                                   {student.classId}
+                                </TableCell>
+                                <TableCell>
+                                  <Button
+                                    size="small"
+                                    color="error"
+                                    variant="contained"
+                                    onClick={() => this.deleteStudent(student.studentId)}
+                                  >
+                                    Delete
+                                  </Button>
+                                  <Box sx={{ pt: 1 }} />
+                                  <Button
+                                    size="small"
+                                    color="inherit"
+                                    variant="contained"
+                                    onClick={() => this.updateStudentModal(student)}
+                                  >
+                                    Edit
+                                  </Button>
                                 </TableCell>
                               </TableRow>
                             ))}
@@ -429,8 +542,164 @@ class AddStudents extends React.Component {
                 </Box>
               </Grid>
             </Grid>
-
           </Container>
+
+          <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            style={customStyles}
+          >
+            <form
+              autoComplete="on"
+              noValidate
+            >
+              <Card>
+                <CardHeader
+                  title="Edit Student Details"
+                />
+                <Divider />
+                <CardContent>
+                  <Grid
+                    container
+                    spacing={1}
+                  >
+                    <Grid
+                      item
+                      md={6}
+                      xs={12}
+                    >
+                      <TextField
+                        fullWidth
+                        label="Student Name"
+                        name="name"
+                        onChange={(e) => this.setState({ name: e.target.value })}
+                        required
+                        value={name}
+                        variant="outlined"
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      md={6}
+                      xs={12}
+                    >
+                      <TextField
+                        fullWidth
+                        label="Surname"
+                        name="surname"
+                        onChange={(e) => this.setState({ surname: e.target.value })}
+                        required
+                        value={surname}
+                        variant="outlined"
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      md={4}
+                      xs={12}
+                    >
+                      <TextField
+                        fullWidth
+                        label="ID Number"
+                        name="idNumber"
+                        onChange={(e) => this.setState({ idNumber: e.target.value })}
+                        required
+                        value={idNumber}
+                        variant="outlined"
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      md={8}
+                      xs={12}
+                    >
+                      <TextField
+                        fullWidth
+                        label="Date of Birth"
+                        name="dob"
+                        type="date"
+                        onChange={(e) => this.setState({ dob: e.target.value })}
+                        required
+                        value={dob}
+                        variant="outlined"
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      md={6}
+                      xs={12}
+                    >
+                      <TextField
+                        fullWidth
+                        label="Phone Number"
+                        name="phoneNumber"
+                        type="number"
+                        onChange={(e) => this.setState({ phoneNumber: e.target.value })}
+                        required
+                        value={phoneNumber}
+                        variant="outlined"
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      md={6}
+                      xs={12}
+                    >
+                      <TextField
+                        fullWidth
+                        label="Email Address"
+                        name="emailAddress"
+                        type="email"
+                        onChange={(e) => this.setState({ emailAddress: e.target.value })}
+                        required
+                        value={emailAddress}
+                        variant="outlined"
+                      />
+                    </Grid>
+
+                    <Grid
+                      item
+                      md={5}
+                      xs={12}
+                    >
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">Class</InputLabel>
+                        <Select
+                          value={className}
+                          label="Subject"
+                          required
+                          variant="outlined"
+                        >
+                          {classes.map((classe) => (
+                            <MenuItem onClick={() => this.handleChangeClass(classe)} value={classe}>{classe.className}</MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+
+                    </Grid>
+                  </Grid>
+                </CardContent>
+                <Divider />
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    p: 2
+                  }}
+                >
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    onClick={() => this.handleUpdate()}
+                  >
+                    Submit
+                  </Button>
+                </Box>
+              </Card>
+            </form>
+
+          </Modal>
+
         </Box>
       </>
     );
