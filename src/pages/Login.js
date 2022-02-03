@@ -83,9 +83,10 @@ const Login = () => {
                           console.log('hey');
                         },
                         onClose: () => {
-                          navigate('/', { replace: true });
+                          navigate('/login', { replace: true });
                         }
                       });
+                      navigate('/login', { replace: true });
                     }
                   } else {
                     alert.error(response.message, { position: positions.MIDDLE }, {
@@ -94,9 +95,10 @@ const Login = () => {
                         console.log(response);
                       },
                       onClose: () => {
-                        navigate('/', { replace: true });
+                        navigate('/login', { replace: true });
                       }
                     });
+                    navigate('/login', { replace: true });
                   }
                 }).catch((error) => {
                   alert.show('Oops, an error occured. Try again in a moment.', { position: positions.MIDDLE }, {
@@ -109,6 +111,7 @@ const Login = () => {
                       navigate('/', { replace: true });
                     }
                   });
+                  navigate('/', { replace: true });
                 });
             }}
           >

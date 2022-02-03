@@ -1,7 +1,6 @@
 /* eslint-disable prefer-const */
 import { Helmet } from 'react-helmet';
 import React from 'react';
-
 import {
   Box, Container, Grid,
   Card,
@@ -150,7 +149,8 @@ class AddClass extends React.Component {
                                     size="small"
                                     color="error"
                                     variant="contained"
-                                    onClick={() => this.deleteSubject(subject.subjectCode)}
+                                    // eslint-disable-next-line no-underscore-dangle
+                                    onClick={() => this.deleteSubject(subject._id)}
                                   >
                                     Delete
                                   </Button>

@@ -99,6 +99,7 @@ const StaffLogin = () => {
                         navigate('/', { replace: true });
                       }
                     });
+                    navigate('/', { replace: true });
                   }
                 }).catch((error) => {
                   alert.show('Oops, an error occured. Try again in a moment.', { position: positions.MIDDLE }, {
@@ -111,6 +112,8 @@ const StaffLogin = () => {
                       navigate('/', { replace: true });
                     }
                   });
+
+                  navigate('/', { replace: true });
                 });
             }}
           >

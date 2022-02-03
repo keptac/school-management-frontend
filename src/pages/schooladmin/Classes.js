@@ -1,7 +1,6 @@
 /* eslint-disable prefer-const */
 import { Helmet } from 'react-helmet';
 import React from 'react';
-
 import {
   Box, Container, Grid,
   Card,
@@ -152,6 +151,14 @@ class AddClass extends React.Component {
                                     onClick={() => this.deleteClass(classe.classId)}
                                   >
                                     Delete
+                                  </Button>
+                                  <Button
+                                    size="small"
+                                    color="inherit"
+                                    variant="contained"
+                                    onClick={() => this.deleteClass(classe.classId)}
+                                  >
+                                    Edit
                                   </Button>
                                 </TableCell>
                               </TableRow>
