@@ -57,8 +57,7 @@ class AddStudents extends React.Component {
       idNumber: null,
       studentId: null,
       classId: null,
-      modalIsOpen: false,
-      closeModal: false
+      modalIsOpen: false
     };
   }
 
@@ -122,8 +121,11 @@ class AddStudents extends React.Component {
       AdminServices.updateStudentRecord(data)
         .then((response) => {
           alert(response.message);
+          window.location.reload(false);
         }).catch((error) => {
           console.log(error);
+          alert('An error occured');
+          window.location.reload(false);
         });
     } else {
       alert('Ineligible age. Pupils should be older than 4 years');
@@ -232,6 +234,7 @@ class AddStudents extends React.Component {
       .then((response) => {
         console.log(response);
         this.setState({ page: 0 });
+        window.location.reload(false);
       }).catch((error) => {
         console.log(error);
       });
@@ -239,7 +242,7 @@ class AddStudents extends React.Component {
 
   render() {
     const {
-      students, limit, page, classes, className, addStudentForm, name, surname, dob, phoneNumber, emailAddress, idNumber, modalIsOpen, closeModal
+      students, limit, page, classes, className, addStudentForm, name, surname, dob, phoneNumber, emailAddress, idNumber, modalIsOpen
     } = this.state;
 
     return (
@@ -546,7 +549,6 @@ class AddStudents extends React.Component {
 
           <Modal
             isOpen={modalIsOpen}
-            onRequestClose={closeModal}
             style={customStyles}
           >
             <form
@@ -687,6 +689,14 @@ class AddStudents extends React.Component {
                     p: 2
                   }}
                 >
+                  <Button
+                    color="inherit"
+                    variant="contained"
+                    onClick={() => this.setState({ modalIsOpen: false })}
+                  >
+                    Close
+                  </Button>
+                  <Box sx={{ p: 1 }} />
                   <Button
                     color="primary"
                     variant="contained"

@@ -60,6 +60,7 @@ class AddClass extends React.Component {
       .then((response) => {
         this.setState({ page: 0 });
         console.log(response);
+        window.location.reload(false);
       }).catch((error) => {
         console.log(error);
       });
