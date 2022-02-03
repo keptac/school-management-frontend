@@ -309,6 +309,14 @@ class AddClass extends React.Component {
                     }}
                   >
                     <Button
+                      color="inherit"
+                      variant="contained"
+                      onClick={() => this.setState({ modalIsOpen: false })}
+                    >
+                      Close
+                    </Button>
+                    <Box sx={{ p: 1 }} />
+                    <Button
                       color="primary"
                       variant="contained"
                       onClick={() => this.submitEdit()}
