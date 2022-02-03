@@ -170,7 +170,10 @@ class AddClass extends React.Component {
                                 Notice Date
                               </TableCell>
                               <TableCell>
-                                Notice Date
+                                Target
+                              </TableCell>
+                              <TableCell>
+                                Actions
                               </TableCell>
                             </TableRow>
                           </TableHead>
@@ -200,6 +203,9 @@ class AddClass extends React.Component {
                                 </TableCell>
                                 <TableCell>
                                   {`${notice.updatedAt}`}
+                                </TableCell>
+                                <TableCell>
+                                  {`${notice.target}`}
                                 </TableCell>
                                 <TableCell>
                                   <Button
