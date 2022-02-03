@@ -1,7 +1,7 @@
 /* eslint-disable prefer-const */
 import { Helmet } from 'react-helmet';
 import React from 'react';
-
+import { useNavigate } from 'react-router-dom';
 import {
   Box, Container, Grid,
   Card,
@@ -18,6 +18,8 @@ import {
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import AddSubjectForm from 'src/components/schoolAdmin/AddSubjectForm';
 import SchoolAdminServices from '../../services/schoolAdmin';
+
+const navigate = useNavigate();
 
 class AddClass extends React.Component {
   constructor(props) {
@@ -61,6 +63,7 @@ class AddClass extends React.Component {
       .then((response) => {
         this.setState({ page: 0 });
         console.log(response);
+        navigate('/api/esm/subjects', { replace: true });
       }).catch((error) => {
         console.log(error);
       });
@@ -150,7 +153,8 @@ class AddClass extends React.Component {
                                     size="small"
                                     color="error"
                                     variant="contained"
-                                    onClick={() => this.deleteSubject(subject.subjectCode)}
+                                    // eslint-disable-next-line no-underscore-dangle
+                                    onClick={() => this.deleteSubject(subject._id)}
                                   >
                                     Delete
                                   </Button>

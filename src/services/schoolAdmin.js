@@ -73,8 +73,8 @@ async function postSubject(data) {
 
 async function deleteClass(classId) {
   const config = {
-    method: 'delete',
-    url: `${deploymentUrl}/api/esm/class/${classId}`,
+    method: 'get',
+    url: `${deploymentUrl}/api/esm/class/delete/${classId}`,
     headers: { }
   };
 
@@ -88,10 +88,10 @@ async function deleteClass(classId) {
     });
 }
 
-async function deleteSubject(subjectCode) {
+async function deleteSubject(subjectId) {
   const config = {
-    method: 'delete',
-    url: `${deploymentUrl}/api/esm/subjects/${subjectCode}`,
+    method: 'get',
+    url: `${deploymentUrl}/api/esm/subjects/delete/${subjectId}`,
     headers: { }
   };
 
