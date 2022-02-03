@@ -23,6 +23,8 @@ import {
   MenuItem
 } from '@material-ui/core';
 
+import Moment from 'moment';
+
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import AdminServices from 'src/services/schoolAdmin';
 import AuthService from 'src/services/authServices';
@@ -84,48 +86,58 @@ class AddStudents extends React.Component {
       className
     } = this.state;
 
-    const a = Math.floor(100000 + Math.random() * 900000);
-    const studentIdRef = `STUD${String(a).substring(0, 5)}`;
+    let date1 = Moment(dob);
+    let date2 = Moment(Date.now());
 
-    const data = {
-      name,
-      surname,
-      studentId: studentIdRef,
-      classId: className.classId,
-      dob,
-      phoneNumber,
-      emailAddress,
-      idNumber,
-      guardianName: '',
-      relationshipToGuardian: '',
-      gender: '',
-      address: ''
-    };
+    let differenceInMs = date2.diff(date1);
+    let duration = Moment.duration(differenceInMs);
+    let differenceInYears = duration.asYears();
+    if (differenceInYears > 4.5) {
+      const a = Math.floor(100000 + Math.random() * 900000);
+      const studentIdRef = `STUD${String(a).substring(0, 5)}`;
 
-    const dataReg = {
-      studentId: studentIdRef,
-      firstName: name,
-      surname,
-      classId: className.classId,
-      email: emailAddress,
-      password: 'pass@123'
-    };
+      const data = {
+        name,
+        surname,
+        studentId: studentIdRef,
+        classId: className.classId,
+        dob,
+        phoneNumber,
+        emailAddress,
+        idNumber,
+        guardianName: '',
+        relationshipToGuardian: '',
+        gender: '',
+        address: ''
+      };
 
-    AdminServices.postNewStudent(data)
-      .then((response) => {
-        if (response.success) {
-          AuthService.studentAuthRegister(dataReg)
-            .then((res) => {
-              console.log(res);
-              window.location.reload(false);
-            });
-        } else {
-          alert(response.message);
-          window.location.reload(false);
-        }
-      }).catch((error) => {
-        console.log(error);
-      });
+      const dataReg = {
+        studentId: studentIdRef,
+        firstName: name,
+        surname,
+        classId: className.classId,
+        email: emailAddress,
+        password: 'pass@123'
+      };
+
+      AdminServices.postNewStudent(data)
+        .then((response) => {
+          if (response.success) {
+            AuthService.studentAuthRegister(dataReg)
+              .then((res) => {
+                console.log(res);
+                window.location.reload(false);
+              });
+          } else {
+            alert(response.message);
+            window.location.reload(false);
+          }
+        }).catch((error) => {
+          console.log(error);
+        });
+    } else {
+      alert('Ineligible age. Pupils should be older than 4 years');
+    }
   }
 
   async getAllClasses() {
@@ -241,7 +253,7 @@ class AddStudents extends React.Component {
                                   {`${student.surname} ${student.name}` }
                                 </TableCell>
                                 <TableCell>
-                                  {`${student.dob}`}
+                                  {Moment(`${student.dob}`).format('YYYY-MM-DD')}
                                 </TableCell>
                                 <TableCell>
                                   {student.phoneNumber}
