@@ -146,6 +146,16 @@ class AddStudents extends React.Component {
       });
   }
 
+  async deleteStudent(studentId) {
+    AdminServices.deleteStudent(studentId)
+      .then((response) => {
+        console.log(response);
+        this.setState({ page: 0 });
+      }).catch((error) => {
+        console.log(error);
+      });
+  }
+
   render() {
     const {
       students, limit, page, classes, className, addStudentForm, name, surname, dob, phoneNumber, emailAddress, idNumber
@@ -201,6 +211,9 @@ class AddStudents extends React.Component {
                               <TableCell>
                                 Class
                               </TableCell>
+                              <TableCell>
+                                Action
+                              </TableCell>
                             </TableRow>
                           </TableHead>
                           <TableBody>
@@ -238,6 +251,25 @@ class AddStudents extends React.Component {
                                 </TableCell>
                                 <TableCell>
                                   {student.classId}
+                                </TableCell>
+                                <TableCell>
+                                  <Button
+                                    size="small"
+                                    color="error"
+                                    variant="contained"
+                                    onClick={() => this.deleteStudent(student.studentId)}
+                                  >
+                                    Delete
+                                  </Button>
+                                  <Box sx={{ pt: 1 }} />
+                                  <Button
+                                    size="small"
+                                    color="inherit"
+                                    variant="contained"
+                                    onClick={() => this.editClass(student.studentId)}
+                                  >
+                                    Edit
+                                  </Button>
                                 </TableCell>
                               </TableRow>
                             ))}

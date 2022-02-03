@@ -105,6 +105,23 @@ async function deleteSubject(subjectId) {
     });
 }
 
+async function deleteStudent(studentId) {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/api/esm/students/delete/${studentId}`,
+    headers: { }
+  };
+
+  axios(config)
+    .then((response) => {
+      console.log(JSON.stringify(response.data));
+      return response.data;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
 async function getAllClasses() {
   const config = {
     method: 'get',
@@ -303,7 +320,8 @@ const AdminServices = {
   getNoticesByTaget,
   downloadReports,
   deleteClass,
-  deleteSubject
+  deleteSubject,
+  deleteStudent
 };
 
 export default AdminServices;
