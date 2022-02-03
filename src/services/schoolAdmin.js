@@ -318,6 +318,21 @@ async function updateStudentRecord(data) {
     return err;
   }
 }
+async function updateClasses(data) {
+  const config = {
+    baseURL: `${deploymentUrl}/api/esm`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  };
+  try {
+    const res = await axios.post('/class/update', qs.stringify(data), config);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+}
 
 const AdminServices = {
   postClasses,
@@ -338,7 +353,8 @@ const AdminServices = {
   deleteClass,
   deleteSubject,
   deleteStudent,
-  updateStudentRecord
+  updateStudentRecord,
+  updateClasses
 };
 
 export default AdminServices;
