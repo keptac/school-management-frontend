@@ -82,9 +82,6 @@ const Login = () => {
                         onOpen: () => {
                           console.log('hey');
                         },
-                        onClose: () => {
-                          navigate('/login', { replace: true });
-                        }
                       });
                       navigate('/login', { replace: true });
                     }
@@ -94,9 +91,6 @@ const Login = () => {
                       onOpen: () => {
                         console.log(response);
                       },
-                      onClose: () => {
-                        navigate('/login', { replace: true });
-                      }
                     });
                     navigate('/login', { replace: true });
                   }
