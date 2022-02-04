@@ -56,6 +56,7 @@ class Dashboard extends React.Component {
             <Grid
               container
               spacing={3}
+              sx={{ marginTop: '0.1%' }}
             >
               <Grid
                 item
@@ -64,18 +65,23 @@ class Dashboard extends React.Component {
                 xl={3}
                 xs={12}
               >
-                {subjectData.map((sub) => (
-                  <Grid
-                    item
-                    container
-                    lg={4}
-                    sm={6}
-                    xl={3}
-                    xs={12}
-                  >
-                    <Subjectscard sx={{ height: '100%' }} subjectData={sub} />
-                  </Grid>
-                ))}
+                <Grid
+                  container
+                  spacing={3}
+                >
+                  {subjectData.map((sub) => (
+                    <Grid
+                      item
+                      container
+                      lg={4}
+                      sm={6}
+                      xl={3}
+                      xs={12}
+                    >
+                      <Subjectscard sx={{ height: '100%' }} subjectData={sub} />
+                    </Grid>
+                  ))}
+                </Grid>
               </Grid>
 
               <Grid

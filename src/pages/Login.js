@@ -82,11 +82,8 @@ const Login = () => {
                         onOpen: () => {
                           console.log('hey');
                         },
-                        onClose: () => {
-                          navigate('/login', { replace: true });
-                        }
                       });
-                      navigate('/login', { replace: true });
+                      navigate('/login', { replace: false });
                     }
                   } else {
                     alert.error(response.message, { position: positions.MIDDLE }, {
@@ -94,11 +91,8 @@ const Login = () => {
                       onOpen: () => {
                         console.log(response);
                       },
-                      onClose: () => {
-                        navigate('/login', { replace: true });
-                      }
                     });
-                    navigate('/login', { replace: true });
+                    navigate('/login', { replace: false });
                   }
                 }).catch((error) => {
                   alert.show('Oops, an error occured. Try again in a moment.', { position: positions.MIDDLE }, {

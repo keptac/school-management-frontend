@@ -82,7 +82,7 @@ const Subjectscard = ({ subjectData, ...rest }) => {
               sx={{ pl: 1 }}
               variant="body2"
             >
-              { `Class Teacher ${subjectData.teacherName} `}
+              { `${subjectData.teacherName} `}
             </Typography>
           </Grid>
           <Grid
