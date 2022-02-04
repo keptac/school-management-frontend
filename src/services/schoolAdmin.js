@@ -318,6 +318,54 @@ async function updateStudentRecord(data) {
     return err;
   }
 }
+async function updateClasses(data) {
+  const config = {
+    baseURL: `${deploymentUrl}/api/esm`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  };
+  try {
+    const res = await axios.post('/class/update', qs.stringify(data), config);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+}
+
+async function updateAnnouncement(data) {
+  const config = {
+    baseURL: `${deploymentUrl}/api/esm`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  };
+  try {
+    const res = await axios.post('/announcements/update', qs.stringify(data), config);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+}
+
+async function deleteAnnouncement(noticeid) {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/api/esm/announcements/delete/${noticeid}`,
+    headers: { }
+  };
+
+  axios(config)
+    .then((response) => {
+      console.log(JSON.stringify(response.data));
+      return response.data;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
 
 const AdminServices = {
   postClasses,
@@ -338,7 +386,10 @@ const AdminServices = {
   deleteClass,
   deleteSubject,
   deleteStudent,
-  updateStudentRecord
+  updateStudentRecord,
+  updateClasses,
+  updateAnnouncement,
+  deleteAnnouncement
 };
 
 export default AdminServices;
