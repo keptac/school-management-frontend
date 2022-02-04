@@ -83,7 +83,7 @@ const Login = () => {
                           console.log('hey');
                         },
                       });
-                      navigate('/login', { replace: true });
+                      navigate('/login', { replace: false });
                     }
                   } else {
                     alert.error(response.message, { position: positions.MIDDLE }, {
@@ -92,7 +92,7 @@ const Login = () => {
                         console.log(response);
                       },
                     });
-                    navigate('/login', { replace: true });
+                    navigate('/login', { replace: false });
                   }
                 }).catch((error) => {
                   alert.show('Oops, an error occured. Try again in a moment.', { position: positions.MIDDLE }, {
