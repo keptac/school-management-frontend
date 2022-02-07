@@ -135,7 +135,7 @@ class TeachingResources extends React.Component {
                   </Box>
                   <Box
                     sx={{
-                      pt: 2
+                      pt: 1
                     }}
                   />
                   {uploadDoc ? (<UploadLearningResourcesForm />) : (
@@ -143,15 +143,15 @@ class TeachingResources extends React.Component {
                       {/* <Container maxWidth> */}
                       {viewDoc
                         ? (
-                          <Box sx={{ pt: 3, justifyContent: 'center', display: 'flex' }}>
-                            <Card style={{ height: '780px', width: '70%', justifyContent: 'center', }}>
+                          <Box sx={{ pt: 1, justifyContent: 'center', display: 'flex' }}>
+                            <Card style={{ height: '800px', width: '98%', justifyContent: 'center', }}>
                               {
                                   download ? (<Button>Download</Button>) : (
 
                                     <FileViewer
                                       fileType={type}
                                       filePath={docs}
-                                      allowFullScreen
+                                      // allowFullScreen
                                       onError={() => this.setState({ download: true })}
                                     />
 
@@ -161,8 +161,8 @@ class TeachingResources extends React.Component {
                           </Box>
                         )
                         : (
-                          <Card>
-                            <Box sx={{ pt: 3 }}>
+                          <>
+                            <Box sx={{ pt: 1 }}>
                               <Grid
                                 container
                                 spacing={3}
@@ -189,7 +189,7 @@ class TeachingResources extends React.Component {
                               }}
                             />
 
-                          </Card>
+                          </>
                         )}
 
                       {/* </Container> */}
