@@ -1,20 +1,19 @@
 import { useAlert, positions } from 'react-alert';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
-import Cookies from 'js-cookie';
 import { Formik } from 'formik';
+import Cookies from 'js-cookie';
 import {
   Box,
   Button,
   Container,
-  Link,
   TextField,
   Typography
 } from '@material-ui/core';
 import AuthService from 'src/services/authServices';
 
-const Login = () => {
+const PasswordReset = () => {
   const navigate = useNavigate();
   sessionStorage.clear();
   localStorage.clear();
@@ -23,7 +22,7 @@ const Login = () => {
   return (
     <>
       <Helmet>
-        <title>Student Login | MTGS</title>
+        <title>Student Password Reset | MTGS</title>
       </Helmet>
       <Box
         sx={{
@@ -50,17 +49,22 @@ const Login = () => {
           <Formik
             initialValues={{
               email: '',
-              password: ''
+              oldPassword: '',
+              newPassword: ''
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string()
                 .email('Must be a valid email')
                 .max(255)
                 .required('Email is required'),
-              password: Yup.string().max(255).required('Password is required')
+              oldPassword: Yup.string().max(255).required('Old Password is required'),
+              newPassword: Yup.string().required('New password is required').matches(
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
+                'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
+              )
             })}
             onSubmit={(values) => {
-              AuthService.studentLogin(values)
+              AuthService.studentPasswordReset(values)
                 .then((response) => {
                   if (response.success) {
                     sessionStorage.setItem('loggedUserAvatar', '/static/images/resources/mtgs.jpeg');
@@ -74,26 +78,14 @@ const Login = () => {
                     Cookies.set('name', response.user.name);
                     Cookies.set('classId', response.user.classId);
 
-                    if (response.user.userType === 'STUDENT') {
-                      if (response.user.passwordReset) {
-                        alert.info('Please change your password', { position: positions.MIDDLE }, {
-                          onOpen: () => {
-                            console.log('Student password change');
-                          },
-                        });
-                        navigate('/student/password-reset', { replace: true });
-                      } else {
-                        navigate('/student/dashboard', { replace: true });
-                      }
-                    } else {
-                      alert.error('Account not setup correctly. Please contact Admin', { position: positions.MIDDLE }, {
-                        timeout: 2000,
-                        onOpen: () => {
-                          console.log('hey');
-                        },
-                      });
-                      navigate('/login', { replace: false });
-                    }
+                    alert.show(response.message, { position: positions.MIDDLE }, {
+                      timeout: 2000,
+                      type: 'error',
+                      onOpen: () => {
+                        console.log(response.message);
+                      },
+                    });
+                    navigate('/student/dashboard', { replace: true });
                   } else {
                     alert.error(response.message, { position: positions.MIDDLE }, {
                       timeout: 2000,
@@ -101,7 +93,7 @@ const Login = () => {
                         console.log(response);
                       },
                     });
-                    navigate('/login', { replace: false });
+                    navigate('/student/password-reset', { replace: false });
                   }
                 }).catch((error) => {
                   alert.show('Oops, an error occured. Try again in a moment.', { position: positions.MIDDLE }, {
@@ -110,11 +102,8 @@ const Login = () => {
                     onOpen: () => {
                       console.log(error);
                     },
-                    onClose: () => {
-                      navigate('/', { replace: true });
-                    }
                   });
-                  navigate('/', { replace: true });
+                  navigate('/student/password-reset', { replace: true });
                 });
             }}
           >
@@ -130,14 +119,7 @@ const Login = () => {
               <form onSubmit={handleSubmit}>
                 <Box sx={{ mb: 3 }}>
                   <Typography color="textPrimary" variant="h2">
-                    Students Portal
-                  </Typography>
-                  <Typography
-                    color="textSecondary"
-                    gutterBottom
-                    variant="body2"
-                  >
-                    Sign in
+                    Students Password Reset
                   </Typography>
                 </Box>
 
@@ -155,16 +137,29 @@ const Login = () => {
                   variant="outlined"
                 />
                 <TextField
-                  error={Boolean(touched.password && errors.password)}
+                  error={Boolean(touched.oldPassword && errors.oldPassword)}
                   fullWidth
-                  helperText={touched.password && errors.password}
-                  label="Password"
+                  helperText={touched.oldPassword && errors.oldPassword}
+                  label="Old Password"
                   margin="normal"
-                  name="password"
+                  name="oldPassword"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   type="password"
-                  value={values.password}
+                  value={values.oldPassword}
+                  variant="outlined"
+                />
+                <TextField
+                  error={Boolean(touched.newPassword && errors.newPassword)}
+                  fullWidth
+                  helperText={touched.newPassword && errors.newPassword}
+                  label="New Password"
+                  margin="normal"
+                  name="newPassword"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="password"
+                  value={values.newPassword}
                   variant="outlined"
                 />
                 <Box sx={{ py: 2 }}>
@@ -179,13 +174,6 @@ const Login = () => {
                     Sign in now
                   </Button>
                 </Box>
-                <Typography color="textSecondary" variant="body1">
-                  Don&apos;t have an account?
-                  {' '}
-                  <Link component={RouterLink} to="/login" variant="h6">
-                    Please visit the school adminstation
-                  </Link>
-                </Typography>
               </form>
             )}
           </Formik>
@@ -198,4 +186,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default PasswordReset;
