@@ -51,11 +51,22 @@ async function studentLogin(data) {
   }
 }
 
+async function studentPasswordReset(data) {
+  try {
+    const res = await axios.post('/student/passwordReset', qs.stringify(data), config);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return { success: false, message: 'Connection failed. Please check your connection.' };
+  }
+}
+
 const AuthService = {
   register,
   login,
   studentLogin,
-  studentAuthRegister
+  studentAuthRegister,
+  studentPasswordReset
 };
 
 export default AuthService;

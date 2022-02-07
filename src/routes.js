@@ -40,6 +40,7 @@ import ClassWork from './pages/student/ClassWork';
 import StudentReport from './pages/student/ReportBook';
 import SubmitAssignment from './pages/student/SubmitAssignment';
 import Dummy from './pages/Dummy';
+import PasswordReset from './pages/student/passwordReset';
 
 const routes = [
   // Student Routes
@@ -103,6 +104,7 @@ const routes = [
       { path: 'staff', element: <StaffLogin /> },
       { path: 'register', element: <Register /> },
       { path: 'new-registration', element: <NewStudentRegister /> },
+      { path: 'student/password-reset', element: <PasswordReset /> },
       { path: '404', element: <NotFound /> },
       { path: '/', element: <Navigate to="/staff" /> },
       { path: '*', element: <Navigate to="/404" /> }

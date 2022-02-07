@@ -73,12 +73,12 @@ class Dashboard extends React.Component {
                     <Grid
                       item
                       container
-                      lg={4}
+                      lg={3}
                       sm={6}
                       xl={3}
                       xs={12}
                     >
-                      <Subjectscard sx={{ height: '100%' }} subjectData={sub} />
+                      <Subjectscard subjectData={sub} />
                     </Grid>
                   ))}
                 </Grid>
