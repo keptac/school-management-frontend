@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAlert, positions } from 'react-alert';
+import { BallTriangle } from 'react-loader-spinner';
 
 import {
   Box, Grid,
@@ -23,6 +24,7 @@ const UploadLearningResourcesForm = () => {
   const [values, setValues] = useState({
     resourceName: null,
     topicName: null,
+    loadingLoader: true
   });
 
   const handleChange = (event) => {
@@ -33,6 +35,7 @@ const UploadLearningResourcesForm = () => {
   };
 
   const handleSubmit = () => {
+    setValues({ loadingLoader: true });
     const subjectData = JSON.parse(localStorage.getItem('recordingSubject'));
     const a = Math.floor(1000000 + Math.random() * 9000000);
     const resourceId = `RSC${String(a).substring(0, 5)}`;
@@ -51,6 +54,7 @@ const UploadLearningResourcesForm = () => {
     try {
       UploadService.postMaterialIpfs(data)
         .then((response) => {
+          setValues({ loadingLoader: false });
           navigate('/teacher/subject-student-records', { replace: true });
           navigate('/teacher/teaching-resources', { replace: true });
           alert.info(response.message, { position: positions.MIDDLE }, {
@@ -58,6 +62,7 @@ const UploadLearningResourcesForm = () => {
           });
         }).catch((error) => {
           console.log(error);
+          setValues({ loadingLoader: false });
           alert.error('Snap, an error occured. Please try again later.', { position: positions.MIDDLE }, {
             timeout: 2000,
           });
@@ -66,6 +71,7 @@ const UploadLearningResourcesForm = () => {
         });
     } catch (error) {
       console.log(error);
+      setValues({ loadingLoader: false });
       navigate('/teacher/subject-student-records', { replace: true });
       navigate('/teacher/teaching-resources', { replace: true });
     }
@@ -73,104 +79,136 @@ const UploadLearningResourcesForm = () => {
 
   return (
     <Grid
-      item
-      lg={8}
-      md={12}
-      xs={12}
+      container
+      spacing={3}
+      sx={{ marginTop: '0.1%' }}
     >
-      <Box>
-        <form
-          autoComplete="off"
-          noValidate
-        >
-          <Card>
-            <CardHeader
-              title="Upload Learning Material"
-            />
-            <Divider />
-            <CardContent>
-              <Grid
-                container
-                spacing={3}
-              >
-                <Grid
-                  item
-                  md={6}
-                  xs={12}
-                >
-                  <TextField
-                    fullWidth
-                    label="Resource Name"
-                    name="resourceName"
-                    onChange={handleChange}
-                    required
-                    value={values.resourceName}
-                    variant="outlined"
-                  />
-                </Grid>
-                <Grid
-                  item
-                  md={6}
-                  xs={12}
-                >
-                  <TextField
-                    fullWidth
-                    label="Topic Name"
-                    name="topicName"
-                    onChange={handleChange}
-                    required
-                    value={values.topicName}
-                    variant="outlined"
-                  />
-                </Grid>
-              </Grid>
-              <Box
-                sx={{
-                  pt: 3
-                }}
-              >
+      <Grid
+        item
+        lg={8}
+        md={12}
+        xs={12}
+      >
+        <Box>
+          <form
+            autoComplete="off"
+            noValidate
+          >
+            <Card>
+              <CardHeader
+                title="Upload Learning Material"
+              />
+              <Divider />
+              <CardContent>
                 <Grid
                   container
                   spacing={3}
                 >
                   <Grid
                     item
-                    md={12}
+                    md={6}
                     xs={12}
                   >
                     <TextField
-                      type="file"
                       fullWidth
-                      name="vividlearn"
-                      onChange={(e) => setSelectedFile(e.target.files[0])}
+                      label="Resource Name"
+                      name="resourceName"
+                      onChange={handleChange}
                       required
-                      value={values.vividlearn}
+                      value={values.resourceName}
+                      variant="outlined"
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    md={6}
+                    xs={12}
+                  >
+                    <TextField
+                      fullWidth
+                      label="Topic Name"
+                      name="topicName"
+                      onChange={handleChange}
+                      required
+                      value={values.topicName}
                       variant="outlined"
                     />
                   </Grid>
                 </Grid>
-              </Box>
-            </CardContent>
-            <Divider />
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'flex-end',
-                p: 2
-              }}
-            >
-              <Button
-                color="primary"
-                variant="contained"
-                onClick={handleSubmit}
+                <Box
+                  sx={{
+                    pt: 3
+                  }}
+                >
+                  <Grid
+                    container
+                    spacing={3}
+                  >
+                    <Grid
+                      item
+                      md={12}
+                      xs={12}
+                    >
+                      <TextField
+                        type="file"
+                        fullWidth
+                        name="vividlearn"
+                        onChange={(e) => setSelectedFile(e.target.files[0])}
+                        required
+                        value={values.vividlearn}
+                        variant="outlined"
+                      />
+                    </Grid>
+                  </Grid>
+                </Box>
+              </CardContent>
+              <Divider />
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  p: 2
+                }}
               >
-                Upload Resource
-              </Button>
-            </Box>
-          </Card>
-        </form>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={handleSubmit}
+                >
+                  Upload Resource
+                </Button>
+              </Box>
+            </Card>
+          </form>
 
-      </Box>
+        </Box>
+      </Grid>
+      {
+      values.loadingLoader ? (
+        <Grid
+          item
+          lg={4}
+          md={12}
+          xs={12}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center'
+            }}
+          >
+            <BallTriangle
+              height={70}
+              width={70}
+              color="#D4AF37"
+              ariaLabel="loading"
+            />
+          </Box>
+
+        </Grid>
+      ) : <></>
+    }
+
     </Grid>
   );
 };
