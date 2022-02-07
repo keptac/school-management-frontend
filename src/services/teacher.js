@@ -238,7 +238,7 @@ async function getMeetingsByTeacher(teacherId) {
 async function getMeetingsPerClass(classId) {
   const config = {
     method: 'get',
-    url: `${deploymentUrl}/api/esm/meetings/class/${classId}`,
+    url: `${deploymentUrl}/api/esm/teacherClasses/class/${classId}`,
     headers: { }
   };
 
@@ -247,6 +247,23 @@ async function getMeetingsPerClass(classId) {
     .catch((error) => {
       console.log(error);
       return [];
+    });
+}
+
+async function deleteTeacherClass(classe) {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/api/esm/teacherClasses/delete/${classe.subjectCode}/${classe.teacherId}`,
+    headers: { }
+  };
+
+  axios(config)
+    .then((response) => {
+      console.log(JSON.stringify(response.data));
+      return response.data;
+    })
+    .catch((error) => {
+      console.log(error);
     });
 }
 
@@ -267,6 +284,7 @@ const TeacherServices = {
   saveMeeting,
   getMeetingsByTeacher,
   getMeetingsPerClass,
+  deleteTeacherClass
 };
 
 export default TeacherServices;

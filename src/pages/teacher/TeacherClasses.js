@@ -126,6 +126,17 @@ class AddTeacherClass extends React.Component {
       });
   }
 
+  async deleteTeacherClass(classe) {
+    TeacherServices.deleteTeacherClass(classe)
+      .then((response) => {
+        console.log(response);
+        this.setState({ page: 0 });
+        window.location.reload(false);
+      }).catch((error) => {
+        console.log(error);
+      });
+  }
+
   render() {
     const {
       teacherClasses, limit, page, classes, subjects, subject, className
@@ -175,6 +186,9 @@ class AddTeacherClass extends React.Component {
                               <TableCell>
                                 Level
                               </TableCell>
+                              <TableCell>
+                                Action
+                              </TableCell>
                             </TableRow>
                           </TableHead>
                           <TableBody>
@@ -206,6 +220,16 @@ class AddTeacherClass extends React.Component {
                                 </TableCell>
                                 <TableCell>
                                   {classe.level}
+                                </TableCell>
+                                <TableCell>
+                                  <Button
+                                    size="small"
+                                    color="error"
+                                    variant="contained"
+                                    onClick={() => this.deleteTeacherClass(classe)}
+                                  >
+                                    Delete
+                                  </Button>
                                 </TableCell>
                               </TableRow>
                             ))}
