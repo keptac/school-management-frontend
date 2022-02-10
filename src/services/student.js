@@ -115,13 +115,30 @@ async function getAllDummyTests(subjectId, classId) {
   }
 }
 
+async function updateStudentRecord(data) {
+  const config = {
+    baseURL: `${deploymentUrl}/esm`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  };
+  try {
+    const res = await axios.post('/students/update', qs.stringify(data), config);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+}
+
 const StudentServices = {
   getStudentSubjects,
   download,
   deleteResource,
   getStudentSubmissions,
   getStudentReport,
-  getAllDummyTests
+  getAllDummyTests,
+  updateStudentRecord
 };
 
 export default StudentServices;

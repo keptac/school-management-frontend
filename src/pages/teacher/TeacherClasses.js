@@ -262,7 +262,7 @@ class AddTeacherClass extends React.Component {
                   >
                     <Card>
                       <CardHeader
-                        title="Add New Class"
+                        title="Add New Class Subject"
                       />
                       <Divider />
                       <CardContent>

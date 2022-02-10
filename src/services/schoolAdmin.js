@@ -303,7 +303,7 @@ async function downloadReports() {
     });
 }
 
-async function updateStudentRecord(data) {
+async function updateStudentClassRecord(data) {
   const config = {
     baseURL: `${deploymentUrl}/api/esm`,
     headers: {
@@ -311,13 +311,14 @@ async function updateStudentRecord(data) {
     },
   };
   try {
-    const res = await axios.post('/students/update', qs.stringify(data), config);
+    const res = await axios.post('/students/update/class', qs.stringify(data), config);
     return res.data;
   } catch (err) {
     console.error(err);
     return err;
   }
 }
+
 async function updateClasses(data) {
   const config = {
     baseURL: `${deploymentUrl}/api/esm`,
@@ -386,9 +387,9 @@ const AdminServices = {
   deleteClass,
   deleteSubject,
   deleteStudent,
-  updateStudentRecord,
   updateClasses,
   updateAnnouncement,
+  updateStudentClassRecord,
   deleteAnnouncement
 };
 
