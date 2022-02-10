@@ -369,28 +369,31 @@ async function deleteAnnouncement(noticeid) {
 }
 
 const AdminServices = {
-  postClasses,
   getAllClasses,
   getAllSubjects,
   getAllTeachers,
   getAllNotices,
-  postSubject,
-  postNewStudent,
   getAllStudents,
   getAllPayments,
-  postNewPayment,
-  postAnnouncement,
   getTeacherSubmissions,
   getStudentReport,
   getNoticesByTaget,
   downloadReports,
-  deleteClass,
-  deleteSubject,
-  deleteStudent,
+
+  postSubject,
+  postNewStudent,
+  postClasses,
+  postNewPayment,
+  postAnnouncement,
+
   updateClasses,
   updateAnnouncement,
   updateStudentClassRecord,
-  deleteAnnouncement
+
+  deleteAnnouncement,
+  deleteClass,
+  deleteSubject,
+  deleteStudent
 };
 
 export default AdminServices;

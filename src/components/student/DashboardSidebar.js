@@ -13,7 +13,8 @@ import {
 import {
   BarChart as BarChartIcon,
   Lock as LockIcon,
-  MessageCircle as UsersIcon
+  MessageCircle as UsersIcon,
+  Edit as EditIcon
 } from 'react-feather';
 import OndemandVideoIcon from '@material-ui/icons/OndemandVideo';
 import NavItem from '../NavItem';
@@ -39,6 +40,11 @@ const items = [
     href: '/student/my-report',
     icon: UsersIcon,
     title: 'End of year Report'
+  },
+  {
+    href: '/student/account',
+    icon: EditIcon,
+    title: 'Update Profile'
   },
   {
     href: '/login',
@@ -108,7 +114,16 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           ))}
         </List>
       </Box>
-
+      {/* <Divider />
+      <Box sx={{ p: 2 }}>
+        <List>
+          <NavItem
+            href="/student/account"
+            title="Update Profile"
+            icon={EditIcon}
+          />
+        </List>
+      </Box> */}
     </Box>
   );
 

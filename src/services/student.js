@@ -118,6 +118,21 @@ async function getStudentReport(studentId) {
     });
 }
 
+async function getStudentRecord(studentId) {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/esm/students/${studentId}`,
+    headers: {}
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
 async function getAllDummyTests(subjectId, classId) {
   const config = {
     baseURL: `${deploymentUrl}/esm/`,
@@ -156,6 +171,7 @@ const StudentServices = {
   deleteResource,
   getStudentSubmissions,
   getStudentReport,
+  getStudentRecord,
   getAllDummyTests,
   updateStudentRecord,
   getStudentMeetings

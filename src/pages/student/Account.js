@@ -4,7 +4,7 @@ import {
   Container,
   Grid
 } from '@material-ui/core';
-import AccountProfile from 'src/components/student/account/AccountProfile';
+// import AccountProfile from 'src/components/student/account/AccountProfile';
 import AccountProfileDetails from 'src/components/student/account/AccountProfileDetails';
 
 const Account = () => (
@@ -24,14 +24,6 @@ const Account = () => (
           container
           spacing={3}
         >
-          <Grid
-            item
-            lg={4}
-            md={6}
-            xs={12}
-          >
-            <AccountProfile />
-          </Grid>
           <Grid
             item
             lg={8}
