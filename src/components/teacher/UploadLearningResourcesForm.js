@@ -24,7 +24,7 @@ const UploadLearningResourcesForm = () => {
   const [values, setValues] = useState({
     resourceName: null,
     topicName: null,
-    loadingLoader: true
+    loadingLoader: false
   });
 
   const handleChange = (event) => {

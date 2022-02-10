@@ -31,6 +31,7 @@ import TeacherServices from 'src/services/teacher';
 import { VideoCall } from '@material-ui/icons';
 
 let newDate = '';
+let time = '';
 class TeacherVirtualClass extends React.Component {
   constructor(props) {
     super(props);
@@ -39,6 +40,7 @@ class TeacherVirtualClass extends React.Component {
       className: {},
       topicName: null,
       meetingDate: null,
+      meetingTime: null,
       classes: []
     };
   }
@@ -61,6 +63,11 @@ class TeacherVirtualClass extends React.Component {
     newDate = event.target.value;
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  handleChangeTime(event) {
+    time = event.target.value;
+  }
+
   handleScheduleVirtualClass() {
     const {
       className,
@@ -81,6 +88,7 @@ class TeacherVirtualClass extends React.Component {
       subjectName: subject.subjectName,
       teacherId: userId,
       meetingDate: newDate,
+      meetingTime: time,
       teacherName,
       meetingId,
       meetingLink: ''
@@ -88,7 +96,7 @@ class TeacherVirtualClass extends React.Component {
 
     TeacherServices.saveMeeting(data)
       .then((response) => {
-        // window.location.reload(false);
+        window.location.reload(false);
         console.log(response); // Add alert
       }).catch((error) => {
         console.log(error);
@@ -117,7 +125,7 @@ class TeacherVirtualClass extends React.Component {
 
   render() {
     const {
-      meetings, className, topicName, meetingDate, classes
+      meetings, className, topicName, meetingDate, classes, meetingTime
     } = this.state;
 
     return (
@@ -153,7 +161,7 @@ class TeacherVirtualClass extends React.Component {
 
                     <Grid
                       item
-                      lg={3}
+                      lg={4}
                       md={12}
                       xs={12}
                     >
@@ -192,7 +200,7 @@ class TeacherVirtualClass extends React.Component {
                             color="textPrimary"
                             variant="body1"
                           >
-                            {moment(resource.dueDate).format('DD/MM/YYYY')}
+                            {`${moment(resource.meetingDate).format('DD/MM/YYYY')} @ ${resource.meetingTime}`}
                           </Typography>
                         </CardContent>
                         <Box sx={{ flexGrow: 1 }} />
@@ -320,6 +328,21 @@ class TeacherVirtualClass extends React.Component {
                               onChange={this.handleChangeDate}
                               required
                               value={meetingDate}
+                              variant="outlined"
+                            />
+                          </Grid>
+                          <Grid
+                            item
+                            md={3}
+                            xs={12}
+                          >
+                            <TextField
+                              fullWidth
+                              type="time"
+                              name="meetingTime"
+                              onChange={this.handleChangeTime}
+                              required
+                              value={meetingTime}
                               variant="outlined"
                             />
                           </Grid>
