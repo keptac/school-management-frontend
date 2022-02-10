@@ -118,7 +118,7 @@ class AddStudents extends React.Component {
         idNumber,
       };
 
-      AdminServices.updateStudentRecord(data)
+      AdminServices.updateStudentClassRecord(data)
         .then((response) => {
           alert(response.message);
           window.location.reload(false);

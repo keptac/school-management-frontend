@@ -37,7 +37,7 @@ const items = [
   {
     href: '/teacher/classes',
     icon: EditIcon,
-    title: 'Configure Classes'
+    title: 'Configure Subjects'
   },
   {
     href: '/teacher/reporting',

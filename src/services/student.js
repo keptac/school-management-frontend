@@ -27,6 +27,25 @@ async function getStudentSubjects(classId) {
   }
 }
 
+async function getStudentMeetings(classId) {
+  // const token = await JSON.parse(localStorage.getItem('token'));
+  const config = {
+    baseURL: `${deploymentUrl}/esm/meetings`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      // Authorization: `Bearer ${token}`,
+      // 'Access-Control-Allow-Credentials': true,
+    },
+  };
+  try {
+    const res = await axios.get(`/class/${classId}`, config);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+}
+
 async function getStudentSubmissions(subjectCode, studentId) {
   const config = {
     baseURL: `${deploymentUrl}/esm/submissions`,
@@ -99,6 +118,21 @@ async function getStudentReport(studentId) {
     });
 }
 
+async function getStudentRecord(studentId) {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/esm/students/${studentId}`,
+    headers: {}
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
 async function getAllDummyTests(subjectId, classId) {
   const config = {
     baseURL: `${deploymentUrl}/esm/`,
@@ -115,13 +149,32 @@ async function getAllDummyTests(subjectId, classId) {
   }
 }
 
+async function updateStudentRecord(data) {
+  const config = {
+    baseURL: `${deploymentUrl}/esm`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  };
+  try {
+    const res = await axios.post('/students/update', qs.stringify(data), config);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+}
+
 const StudentServices = {
   getStudentSubjects,
   download,
   deleteResource,
   getStudentSubmissions,
   getStudentReport,
-  getAllDummyTests
+  getStudentRecord,
+  getAllDummyTests,
+  updateStudentRecord,
+  getStudentMeetings
 };
 
 export default StudentServices;

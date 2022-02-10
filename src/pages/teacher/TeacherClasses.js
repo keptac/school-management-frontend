@@ -90,7 +90,7 @@ class AddTeacherClass extends React.Component {
     TeacherServices.addTeacherClass(data)
       .then((response) => {
         window.location.reload(false);
-        alert('Sucess');
+        alert(response.message);
         console.log(response); // Add alert
       }).catch((error) => {
         console.log(error);
@@ -262,7 +262,7 @@ class AddTeacherClass extends React.Component {
                   >
                     <Card>
                       <CardHeader
-                        title="Add New Class"
+                        title="Add New Class Subject"
                       />
                       <Divider />
                       <CardContent>
