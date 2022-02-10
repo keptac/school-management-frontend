@@ -178,7 +178,7 @@ const PasswordReset = () => {
             )}
           </Formik>
           <Typography color="textSecondary" variant="caption" display="block" gutterBottom>
-            Version 0.2.17
+            version 0.2.20
           </Typography>
         </Container>
       </Box>
