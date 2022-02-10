@@ -27,6 +27,25 @@ async function getStudentSubjects(classId) {
   }
 }
 
+async function getStudentMeetings(classId) {
+  // const token = await JSON.parse(localStorage.getItem('token'));
+  const config = {
+    baseURL: `${deploymentUrl}/esm/meetings`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      // Authorization: `Bearer ${token}`,
+      // 'Access-Control-Allow-Credentials': true,
+    },
+  };
+  try {
+    const res = await axios.get(`/class/${classId}`, config);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+}
+
 async function getStudentSubmissions(subjectCode, studentId) {
   const config = {
     baseURL: `${deploymentUrl}/esm/submissions`,
@@ -138,7 +157,8 @@ const StudentServices = {
   getStudentSubmissions,
   getStudentReport,
   getAllDummyTests,
-  updateStudentRecord
+  updateStudentRecord,
+  getStudentMeetings
 };
 
 export default StudentServices;

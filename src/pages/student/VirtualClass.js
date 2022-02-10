@@ -39,7 +39,7 @@ class VlirtualClass extends React.Component {
   async getScheduledVirtualClasses() {
     const classid = sessionStorage.getItem('classId');
 
-    StudentServices.getStudentSubjects(classid)
+    StudentServices.getStudentMeetings(classid)
       .then((response) => {
         this.setState({ virtualClasses: response });
       });
@@ -128,7 +128,7 @@ class VlirtualClass extends React.Component {
                                 color="textPrimary"
                                 variant="body1"
                               >
-                                {moment(resource.dueDate).format('DD/MM/YYYY')}
+                                {`${moment(resource.meetingDate).format('DD/MM/YYYY')} @ ${resource.meetingTime}`}
                               </Typography>
                             </CardContent>
                             <Box sx={{ flexGrow: 1 }} />
@@ -161,7 +161,7 @@ class VlirtualClass extends React.Component {
                                   display: 'flex'
                                 }}
                               >
-                                <a href="https://vividstream.netlify.app" _blank>
+                                <a href="https://vividstream.netlify.app" target="blank">
                                   <Button
                                     onClick={() => {
                                       localStorage.setItem('recordingSubject', JSON.stringify(resource));
