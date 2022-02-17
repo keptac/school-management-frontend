@@ -243,6 +243,36 @@ async function getStudentReport(studentId) {
     });
 }
 
+async function getSubjectById(subjectId) {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/api/esm/subjects/${subjectId}`,
+    headers: {}
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
+async function getSubjectTeacherBySubjectCode(subjectCode) {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/api/esm/teacherClasses/subject/${subjectCode}`,
+    headers: {}
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
 async function getAllPayments() {
   const config = {
     method: 'get',
@@ -377,6 +407,8 @@ const AdminServices = {
   getAllPayments,
   getTeacherSubmissions,
   getStudentReport,
+  getSubjectById,
+  getSubjectTeacherBySubjectCode,
   getNoticesByTaget,
   downloadReports,
 

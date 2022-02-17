@@ -49,10 +49,25 @@ class AddClass extends React.Component {
   async getAllSubjects() {
     SchoolAdminServices.getAllSubjects()
       .then((response) => {
-        this.setState({ subjects: response });
+        this.getSubjectTeacher(response);
       }).catch((error) => {
         console.log(error);
       });
+  }
+
+  async getSubjectTeacher(response) {
+    const tempSubject = [];
+    response.forEach((element) => {
+      const subject = element;
+      SchoolAdminServices.getSubjectTeacherBySubjectCode(element.subjectCode)
+        .then((res) => {
+          subject.teacherName = res.teacherName;
+          tempSubject.push(subject);
+          this.setState({ subjects: tempSubject });
+        }).catch((error) => {
+          console.log(error);
+        });
+    });
   }
 
   async deleteSubject(subjectCode) {
@@ -114,6 +129,9 @@ class AddClass extends React.Component {
                                 Level
                               </TableCell>
                               <TableCell>
+                                Teacher
+                              </TableCell>
+                              <TableCell>
                                 Action
                               </TableCell>
                             </TableRow>
@@ -144,6 +162,9 @@ class AddClass extends React.Component {
                                 </TableCell>
                                 <TableCell>
                                   {subject.level}
+                                </TableCell>
+                                <TableCell>
+                                  {`${subject.teacherName}`}
                                 </TableCell>
                                 <TableCell>
                                   <Button

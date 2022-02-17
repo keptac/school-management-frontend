@@ -177,9 +177,6 @@ class AddClass extends React.Component {
                                 Students
                               </TableCell>
                               <TableCell>
-                                Teacher
-                              </TableCell>
-                              <TableCell>
                                 Action
                               </TableCell>
                             </TableRow>
@@ -213,9 +210,6 @@ class AddClass extends React.Component {
                                 </TableCell>
                                 <TableCell>
                                   {`${classe.studentCount}`}
-                                </TableCell>
-                                <TableCell>
-                                  {`${classe.teacher}`}
                                 </TableCell>
                                 <TableCell>
                                   <Button
