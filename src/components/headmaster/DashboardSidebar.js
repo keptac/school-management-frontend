@@ -15,11 +15,11 @@ import {
 import {
   Home as HomeIcon,
   // BarChart as BarChartIcon,
+  // Edit as EditIcon,
+  // BarChart2 as ResultsIcon,
   Lock as LockIcon,
-  Edit as EditIcon,
   Users as PeopleIcon,
   DollarSign as DollarSignIcon,
-  // BarChart2 as ResultsIcon,
   Link as LinkIcon,
   BookOpen as BookOpenIcon,
   Clipboard as NoticeBoardIcon
@@ -44,11 +44,11 @@ const items = [
   //   icon: BarChartIcon,
   //   title: 'Reports'
   // },
-  {
-    href: '/headmaster/subjects',
-    icon: EditIcon,
-    title: 'Subjects'
-  },
+  // {
+  //   href: '/headmaster/subjects',
+  //   icon: EditIcon,
+  //   title: 'Subjects'
+  // },
   {
     href: '/headmaster/classes',
     icon: BookOpenIcon,

@@ -11,12 +11,24 @@ import {
   TablePagination,
   TableRow,
   Typography,
-  Button
+  Button,
+  CardContent,
+  CardHeader,
+  Divider,
 } from '@material-ui/core';
-
+import Modal from 'react-modal';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import AddSubjectForm from 'src/components/schoolAdmin/AddSubjectForm';
 import SchoolAdminServices from '../../services/schoolAdmin';
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    transform: 'translate(-50%, -50%)',
+  },
+};
 
 class AddClass extends React.Component {
   constructor(props) {
@@ -24,7 +36,9 @@ class AddClass extends React.Component {
     this.state = {
       limit: 10,
       page: 0,
-      subjects: []
+      subjects: [],
+      modalIsOpen: false,
+      subjectCode: null,
     };
   }
 
@@ -49,41 +63,22 @@ class AddClass extends React.Component {
   async getAllSubjects() {
     SchoolAdminServices.getAllSubjects()
       .then((response) => {
-        this.getSubjectTeacher(response);
+        this.setState({ subjects: response });
       }).catch((error) => {
         console.log(error);
       });
   }
 
-  async getSubjectTeacher(response) {
-    const tempSubject = [];
-    response.forEach((element) => {
-      const subject = element;
-      SchoolAdminServices.getSubjectTeacherBySubjectCode(element.subjectCode)
-        .then((res) => {
-          subject.teacherName = res.teacherName;
-          tempSubject.push(subject);
-          this.setState({ subjects: tempSubject });
-        }).catch((error) => {
-          console.log(error);
-        });
+  updateSubjectModal(subject) {
+    this.setState({ modalIsOpen: true });
+    this.setState({
+      subjectCode: subject.subjectCode
     });
-  }
-
-  async deleteSubject(subjectCode) {
-    SchoolAdminServices.deleteSubject(subjectCode)
-      .then((response) => {
-        this.setState({ page: 0 });
-        console.log(response);
-        window.location.reload(false);
-      }).catch((error) => {
-        console.log(error);
-      });
   }
 
   render() {
     const {
-      limit, page, subjects,
+      limit, page, subjects, modalIsOpen, subjectCode
     } = this.state;
 
     return (
@@ -106,7 +101,7 @@ class AddClass extends React.Component {
             >
               <Grid
                 item
-                lg={7}
+                lg={8}
                 md={12}
                 xl={9}
                 xs={12}
@@ -127,12 +122,6 @@ class AddClass extends React.Component {
                               </TableCell>
                               <TableCell>
                                 Level
-                              </TableCell>
-                              <TableCell>
-                                Teacher
-                              </TableCell>
-                              <TableCell>
-                                Action
                               </TableCell>
                             </TableRow>
                           </TableHead>
@@ -163,20 +152,6 @@ class AddClass extends React.Component {
                                 <TableCell>
                                   {subject.level}
                                 </TableCell>
-                                <TableCell>
-                                  {`${subject.teacherName}`}
-                                </TableCell>
-                                <TableCell>
-                                  <Button
-                                    size="small"
-                                    color="error"
-                                    variant="contained"
-                                    // eslint-disable-next-line no-underscore-dangle
-                                    onClick={() => this.deleteSubject(subject._id)}
-                                  >
-                                    Delete
-                                  </Button>
-                                </TableCell>
                               </TableRow>
                             ))}
                           </TableBody>
@@ -197,12 +172,49 @@ class AddClass extends React.Component {
 
                 </Box>
               </Grid>
-
-              <AddSubjectForm />
-
             </Grid>
-
           </Container>
+          <Modal
+            isOpen={modalIsOpen}
+            style={customStyles}
+          >
+            <Box sx={{ pt: 3 }}>
+              <form
+                autoComplete="off"
+                noValidate
+              >
+                <Card>
+                  <CardHeader
+                    title="Edit Class"
+                  />
+                  <Divider />
+                  <CardContent>
+                    Subject:
+                    {' '}
+                    {subjectCode}
+                  </CardContent>
+                  <Divider />
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'flex-end',
+                      p: 2
+                    }}
+                  >
+                    <Button
+                      color="inherit"
+                      variant="contained"
+                      onClick={() => this.setState({ modalIsOpen: false })}
+                    >
+                      Close
+                    </Button>
+                    <Box sx={{ p: 1 }} />
+                  </Box>
+                </Card>
+              </form>
+
+            </Box>
+          </Modal>
         </Box>
       </>
     );

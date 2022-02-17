@@ -137,6 +137,21 @@ async function getAllClasses() {
     });
 }
 
+async function getAllTeacherSubjects() {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/api/esm/teacherClasses`,
+    headers: { }
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
 async function getAllSubjects() {
   const config = {
     method: 'get',
@@ -410,6 +425,7 @@ const AdminServices = {
   getSubjectById,
   getSubjectTeacherBySubjectCode,
   getNoticesByTaget,
+  getAllTeacherSubjects,
   downloadReports,
 
   postSubject,
