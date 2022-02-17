@@ -78,6 +78,8 @@ const StaffLogin = () => {
                       navigate('/teacher/dashboard', { replace: true });
                     } else if (response.user.userType === 'ADMIN') {
                       navigate('/school-admin/dashboard', { replace: true });
+                    } else if (response.user.userType === 'HEAD') {
+                      navigate('/headmaster/dashboard', { replace: true });
                     } else {
                       alert.error('Account not setup correctly. Please contact Admin', { position: positions.MIDDLE }, {
                         timeout: 2000,
