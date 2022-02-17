@@ -35,42 +35,42 @@ const user = {
 
 const items = [
   {
-    href: '/school-admin/dashboard',
+    href: '/headmaster/dashboard',
     icon: HomeIcon,
     title: 'Home'
   },
   // {
-  //   href: '/school-admin/dashboard',
+  //   href: '/headmaster/dashboard',
   //   icon: BarChartIcon,
   //   title: 'Reports'
   // },
   {
-    href: '/school-admin/subjects',
+    href: '/headmaster/subjects',
     icon: EditIcon,
     title: 'Subjects'
   },
   {
-    href: '/school-admin/classes',
+    href: '/headmaster/classes',
     icon: BookOpenIcon,
     title: 'Classes'
   },
   {
-    href: '/school-admin/students',
+    href: '/headmaster/students',
     icon: PeopleIcon,
     title: 'Students'
   },
   {
-    href: '/school-admin/tuition',
+    href: '/headmaster/tuition',
     icon: DollarSignIcon,
     title: 'Fees Payments'
   },
   {
-    href: '/school-admin/notices',
+    href: '/headmaster/notices',
     icon: NoticeBoardIcon,
     title: 'Notices'
   }
   // {
-  //   href: '/school-admin/dashboard',
+  //   href: '/headmaster/dashboard',
   //   icon: ResultsIcon,
   //   title: 'Configured Grades'
   // }
@@ -115,7 +115,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             width: 64,
             height: 64
           }}
-          to="/school-admin/dashboard"
+          to="/headmaster/dashboard"
         />
         <Typography
           color="textPrimary"
