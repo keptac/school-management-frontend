@@ -28,6 +28,7 @@ import {
 
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import AddNoticeForm from 'src/components/schoolAdmin/NoticeBoardForm';
+import moment from 'moment';
 import SchoolAdminServices from '../../services/schoolAdmin';
 
 const customStyles = {
@@ -148,7 +149,7 @@ class AddClass extends React.Component {
             >
               <Grid
                 item
-                lg={7}
+                lg={8}
                 md={12}
                 xl={9}
                 xs={12}
@@ -202,7 +203,7 @@ class AddClass extends React.Component {
                                   {`${notice.noticeBody}`}
                                 </TableCell>
                                 <TableCell>
-                                  {`${notice.updatedAt}`}
+                                  {moment(`${notice.updatedAt}`).format('YYYY-MM-DD')}
                                 </TableCell>
                                 <TableCell>
                                   {`${notice.target}`}
@@ -216,8 +217,8 @@ class AddClass extends React.Component {
                                   >
                                     Delete
                                   </Button>
-                                  <Box sx={{ pt: 1 }} />
                                   <Button
+                                    sx={{ margin: 0.5 }}
                                     size="small"
                                     color="inherit"
                                     variant="contained"

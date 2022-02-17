@@ -209,9 +209,9 @@ class AddClass extends React.Component {
                                   >
                                     Delete
                                   </Button>
-                                  <Box sx={{ pt: 1 }} />
                                   <Button
                                     size="small"
+                                    sx={{ margin: 0.5 }}
                                     color="inherit"
                                     variant="contained"
                                     onClick={() => this.updateClassModal(classe)}

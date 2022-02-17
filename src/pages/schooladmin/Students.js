@@ -457,10 +457,13 @@ class AddStudents extends React.Component {
                                 DOB
                               </TableCell>
                               <TableCell>
-                                Phone Number
+                                Gender
                               </TableCell>
                               <TableCell>
-                                Gender
+                                Disability
+                              </TableCell>
+                              <TableCell>
+                                Phone Number
                               </TableCell>
                               <TableCell>
                                 Gurdian
@@ -504,10 +507,13 @@ class AddStudents extends React.Component {
                                   {Moment(`${student.dob}`).format('YYYY-MM-DD')}
                                 </TableCell>
                                 <TableCell>
-                                  {student.phoneNumber}
+                                  {student.gender}
                                 </TableCell>
                                 <TableCell>
-                                  {student.gender}
+                                  {student.disability}
+                                </TableCell>
+                                <TableCell>
+                                  {student.phoneNumber}
                                 </TableCell>
                                 <TableCell>
                                   {`${student.guardianName} (${student.relationshipToGuardian})` }
@@ -527,8 +533,8 @@ class AddStudents extends React.Component {
                                   >
                                     Delete
                                   </Button>
-                                  <Box sx={{ pt: 1 }} />
                                   <Button
+                                    sx={{ margin: 0.4 }}
                                     size="small"
                                     color="inherit"
                                     variant="contained"

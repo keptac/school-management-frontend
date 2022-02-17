@@ -77,7 +77,7 @@ const AddNoticeForm = () => {
     <>
       <Grid
         item
-        lg={5}
+        lg={4}
         md={12}
         xs={12}
       >
