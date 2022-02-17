@@ -64,6 +64,11 @@ class AdminDashboard extends React.Component {
         schoolData.push({ name: 'Staff', count: response.length });
         this.setState({ schoolData });
       });
+    // SchoolAdminServices.getSumOfPayments()
+    //   .then((response) => {
+    //     schoolData.push({ name: 'Total Amount Payments', count: response.length });
+    //     this.setState({ schoolData });
+    //   });
   }
 
   downloadReports() {

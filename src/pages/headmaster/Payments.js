@@ -12,15 +12,6 @@ import {
   TablePagination,
   TableRow,
   Typography,
-  CardContent,
-  CardHeader,
-  TextField,
-  Divider,
-  Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem
 } from '@material-ui/core';
 
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -62,10 +53,6 @@ class PaymentClass extends React.Component {
     }
   }
 
-  handleChangeAdd() {
-    this.setState({ addPaymentForm: true });
-  }
-
   handleSubmit() {
     const {
       term,
@@ -105,7 +92,7 @@ class PaymentClass extends React.Component {
 
   render() {
     const {
-      payments, limit, page, term, addPaymentForm, amount, narration, studentId
+      payments, limit, page
     } = this.state;
 
     return (
@@ -128,7 +115,7 @@ class PaymentClass extends React.Component {
             >
               <Grid
                 item
-                lg={8}
+                lg={10}
                 md={12}
                 xl={9}
                 xs={12}
@@ -214,130 +201,6 @@ class PaymentClass extends React.Component {
                     />
                   </Card>
 
-                </Box>
-              </Grid>
-              <Grid
-                item
-                lg={4}
-                md={12}
-                xs={12}
-              >
-                <Box sx={{ pt: 3 }}>
-                  {addPaymentForm ? (
-                    <form
-                      autoComplete="off"
-                      noValidate
-                    >
-                      <Card>
-                        <CardHeader
-                          title="Add New Payment"
-                        />
-                        <Divider />
-                        <CardContent>
-                          <Grid
-                            container
-                            spacing={1}
-                          >
-                            <Grid
-                              item
-                              md={8}
-                              xs={12}
-                            >
-                              <TextField
-                                fullWidth
-                                label="Student ID Number"
-                                name="studentId"
-                                onChange={(e) => this.setState({ studentId: e.target.value })}
-                                required
-                                value={studentId}
-                                variant="outlined"
-                              />
-                            </Grid>
-                            <Grid
-                              item
-                              md={4}
-                              xs={12}
-                            >
-                              <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">Term</InputLabel>
-                                <Select
-                                  value={term}
-                                  label="term"
-                                  onChange={() => this.handleChangeTerm}
-                                  required
-                                  variant="outlined"
-                                >
-                                  <MenuItem value="1">Term 1</MenuItem>
-                                  <MenuItem value="2">Term 2</MenuItem>
-                                  <MenuItem value="3">Term 3</MenuItem>
-                                  <MenuItem value="4">Vacation</MenuItem>
-                                </Select>
-                              </FormControl>
-
-                            </Grid>
-
-                            <Grid
-                              item
-                              md={6}
-                              xs={12}
-                            >
-                              <TextField
-                                fullWidth
-                                label="Amount"
-                                name="amount"
-                                type="number"
-                                onChange={(e) => this.setState({ amount: e.target.value })}
-                                required
-                                value={amount}
-                                variant="outlined"
-                              />
-                            </Grid>
-                            <Grid
-                              item
-                              md={12}
-                              xs={12}
-                            >
-                              <TextField
-                                fullWidth
-                                label="Narration"
-                                name="narration"
-                                type="email"
-                                onChange={(e) => this.setState({ narration: e.target.value })}
-                                required
-                                value={narration}
-                                variant="outlined"
-                              />
-                            </Grid>
-                          </Grid>
-                        </CardContent>
-                        <Divider />
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            justifyContent: 'flex-end',
-                            p: 2
-                          }}
-                        >
-                          <Button
-                            color="primary"
-                            variant="contained"
-                            onClick={() => this.handleSubmit()}
-                          >
-                            Add New Payment
-                          </Button>
-                        </Box>
-                      </Card>
-                    </form>
-                  )
-                    : (
-                      <Button
-                        color="primary"
-                        variant="contained"
-                        onClick={() => this.handleChangeAdd()}
-                      >
-                        Add Payment
-                      </Button>
-                    )}
                 </Box>
               </Grid>
             </Grid>

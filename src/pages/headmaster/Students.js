@@ -48,7 +48,6 @@ class AddStudents extends React.Component {
       classes: [],
       students: [],
       className: {},
-      addStudentForm: false,
       name: null,
       surname: null,
       dob: null,
@@ -82,10 +81,6 @@ class AddStudents extends React.Component {
     } else if (newPage !== 0) {
       this.setState({ page: newPage - 1 });
     }
-  }
-
-  handleChangeAdd() {
-    this.setState({ addStudentForm: true });
   }
 
   handleUpdate() {
@@ -242,7 +237,7 @@ class AddStudents extends React.Component {
 
   render() {
     const {
-      students, limit, page, classes, className, addStudentForm, name, surname, dob, phoneNumber, emailAddress, idNumber, modalIsOpen
+      students, limit, page, classes, className, name, surname, dob, phoneNumber, emailAddress, idNumber, modalIsOpen
     } = this.state;
 
     return (
@@ -265,7 +260,7 @@ class AddStudents extends React.Component {
             >
               <Grid
                 item
-                lg={8}
+                lg={12}
                 md={12}
                 xl={9}
                 xs={12}
@@ -288,6 +283,12 @@ class AddStudents extends React.Component {
                               </TableCell>
                               <TableCell>
                                 Phone Number
+                              </TableCell>
+                              <TableCell>
+                                Gender
+                              </TableCell>
+                              <TableCell>
+                                Gurdian
                               </TableCell>
                               <TableCell>
                                 Email
@@ -331,6 +332,12 @@ class AddStudents extends React.Component {
                                   {student.phoneNumber}
                                 </TableCell>
                                 <TableCell>
+                                  {student.gender}
+                                </TableCell>
+                                <TableCell>
+                                  {`${student.guardianName} (${student.relationshipToGuardian})` }
+                                </TableCell>
+                                <TableCell>
                                   {student.emailAddress}
                                 </TableCell>
                                 <TableCell>
@@ -344,15 +351,6 @@ class AddStudents extends React.Component {
                                     onClick={() => this.deleteStudent(student.studentId)}
                                   >
                                     Delete
-                                  </Button>
-                                  <Box sx={{ pt: 1 }} />
-                                  <Button
-                                    size="small"
-                                    color="inherit"
-                                    variant="contained"
-                                    onClick={() => this.updateStudentModal(student)}
-                                  >
-                                    Edit
                                   </Button>
                                 </TableCell>
                               </TableRow>
@@ -372,176 +370,6 @@ class AddStudents extends React.Component {
                     />
                   </Card>
 
-                </Box>
-              </Grid>
-              <Grid
-                item
-                lg={4}
-                md={12}
-                xs={12}
-              >
-                <Box sx={{ pt: 3 }}>
-                  {addStudentForm ? (
-                    <form
-                      autoComplete="off"
-                      noValidate
-                    >
-                      <Card>
-                        <CardHeader
-                          title="Add New New Student"
-                        />
-                        <Divider />
-                        <CardContent>
-                          <Grid
-                            container
-                            spacing={1}
-                          >
-                            <Grid
-                              item
-                              md={6}
-                              xs={12}
-                            >
-                              <TextField
-                                fullWidth
-                                label="Student Name"
-                                name="name"
-                                onChange={(e) => this.setState({ name: e.target.value })}
-                                // onChange={e => this.handleChange(name, )}
-                                required
-                                value={name}
-                                variant="outlined"
-                              />
-                            </Grid>
-                            <Grid
-                              item
-                              md={6}
-                              xs={12}
-                            >
-                              <TextField
-                                fullWidth
-                                label="Surname"
-                                name="surname"
-                                onChange={(e) => this.setState({ surname: e.target.value })}
-                                required
-                                value={surname}
-                                variant="outlined"
-                              />
-                            </Grid>
-                            <Grid
-                              item
-                              md={4}
-                              xs={12}
-                            >
-                              <TextField
-                                fullWidth
-                                label="ID Number"
-                                name="idNumber"
-                                onChange={(e) => this.setState({ idNumber: e.target.value })}
-                                required
-                                value={idNumber}
-                                variant="outlined"
-                              />
-                            </Grid>
-                            <Grid
-                              item
-                              md={8}
-                              xs={12}
-                            >
-                              <TextField
-                                fullWidth
-                                label="Date of Birth"
-                                name="dob"
-                                type="date"
-                                onChange={(e) => this.setState({ dob: e.target.value })}
-                                required
-                                value={dob}
-                                variant="outlined"
-                              />
-                            </Grid>
-                            <Grid
-                              item
-                              md={6}
-                              xs={12}
-                            >
-                              <TextField
-                                fullWidth
-                                label="Phone Number"
-                                name="phoneNumber"
-                                type="number"
-                                onChange={(e) => this.setState({ phoneNumber: e.target.value })}
-                                required
-                                value={phoneNumber}
-                                variant="outlined"
-                              />
-                            </Grid>
-                            <Grid
-                              item
-                              md={6}
-                              xs={12}
-                            >
-                              <TextField
-                                fullWidth
-                                label="Email Address"
-                                name="emailAddress"
-                                type="email"
-                                onChange={(e) => this.setState({ emailAddress: e.target.value })}
-                                required
-                                value={emailAddress}
-                                variant="outlined"
-                              />
-                            </Grid>
-
-                            <Grid
-                              item
-                              md={5}
-                              xs={12}
-                            >
-                              <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">Class</InputLabel>
-                                <Select
-                                  value={className}
-                                  label="Subject"
-                                // onChange={() => this.handleChangeClass}
-                                  required
-                                  variant="outlined"
-                                >
-                                  {classes.map((classe) => (
-                                    <MenuItem onClick={() => this.handleChangeClass(classe)} value={classe}>{classe.className}</MenuItem>
-                                  ))}
-                                </Select>
-                              </FormControl>
-
-                            </Grid>
-                          </Grid>
-                        </CardContent>
-                        <Divider />
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            justifyContent: 'flex-end',
-                            p: 2
-                          }}
-                        >
-                          <Button
-                            color="primary"
-                            variant="contained"
-                            onClick={() => this.handleSubmit()}
-                          >
-                            Add Student
-                          </Button>
-                        </Box>
-                      </Card>
-                    </form>
-                  )
-                    : (
-                      <Button
-                        color="primary"
-                        variant="contained"
-                        onClick={() => this.handleChangeAdd()}
-                      >
-                        Add New Student
-                      </Button>
-                    )}
                 </Box>
               </Grid>
             </Grid>
