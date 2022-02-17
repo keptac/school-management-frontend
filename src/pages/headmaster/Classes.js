@@ -23,7 +23,7 @@ import {
 } from '@material-ui/core';
 import Modal from 'react-modal';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import AddClassForm from 'src/components/schoolAdmin/AddClassForms';
+import TeacherServices from 'src/services/teacher';
 import SchoolAdminServices from '../../services/schoolAdmin';
 
 const customStyles = {
@@ -46,7 +46,8 @@ class AddClass extends React.Component {
       modalIsOpen: false,
       className: null,
       station: null,
-      classId: null
+      classId: null,
+      // tempClass: []
     };
   }
 
@@ -75,10 +76,25 @@ class AddClass extends React.Component {
   async getAllClasses() {
     SchoolAdminServices.getAllClasses()
       .then((response) => {
-        this.setState({ classes: response });
+        this.getCounts(response);
       }).catch((error) => {
         console.log(error);
       });
+  }
+
+  async getCounts(response) {
+    const tempClasses = [];
+    response.forEach((element) => {
+      const classItem = element;
+      TeacherServices.getStudentsPerClass(element.classId)
+        .then((res) => {
+          classItem.studentCount = res.length;
+          tempClasses.push(classItem);
+          this.setState({ classes: tempClasses });
+        }).catch((error) => {
+          console.log(error);
+        });
+    });
   }
 
   updateClassModal(classData) {
@@ -111,17 +127,6 @@ class AddClass extends React.Component {
       });
   }
 
-  async deleteClass(classId) {
-    SchoolAdminServices.deleteClass(classId)
-      .then((response) => {
-        console.log(response);
-        this.setState({ page: 0 });
-        window.location.reload(false);
-      }).catch((error) => {
-        console.log(error);
-      });
-  }
-
   render() {
     const {
       limit, page, classes, modalIsOpen, className, station
@@ -147,7 +152,7 @@ class AddClass extends React.Component {
             >
               <Grid
                 item
-                lg={7}
+                lg={10}
                 md={12}
                 xl={9}
                 xs={12}
@@ -167,6 +172,12 @@ class AddClass extends React.Component {
                               </TableCell>
                               <TableCell>
                                 Station
+                              </TableCell>
+                              <TableCell>
+                                Students
+                              </TableCell>
+                              <TableCell>
+                                Teacher
                               </TableCell>
                               <TableCell>
                                 Action
@@ -201,22 +212,19 @@ class AddClass extends React.Component {
                                   {`${classe.station}`}
                                 </TableCell>
                                 <TableCell>
-                                  <Button
-                                    size="small"
-                                    color="error"
-                                    variant="contained"
-                                    onClick={() => this.deleteClass(classe.classId)}
-                                  >
-                                    Delete
-                                  </Button>
-                                  <Box sx={{ pt: 1 }} />
+                                  {`${classe.studentCount}`}
+                                </TableCell>
+                                <TableCell>
+                                  {`${classe.teacher}`}
+                                </TableCell>
+                                <TableCell>
                                   <Button
                                     size="small"
                                     color="inherit"
                                     variant="contained"
                                     onClick={() => this.updateClassModal(classe)}
                                   >
-                                    Edit
+                                    View Perfomance
                                   </Button>
                                 </TableCell>
                               </TableRow>
@@ -238,8 +246,6 @@ class AddClass extends React.Component {
 
                 </Box>
               </Grid>
-
-              <AddClassForm />
 
             </Grid>
 
