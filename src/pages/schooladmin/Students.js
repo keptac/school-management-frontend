@@ -265,118 +265,7 @@ class AddStudents extends React.Component {
             >
               <Grid
                 item
-                lg={8}
-                md={12}
-                xl={9}
-                xs={12}
-              >
-                <Box sx={{ pt: 3 }}>
-                  <Card>
-                    <PerfectScrollbar>
-                      <Box sx={{ minWidth: 600 }}>
-                        <Table>
-                          <TableHead>
-                            <TableRow>
-                              <TableCell>
-                                Student ID
-                              </TableCell>
-                              <TableCell>
-                                Student Name
-                              </TableCell>
-                              <TableCell>
-                                DOB
-                              </TableCell>
-                              <TableCell>
-                                Phone Number
-                              </TableCell>
-                              <TableCell>
-                                Email
-                              </TableCell>
-                              <TableCell>
-                                Class
-                              </TableCell>
-                              <TableCell>
-                                Action
-                              </TableCell>
-                            </TableRow>
-                          </TableHead>
-                          <TableBody>
-                            {students.slice(page * limit, page * limit + limit).map((student) => (
-                              <TableRow
-                                hover
-                                key={student.studentId}
-                              >
-                                <TableCell>
-                                  <Box
-                                    sx={{
-                                      alignItems: 'center',
-                                      display: 'flex'
-                                    }}
-                                  >
-                                    <Typography
-                                      color="textPrimary"
-                                      variant="body1"
-                                    >
-                                      {student.studentId}
-                                    </Typography>
-                                  </Box>
-                                </TableCell>
-                                <TableCell>
-                                  {`${student.surname} ${student.name}` }
-                                </TableCell>
-                                <TableCell>
-                                  {Moment(`${student.dob}`).format('YYYY-MM-DD')}
-                                </TableCell>
-                                <TableCell>
-                                  {student.phoneNumber}
-                                </TableCell>
-                                <TableCell>
-                                  {student.emailAddress}
-                                </TableCell>
-                                <TableCell>
-                                  {student.classId}
-                                </TableCell>
-                                <TableCell>
-                                  <Button
-                                    size="small"
-                                    color="error"
-                                    variant="contained"
-                                    onClick={() => this.deleteStudent(student.studentId)}
-                                  >
-                                    Delete
-                                  </Button>
-                                  <Box sx={{ pt: 1 }} />
-                                  <Button
-                                    size="small"
-                                    color="inherit"
-                                    variant="contained"
-                                    onClick={() => this.updateStudentModal(student)}
-                                  >
-                                    Edit
-                                  </Button>
-                                </TableCell>
-                              </TableRow>
-                            ))}
-                          </TableBody>
-                        </Table>
-                      </Box>
-
-                    </PerfectScrollbar>
-                    <TablePagination
-                      component="div"
-                      count={students.length}
-                      onPageChange={(e) => this.handlePageChange(e, page)}
-                      onRowsPerPageChange={(e) => this.handleLimitChange(e)}
-                      page={page}
-                      rowsPerPage={limit}
-                    />
-                  </Card>
-
-                </Box>
-              </Grid>
-              <Grid
-                item
-                lg={4}
+                lg={6}
                 md={12}
                 xs={12}
               >
@@ -544,6 +433,137 @@ class AddStudents extends React.Component {
                     )}
                 </Box>
               </Grid>
+              <Grid
+                item
+                lg={12}
+                md={12}
+                xl={9}
+                xs={12}
+              >
+                <Box sx={{ pt: 3 }}>
+                  <Card>
+                    <PerfectScrollbar>
+                      <Box sx={{ minWidth: 600 }}>
+                        <Table>
+                          <TableHead>
+                            <TableRow>
+                              <TableCell>
+                                Student ID
+                              </TableCell>
+                              <TableCell>
+                                Student Name
+                              </TableCell>
+                              <TableCell>
+                                DOB
+                              </TableCell>
+                              <TableCell>
+                                Gender
+                              </TableCell>
+                              <TableCell>
+                                Disability
+                              </TableCell>
+                              <TableCell>
+                                Phone Number
+                              </TableCell>
+                              <TableCell>
+                                Gurdian
+                              </TableCell>
+                              <TableCell>
+                                Email
+                              </TableCell>
+                              <TableCell>
+                                Class
+                              </TableCell>
+                              <TableCell>
+                                Action
+                              </TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            {students.slice(page * limit, page * limit + limit).map((student) => (
+                              <TableRow
+                                hover
+                                key={student.studentId}
+                              >
+                                <TableCell>
+                                  <Box
+                                    sx={{
+                                      alignItems: 'center',
+                                      display: 'flex'
+                                    }}
+                                  >
+                                    <Typography
+                                      color="textPrimary"
+                                      variant="body1"
+                                    >
+                                      {student.studentId}
+                                    </Typography>
+                                  </Box>
+                                </TableCell>
+                                <TableCell>
+                                  {`${student.surname} ${student.name}` }
+                                </TableCell>
+                                <TableCell>
+                                  {Moment(`${student.dob}`).format('YYYY-MM-DD')}
+                                </TableCell>
+                                <TableCell>
+                                  {student.gender}
+                                </TableCell>
+                                <TableCell>
+                                  {student.disability}
+                                </TableCell>
+                                <TableCell>
+                                  {student.phoneNumber}
+                                </TableCell>
+                                <TableCell>
+                                  {`${student.guardianName} (${student.relationshipToGuardian})` }
+                                </TableCell>
+                                <TableCell>
+                                  {student.emailAddress}
+                                </TableCell>
+                                <TableCell>
+                                  {student.classId}
+                                </TableCell>
+                                <TableCell>
+                                  <Button
+                                    size="small"
+                                    color="error"
+                                    variant="contained"
+                                    onClick={() => this.deleteStudent(student.studentId)}
+                                  >
+                                    Delete
+                                  </Button>
+                                  <Button
+                                    sx={{ margin: 0.4 }}
+                                    size="small"
+                                    color="inherit"
+                                    variant="contained"
+                                    onClick={() => this.updateStudentModal(student)}
+                                  >
+                                    Edit
+                                  </Button>
+                                </TableCell>
+                              </TableRow>
+
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </Box>
+
+                    </PerfectScrollbar>
+                    <TablePagination
+                      component="div"
+                      count={students.length}
+                      onPageChange={(e) => this.handlePageChange(e, page)}
+                      onRowsPerPageChange={(e) => this.handleLimitChange(e)}
+                      page={page}
+                      rowsPerPage={limit}
+                    />
+                  </Card>
+
+                </Box>
+              </Grid>
+
             </Grid>
           </Container>
 

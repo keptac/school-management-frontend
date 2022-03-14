@@ -8,35 +8,20 @@ import * as html2canvas from 'html2canvas';
 import {
   Box,
   Container,
-  CardContent,
-  Card,
-  Button,
   Grid,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
-  Badge
 } from '@material-ui/core';
-import moment from 'moment';
+
 import NoticeBoard from 'src/components/NoticeBoard';
 import DashboardCard from 'src/components/schoolAdmin/DashboardCard';
 import React from 'react';
-import PerfectScrollbar from 'react-perfect-scrollbar';
 
-// import StudentReport from 'src/components/reportTemplate';
-// import Logo from 'src/components/Logo';
 import SchoolAdminServices from '../../services/schoolAdmin';
 
 class AdminDashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      subjectData: [],
-      reportData: [],
-      downloaded: false,
+      schoolData: [],
       marksResults: [],
       students: []
     };
@@ -44,17 +29,7 @@ class AdminDashboard extends React.Component {
 
   componentDidMount() {
     this.getDashData();
-    this.getTeacherSubmissions();
     this.getStudents();
-  }
-
-  async getTeacherSubmissions() {
-    SchoolAdminServices.getTeacherSubmissions()
-      .then((response) => {
-        this.setState({ marksResults: response });
-      }).catch((error) => {
-        console.log(error);
-      });
   }
 
   async getStudents() {
@@ -67,23 +42,33 @@ class AdminDashboard extends React.Component {
   }
 
   getDashData() {
-    const { subjectData } = this.state;
+    const { schoolData } = this.state;
 
+    SchoolAdminServices.getAllStudents()
+      .then((response) => {
+        schoolData.push({ name: 'Students', count: response.length });
+        this.setState({ schoolData });
+      });
     SchoolAdminServices.getAllClasses()
       .then((response) => {
-        subjectData.push({ name: 'Classes', count: response.length });
-        this.setState({ subjectData });
+        schoolData.push({ name: 'Classes', count: response.length });
+        this.setState({ schoolData });
       });
     SchoolAdminServices.getAllSubjects()
       .then((response) => {
-        subjectData.push({ name: 'Subjects', count: response.length });
-        this.setState({ subjectData });
+        schoolData.push({ name: 'Subjects', count: response.length });
+        this.setState({ schoolData });
       });
     SchoolAdminServices.getAllTeachers()
       .then((response) => {
-        subjectData.push({ name: 'Staff', count: response.length });
-        this.setState({ subjectData });
+        schoolData.push({ name: 'Staff', count: response.length });
+        this.setState({ schoolData });
       });
+    // SchoolAdminServices.getSumOfPayments()
+    //   .then((response) => {
+    //     schoolData.push({ name: 'Total Amount Payments', count: response.length });
+    //     this.setState({ schoolData });
+    //   });
   }
 
   downloadReports() {
@@ -363,10 +348,6 @@ class AdminDashboard extends React.Component {
               console.log(`${response.error} --> ${student.firstName} ${student.surname} ${student.studentid}`);
               // Send back to backend to log failed records.
             }
-            if (count + failedCount >= students.length) {
-              console.log('Processed');
-              this.setState({ downloaded: true });
-            }
           });
         count++;
       });
@@ -378,7 +359,7 @@ class AdminDashboard extends React.Component {
 
   render() {
     const {
-      subjectData, reportData, downloaded
+      schoolData,
     } = this.state;
     return (
       <>
@@ -410,7 +391,7 @@ class AdminDashboard extends React.Component {
                   container
                   spacing={3}
                 >
-                  {subjectData.map((resource) => (
+                  {schoolData.map((resource) => (
                     <Grid
                       item
                       key={resource.id}
@@ -422,152 +403,6 @@ class AdminDashboard extends React.Component {
                     </Grid>
 
                   ))}
-                  <Grid
-                    item
-                    lg={12}
-                    md={6}
-                    xs={12}
-                  >
-                    <Card>
-                      <CardContent>
-                        <Grid
-                          container
-                        >
-                          <Grid
-                            lg={8}
-                            md={12}
-                            xl={9}
-                            xs={12}
-                          >
-                            <Box
-                              sx={{
-                                display: 'flex',
-                                justifyContent: 'flex-start'
-                              }}
-                            >
-                              <Button
-                                sx={{ mx: 1 }}
-                              >
-                                End of term progress reports not yet ready
-                              </Button>
-                            </Box>
-                          </Grid>
-                          <Grid
-                            lg={4}
-                            md={12}
-                            xl={9}
-                            xs={12}
-                          >
-                            <Box
-                              sx={{
-                                display: 'flex',
-                                justifyContent: 'flex-end'
-                              }}
-                            >
-                              {/* <StudentReport studentResults={students} /> */}
-                              {downloaded
-                                ? (
-                                  <Button
-                                    color="primary"
-                                    variant="contained"
-                                  >
-                                    Download Successful Check Downloads
-                                  </Button>
-                                )
-                                : (
-                                  <Button
-                                    color="primary"
-                                    variant="contained"
-                                    onClick={() => {
-                                      this.downloadReports();
-                                    }}
-                                  >
-                                    Generate Reports
-                                  </Button>
-                                )}
-                            </Box>
-                          </Grid>
-                        </Grid>
-                      </CardContent>
-                    </Card>
-                  </Grid>
-                  <Grid
-                    item
-                    lg={12}
-                    md={12}
-                    xs={12}
-                  >
-                    <Card>
-                      <CardContent>
-                        <PerfectScrollbar>
-                          <Box sx={{ minWidth: 600 }}>
-                            <Table>
-                              <TableHead>
-                                <TableRow>
-                                  <TableCell>
-                                    Class
-                                  </TableCell>
-                                  <TableCell>
-                                    Subject
-                                  </TableCell>
-                                  <TableCell>
-                                    Teacher Name
-                                  </TableCell>
-                                  <TableCell>
-                                    Weekending
-                                  </TableCell>
-                                  <TableCell>
-                                    Report Status
-                                  </TableCell>
-                                </TableRow>
-                              </TableHead>
-                              <TableBody>
-                                {reportData.map((reportRecord) => (
-                                  <TableRow
-                                    hover
-                                    key={reportRecord.classId}
-                                  >
-                                    <TableCell>
-                                      <Box
-                                        sx={{
-                                          alignItems: 'center',
-                                          display: 'flex'
-                                        }}
-                                      >
-                                        <Typography
-                                          color="textPrimary"
-                                          variant="body1"
-                                        >
-                                          {`${reportRecord.className}` }
-                                        </Typography>
-                                      </Box>
-                                    </TableCell>
-                                    <TableCell>
-                                      {`${reportRecord.subject}`}
-                                    </TableCell>
-                                    <TableCell>
-                                      {`${reportRecord.teacherName}`}
-                                    </TableCell>
-
-                                    <TableCell>
-                                      {moment(reportRecord.createdAt).format('DD/MM/YYYY')}
-                                    </TableCell>
-                                    <TableCell
-                                      align="enter"
-                                    >
-                                      stat
-                                      <Badge badgeContent={reportRecord.status} color={reportRecord.status === 'Submitted' ? 'success' : 'warning'} />
-                                    </TableCell>
-                                  </TableRow>
-                                ))}
-                              </TableBody>
-                            </Table>
-                          </Box>
-                        </PerfectScrollbar>
-                      </CardContent>
-                    </Card>
-                  </Grid>
-
                 </Grid>
               </Grid>
               <Grid

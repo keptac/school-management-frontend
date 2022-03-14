@@ -137,6 +137,21 @@ async function getAllClasses() {
     });
 }
 
+async function getAllTeacherSubjects() {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/api/esm/teacherClasses`,
+    headers: { }
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
 async function getAllSubjects() {
   const config = {
     method: 'get',
@@ -232,6 +247,36 @@ async function getStudentReport(studentId) {
   const config = {
     method: 'get',
     url: `${deploymentUrl}/api/esm/studentMarks/student/${studentId}`,
+    headers: {}
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
+async function getSubjectById(subjectId) {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/api/esm/subjects/${subjectId}`,
+    headers: {}
+  };
+
+  return axios(config)
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log(error);
+      return [];
+    });
+}
+
+async function getSubjectTeacherBySubjectCode(subjectCode) {
+  const config = {
+    method: 'get',
+    url: `${deploymentUrl}/api/esm/teacherClasses/subject/${subjectCode}`,
     headers: {}
   };
 
@@ -377,7 +422,10 @@ const AdminServices = {
   getAllPayments,
   getTeacherSubmissions,
   getStudentReport,
+  getSubjectById,
+  getSubjectTeacherBySubjectCode,
   getNoticesByTaget,
+  getAllTeacherSubjects,
   downloadReports,
 
   postSubject,

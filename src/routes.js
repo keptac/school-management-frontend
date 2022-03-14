@@ -15,9 +15,17 @@ import Account from 'src/pages/student/Account';
 import Dashboard from 'src/pages/student/Dashboard';
 import Library from 'src/pages/student/Library';
 import VirtualClass from 'src/pages/student/VirtualClass';
+
+import HeadmasterDashboardLayout from 'src/components/headmaster/HeadmasterLayout';
+import HeadAdminDashboard from './pages/headmaster/Dashboard';
+import HeadAddSubject from './pages/headmaster/Subjects';
+import HeadAddStudents from './pages/headmaster/Students';
+import HeadAddClass from './pages/headmaster/Classes';
+import HeadAddNotice from './pages/headmaster/NoticeBoard';
+import HeadPaymentClass from './pages/headmaster/Payments';
+
 import ProgressReport from './pages/teacher/ProgressReport';
 import AddTeacherClass from './pages/teacher/TeacherClasses';
-
 import SubjectContent from './pages/student/SubjectContent';
 
 import SchoolAdminDashboardLayout from './components/schoolAdmin/SchoolAdminLayout';
@@ -95,6 +103,20 @@ const routes = [
     ]
   },
 
+  // Headmaster Admin Routes
+  {
+    path: 'headmaster',
+    element: <HeadmasterDashboardLayout />,
+    children: [
+      { path: 'dashboard', element: <HeadAdminDashboard /> },
+      { path: 'subjects', element: <HeadAddSubject /> },
+      { path: 'classes', element: <HeadAddClass /> },
+      { path: 'students', element: <HeadAddStudents /> },
+      { path: 'tuition', element: <HeadPaymentClass /> },
+      { path: 'notices', element: <HeadAddNotice /> },
+      { path: '*', element: <Navigate to="/404" /> }
+    ]
+  },
   // Default Routes
   {
     path: '/',

@@ -15,11 +15,11 @@ import {
 import {
   Home as HomeIcon,
   // BarChart as BarChartIcon,
+  // Edit as EditIcon,
+  // BarChart2 as ResultsIcon,
   Lock as LockIcon,
-  Edit as EditIcon,
   Users as PeopleIcon,
   DollarSign as DollarSignIcon,
-  // BarChart2 as ResultsIcon,
   Link as LinkIcon,
   BookOpen as BookOpenIcon,
   Clipboard as NoticeBoardIcon
@@ -35,42 +35,42 @@ const user = {
 
 const items = [
   {
-    href: '/school-admin/dashboard',
+    href: '/headmaster/dashboard',
     icon: HomeIcon,
     title: 'Home'
   },
   // {
-  //   href: '/school-admin/dashboard',
+  //   href: '/headmaster/dashboard',
   //   icon: BarChartIcon,
   //   title: 'Reports'
   // },
+  // {
+  //   href: '/headmaster/subjects',
+  //   icon: EditIcon,
+  //   title: 'Subjects'
+  // },
   {
-    href: '/school-admin/subjects',
-    icon: EditIcon,
-    title: 'Subjects'
-  },
-  {
-    href: '/school-admin/classes',
+    href: '/headmaster/classes',
     icon: BookOpenIcon,
     title: 'Classes'
   },
   {
-    href: '/school-admin/students',
+    href: '/headmaster/students',
     icon: PeopleIcon,
     title: 'Students'
   },
   {
-    href: '/school-admin/tuition',
+    href: '/headmaster/tuition',
     icon: DollarSignIcon,
     title: 'Fees Payments'
   },
   {
-    href: '/school-admin/notices',
+    href: '/headmaster/notices',
     icon: NoticeBoardIcon,
     title: 'Notices'
   }
   // {
-  //   href: '/school-admin/dashboard',
+  //   href: '/headmaster/dashboard',
   //   icon: ResultsIcon,
   //   title: 'Configured Grades'
   // }
@@ -115,7 +115,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             width: 64,
             height: 64
           }}
-          to="/school-admin/dashboard"
+          to="/headmaster/dashboard"
         />
         <Typography
           color="textPrimary"

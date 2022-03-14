@@ -4,7 +4,7 @@ import { experimentalStyled } from '@material-ui/core';
 import DashboardNavbar from '../DashboardNavbar';
 import DashboardSidebar from './DashboardSidebar';
 
-const SchoolAdminDashboardLayoutRoot = experimentalStyled('div')(
+const HeadmasterDashboardLayoutRoot = experimentalStyled('div')(
   ({ theme }) => ({
     backgroundColor: theme.palette.background.default,
     display: 'flex',
@@ -14,7 +14,7 @@ const SchoolAdminDashboardLayoutRoot = experimentalStyled('div')(
   })
 );
 
-const SchoolAdminDashboardLayoutWrapper = experimentalStyled('div')(
+const HeadmasterDashboardLayoutWrapper = experimentalStyled('div')(
   ({ theme }) => ({
     display: 'flex',
     flex: '1 1 auto',
@@ -26,37 +26,37 @@ const SchoolAdminDashboardLayoutWrapper = experimentalStyled('div')(
   })
 );
 
-const SchoolAdminDashboardLayoutContainer = experimentalStyled('div')({
+const HeadmasterDashboardLayoutContainer = experimentalStyled('div')({
   display: 'flex',
   flex: '1 1 auto',
   overflow: 'hidden'
 });
 
-const SchoolAdminDashboardLayoutContent = experimentalStyled('div')({
+const HeadmasterDashboardLayoutContent = experimentalStyled('div')({
   flex: '1 1 auto',
   height: '100%',
   overflow: 'auto'
 });
 
-const SchoolAdminDashboardLayout = () => {
+const HeadmasterDashboardLayout = () => {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
 
   return (
-    <SchoolAdminDashboardLayoutRoot>
+    <HeadmasterDashboardLayoutRoot>
       <DashboardNavbar onMobileNavOpen={() => setMobileNavOpen(true)} />
       <DashboardSidebar
         onMobileClose={() => setMobileNavOpen(false)}
         openMobile={isMobileNavOpen}
       />
-      <SchoolAdminDashboardLayoutWrapper>
-        <SchoolAdminDashboardLayoutContainer>
-          <SchoolAdminDashboardLayoutContent>
+      <HeadmasterDashboardLayoutWrapper>
+        <HeadmasterDashboardLayoutContainer>
+          <HeadmasterDashboardLayoutContent>
             <Outlet />
-          </SchoolAdminDashboardLayoutContent>
-        </SchoolAdminDashboardLayoutContainer>
-      </SchoolAdminDashboardLayoutWrapper>
-    </SchoolAdminDashboardLayoutRoot>
+          </HeadmasterDashboardLayoutContent>
+        </HeadmasterDashboardLayoutContainer>
+      </HeadmasterDashboardLayoutWrapper>
+    </HeadmasterDashboardLayoutRoot>
   );
 };
 
-export default SchoolAdminDashboardLayout;
+export default HeadmasterDashboardLayout;
