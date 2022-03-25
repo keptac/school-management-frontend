@@ -302,8 +302,10 @@ class AddClass extends React.Component {
                             <MenuItem value="ALL">ALL</MenuItem>
                             <MenuItem value="STAFF">STAFF</MenuItem>
                             <MenuItem value="STUDENTS">STUDENTS</MenuItem>
-                            <MenuItem value="JUNIOR">JUNIOR SCHOOL</MenuItem>
-                            <MenuItem value="SENIOR">SENIOR SCHOOL</MenuItem>
+                            <MenuItem value="MARIMBA ECD">Marimba ECD</MenuItem>
+                            <MenuItem value="JUNIOR">Tynwald ECD and Junior School </MenuItem>
+                            <MenuItem value="VICFALLS">Victorial Falls ECD and Junior School</MenuItem>
+                            <MenuItem value="SENIOR">Tynwald Senior School </MenuItem>
                           </Select>
                         </FormControl>
                       </Grid>
